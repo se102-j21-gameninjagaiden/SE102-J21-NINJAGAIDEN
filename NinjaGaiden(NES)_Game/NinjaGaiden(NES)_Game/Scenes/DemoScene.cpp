@@ -60,6 +60,7 @@ void DemoScene::Update(float dt)
 		mPlayer->OnKeyPressed(DIK_Z);
 	}
 	mPlayer->HandleKeyboard();
+	mMap->Update(dt);
 	mPlayer->Update(dt);
    
 }

@@ -18,20 +18,23 @@ void GameMap::LoadMap( const char *filepath)
 	mTileMap = new Sprite("Resources/tileSet.png");
 	// Khởi tạo các viên gạch
 	//khoi tao cac khoi Brick (vien gach)
-//#pragma region -BRICK-
-//	for (int i = 0; i < 5; i++)
-//	{
-//		D3DXVECTOR3 position(0,0,0 );
-//			//fstream fs("Brick");
-//		Brick *brick = nullptr;
-//		brick = new BrickNormal(position);
-//		brick->Tag = Entity::EntityTypes::Brick;
-//		mListBricks.push_back(brick);
-//	}
-//	
-//#pragma endregion
+#pragma region -BRICK-
+	for (int i = 0; i < 5; i++)
+	{
+		D3DXVECTOR3 position((18+i)*FrameWidth,5*FrameHeight,0 );
+			//fstream fs("Brick");
+		Brick *brick = nullptr;
+		brick = new BrickGold(position);
+		brick->Tag = Entity::EntityTypes::Brick;
+		
+		mListBricks.push_back(brick);
+	
+	}
+	
+#pragma endregion
 	
 }
+
 
 bool GameMap::isContain(RECT rect1, RECT rect2)
 {
@@ -43,12 +46,19 @@ bool GameMap::isContain(RECT rect1, RECT rect2)
 	return true;
 }
 
+void GameMap::Update(float dt)
+{
+	for (size_t i = 0; i < mListBricks.size(); i++)
+	{
+		mListBricks[i]->Update(dt);
+	}
+}
 void GameMap::Draw()
 {
 	RECT rect;
 	D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 		GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
- //#pragma region DRAW TILESET
+ #pragma region DRAW TILESET
 	for (int rowIndex = 0; rowIndex < mrowCount; rowIndex++)
 	{
 		
@@ -80,16 +90,18 @@ void GameMap::Draw()
 			mTileMap->Draw(position,rect,D3DXVECTOR2(),trans);
 		}
 	}
- //#pragma endregion
+ #pragma endregion
 
-//#pragma region DRAW BRICK
-//
-//	for (size_t i = 0; i < mListBricks.size(); i++)
-//	{
-//		mListBricks[i]->Draw(trans);
-//	}
-//
-//#pragma endregion
+#pragma region DRAW BRICK
+
+	for (size_t i = 0; i < mListBricks.size(); i++)
+	{
+		//D3DXVECTOR2 pos(200,80);
+		mListBricks[i]->Draw(mListBricks[i]->GetPosition(),RECT(),D3DXVECTOR2(),trans);
+		//mListBricks[i]->Draw(pos);
+	}
+
+#pragma endregion
 }
 
 void GameMap::SetCamera(Camera * camera)

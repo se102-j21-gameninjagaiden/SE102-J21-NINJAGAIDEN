@@ -7,6 +7,7 @@
 #include "../GameDefine/GameDefine.h"
 #include "../GameObjects/MapObjects/Brick.h"
 #include "..//GameObjects/MapObjects/BrickNormal.h"
+#include "../GameObjects/MapObjects/BrickGold.h"
 
 using namespace std;
 class GameMap
@@ -16,6 +17,7 @@ public:
 	int GetHeight();
 	int GetWidth();
 	void Draw();
+	void Update(float dt);
 	void SetCamera(Camera *camera);
 	~GameMap();
 private:
