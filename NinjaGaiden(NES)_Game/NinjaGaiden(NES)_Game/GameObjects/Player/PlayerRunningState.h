@@ -11,6 +11,7 @@ public:
     void Update(float dt);
 
     void HandleKeyboard();
+	void OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data);
 
     virtual StateName GetState();
 

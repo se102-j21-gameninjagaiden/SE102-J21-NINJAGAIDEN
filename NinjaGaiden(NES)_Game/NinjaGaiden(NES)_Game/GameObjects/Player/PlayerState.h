@@ -24,6 +24,7 @@ public:
 
     virtual void HandleKeyboard();
 	int IsKeyDown(int keyCode);
+	virtual void OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data);
 	
     //ham thuan ao bat buoc phai ke thua
     virtual StateName GetState() = 0;

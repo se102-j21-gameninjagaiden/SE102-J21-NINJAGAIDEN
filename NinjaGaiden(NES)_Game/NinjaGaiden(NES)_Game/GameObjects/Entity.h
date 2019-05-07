@@ -24,7 +24,11 @@ public:
         BottomRight, //7
         NotKnow
     };
-
+	struct CollisionReturn
+	{
+		bool IsCollided;
+		RECT RegionCollision;
+	};
     enum EntityTypes
     {
         None, Brick, Enemy, Mario, Static, BrickGoldNormal, BrickGold
@@ -69,6 +73,9 @@ public:
     virtual D3DXVECTOR3 GetPosition();
 
     virtual void Update(float dt);
+	//kiem soat viec va cham
+	//khi xay ra va cham voi 1 thuc the nao do thi ham nay se dc goi de xu ly
+	virtual void OnCollision(Entity *impactor, CollisionReturn data, SideCollisions side);
 
 protected:
 

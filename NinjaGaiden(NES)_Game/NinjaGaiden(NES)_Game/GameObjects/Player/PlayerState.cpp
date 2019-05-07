@@ -30,3 +30,7 @@ int PlayerState::IsKeyDown(int keyCode)
 	return (GameGlobal::GetCurrentKeyState()[keyCode] & 0x80) > 0;
 
 }
+
+void PlayerState::OnCollision(Entity * impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
+{
+}

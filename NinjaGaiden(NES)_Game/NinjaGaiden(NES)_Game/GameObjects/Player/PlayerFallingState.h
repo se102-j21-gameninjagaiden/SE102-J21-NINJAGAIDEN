@@ -13,7 +13,7 @@ public:
     void HandleKeyboard();
 
     virtual StateName GetState();
-
+	void OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data);
 protected:
     //do bien tien van toc sau moi frame tinh bang pixel / s
     float acceleratorY;

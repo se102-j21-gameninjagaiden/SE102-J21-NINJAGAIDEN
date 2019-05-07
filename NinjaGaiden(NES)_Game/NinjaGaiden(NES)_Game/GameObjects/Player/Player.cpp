@@ -72,8 +72,8 @@ void Player::OnKeyPressed(int key)
 
 void Player::OnKeyUp(int key)
 {
-  //  if (key == VK_SPACE)
-      //  allowJump = true;
+    if (key == DIK_SPACE)
+        allowJump = true;
 }
 
 void Player::SetReverse(bool flag)
@@ -81,18 +81,34 @@ void Player::SetReverse(bool flag)
     mCurrentReverse = flag;
 }
 
-
+void Player::SetCamera(Camera *camera)
+{
+	this->mCamera = camera;
+}
 
 void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
 {
     mCurrentAnimation->FlipVertical(mCurrentReverse);
     mCurrentAnimation->SetPosition(this->GetPosition());
 
-    mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0));
+   
+	if (mCamera)
+	{
+		D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
+			GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
+
+		mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
+	}
+	else
+	{
+		mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0));
+	}
 }
 
 void Player::SetState(PlayerState *newState)
 {
+	allowMoveLeft = true;
+	allowMoveRight = true;
     delete this->mPlayerData->state;
 
     this->mPlayerData->state = newState;
@@ -160,7 +176,17 @@ Player::MoveDirection Player::getMoveDirection()
 
     return MoveDirection::None;
 }
-
+void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+{
+	this->mPlayerData->state->OnCollision(impactor, side, data);
+}
+void Player::OnNoCollisionWithBottom()
+{
+	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling)
+	{
+		this->SetState(new PlayerFallingState(this->mPlayerData));
+	}
+}
 PlayerState::StateName Player::getState()
 {
     return mCurrentState;

@@ -27,7 +27,7 @@ PlayerFallingState::~PlayerFallingState()
 
 void PlayerFallingState::Update(float dt)
 {
-    
+	
      if (mPlayerData->player->GetVy() >= Define::PLAYER_MAX_JUMP_VELOCITY)
     {
 		
@@ -93,4 +93,53 @@ void PlayerFallingState::HandleKeyboard()
 PlayerState::StateName PlayerFallingState::GetState()
 {
     return PlayerState::Falling;
+}
+
+void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
+{
+	//lay phia va cham so voi player
+	//GameCollision::SideCollisions side = GameCollision::getSideCollision(this->mPlayerData->player, data);
+
+	switch (side)
+	{
+	case Entity::Left:
+		if (mPlayerData->player->getMoveDirection() == Player::MoveToLeft)
+		{
+			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left, 0);
+			this->mPlayerData->player->SetVx(0);
+		}
+		break;
+
+	case Entity::Right:
+		if (mPlayerData->player->getMoveDirection() == Player::MoveToRight)
+		{
+			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left), 0);
+			this->mPlayerData->player->SetVx(0);
+		}
+		break;
+
+	case Entity::Top:
+		break;
+
+	case Entity::Bottom:
+	case Entity::BottomRight:
+	case Entity::BottomLeft:
+		if (data.RegionCollision.right - data.RegionCollision.left >= 8.0f)
+		{
+			this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
+
+			if (isLeftOrRightKeyPressed)
+			{
+				this->mPlayerData->player->SetState(new PlayerRunningState(this->mPlayerData));
+			}
+			else
+			{
+				this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
+			}
+		}
+		return;
+
+	default:
+		break;
+	}
 }

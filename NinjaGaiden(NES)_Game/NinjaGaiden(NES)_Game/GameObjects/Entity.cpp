@@ -21,6 +21,10 @@ RECT Entity::GetBound()
 
     return bound;
 }
+void Entity::OnCollision(Entity *impactor, CollisionReturn data, Entity::SideCollisions side)
+{
+	vx = 0, vy = 0;
+}
 
 void Entity::OnSetPosition(D3DXVECTOR3 pos)
 {

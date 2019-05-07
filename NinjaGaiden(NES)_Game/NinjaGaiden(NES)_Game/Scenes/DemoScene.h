@@ -22,10 +22,13 @@ public:
 
     void OnKeyDown(int keyCode);
     void OnKeyUp(int keyCode);
-    void OnMouseDown(float x, float y);
+   
 	int IsKeyDown(int KeyCode);
 
 protected:
+	void checkCollision();
+	void CheckCameraAndWorldMap();
+
 	GameMap *mMap;
 	Camera *mCamera;
 	Player *mPlayer;

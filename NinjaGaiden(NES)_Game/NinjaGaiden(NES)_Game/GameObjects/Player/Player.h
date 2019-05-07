@@ -10,8 +10,8 @@
 #include "PlayerState.h"
 #include "PlayerRunningState.h"
 #include "../Player/PlayerStandingBeatState.h"
-
-
+#include "../../GameComponents/Camera.h"
+#include "PlayerFallingState.h"
 
 
 
@@ -27,11 +27,14 @@ public:
         MoveToRight, //chay tu trai sang phai
         None //dung im
     };
-
+	void SetCamera(Camera *camera);
     void Update(float dt);
 
     void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
 
+	void OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side);
+
+	void OnNoCollisionWithBottom();
     void SetState(PlayerState *newState);
 
     MoveDirection getMoveDirection();
@@ -51,7 +54,12 @@ public:
     //true thi se lat nguoc anh theo truc y
     void SetReverse(bool flag);
 
+
+	bool allowMoveLeft;
+	bool allowMoveRight;
+
 protected:
+	Camera *mCamera;
     PlayerData *mPlayerData;
 
     Animation   *mCurrentAnimation,
