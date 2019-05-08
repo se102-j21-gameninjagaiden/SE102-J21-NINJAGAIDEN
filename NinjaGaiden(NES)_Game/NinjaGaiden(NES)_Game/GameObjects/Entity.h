@@ -31,7 +31,7 @@ public:
 	};
     enum EntityTypes
     {
-        None, Brick, Enemy, Mario, Static, BrickGoldNormal, BrickGold
+        None, Brick, Enemy, Ninja, Static, BrickGoldNormal, BrickGold
     };
 
     EntityTypes Tag; //Tag de nhan vien loai Entity
@@ -76,6 +76,8 @@ public:
 	//kiem soat viec va cham
 	//khi xay ra va cham voi 1 thuc the nao do thi ham nay se dc goi de xu ly
 	virtual void OnCollision(Entity *impactor, CollisionReturn data, SideCollisions side);
+
+	
 
 protected:
 

@@ -20,6 +20,7 @@ bool Brick::init(D3DXVECTOR3 position)
 
     Entity::SetWidth(mAnimation->GetWidth());
     Entity::SetHeight(mAnimation->GetHeight());
+	
 
     return true;
 }
@@ -38,6 +39,12 @@ void Brick::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXV
 {
     mAnimation->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
+
+void Brick::OnCollision(Entity * impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+{
+}
+
+
 
 void Brick::Draw(D3DXVECTOR2 transform)
 {

@@ -18,6 +18,8 @@ Player::Player()
     this->SetState(new PlayerStandingState(this->mPlayerData));
 
     allowJump = true;
+	Tag = Ninja;
+	
 }
 
 Player::~Player()
