@@ -1,4 +1,8 @@
-﻿  PlayerStandingBeatState.cpp
+﻿  GameMap.cpp
   c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\player\playerstandingbeatstate.cpp(9): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(32): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(121): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(127): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(128): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
   NinjaGaiden(NES)_Game.vcxproj -> C:\Users\thaon\Desktop\SE102-J21-NINJAGAIDEN\NinjaGaiden(NES)_Game\Debug\NinjaGaiden(NES)_Game.exe

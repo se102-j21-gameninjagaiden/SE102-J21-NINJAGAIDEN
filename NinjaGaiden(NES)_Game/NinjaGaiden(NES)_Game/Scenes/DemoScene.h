@@ -9,7 +9,7 @@
 #include "../GameComponents/Sprite.h"
 #include "../GameComponents/GameMap.h"
 #include "../GameDefine/GameDefine.h"
-#include "../GameObjects/Player/Player.h"
+#include "../GameObjects/DynamicGameObject/Player/Player.h"
 
 class DemoScene : public Scene
 {

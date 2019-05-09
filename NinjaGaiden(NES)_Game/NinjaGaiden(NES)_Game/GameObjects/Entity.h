@@ -31,7 +31,7 @@ public:
 	};
     enum EntityTypes
     {
-        None, Brick, Enemy, Ninja, Static, BrickGoldNormal, BrickGold
+        None, Brick, Enemy, Ninja, Static, BrickGoldNormal, BrickGold , Dynamic
     };
 
     EntityTypes Tag; //Tag de nhan vien loai Entity

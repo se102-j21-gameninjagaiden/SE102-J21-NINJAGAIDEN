@@ -31,13 +31,13 @@ void GameMap::LoadMap( const char *filepath)
 	{
 		D3DXVECTOR3 position((13+i*2)*FrameWidth + FrameWidth/2,5*FrameHeight + FrameHeight/2-20,0 );
 			//fstream fs("Brick");
-		Brick *brick = nullptr;
-		brick = new BrickGold(position);
-		brick->Tag = Entity::EntityTypes::Brick;
+		GameObject *object = nullptr;
+		object = new Butterfly(position);
+		object->Tag = Entity::EntityTypes::Static;
 		
-		mListBricks.push_back(brick);
-		if (brick)
-			mQuadTree->insertEntity(brick);
+		mListObjects.push_back(object);
+		if (object)
+			mQuadTree->insertEntity(object);
 	
 	}
 	
@@ -67,14 +67,18 @@ void GameMap::LoadMap( const char *filepath)
 	fstream f("Resources/StaticObjectMap.txt");
 	int widthObject, heightObject, idX_Object, idY_Object;
 	//f >> widthObject;
-	f >> widthObject >> heightObject >> idX_Object >> idY_Object;
+	while (!f.eof())
+	{
+		f >> widthObject >> heightObject >> idX_Object >> idY_Object;
+		Entity *entity = new Entity();
+		entity->SetPosition(idX_Object*FrameWidth + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
+		entity->SetWidth(widthObject);
+		entity->SetHeight(heightObject);
+		entity->Tag = Entity::EntityTypes::Static;
+		mQuadTree->insertEntity(entity);
+	}
 	f.close();
-	Entity *entity = new Entity();
-	entity->SetPosition(idX_Object + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
-	entity->SetWidth(widthObject);
-	entity->SetHeight(heightObject);
-	entity->Tag = Entity::EntityTypes::Static;
-	mQuadTree->insertEntity(entity);
+
 #pragma endregion
 	
 }
@@ -92,9 +96,10 @@ bool GameMap::isContain(RECT rect1, RECT rect2)
 
 void GameMap::Update(float dt)
 {
-	for (size_t i = 0; i < mListBricks.size(); i++)
+	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-		mListBricks[i]->Update(dt);
+	
+		mListObjects[i]->Update(dt);
 	}
 }
 void GameMap::Draw()
@@ -138,10 +143,10 @@ void GameMap::Draw()
 
 #pragma region DRAW BRICK
 
-	for (size_t i = 0; i < mListBricks.size(); i++)
+	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
 		//D3DXVECTOR2 pos(200,80);
-		mListBricks[i]->Draw(mListBricks[i]->GetPosition(),RECT(),D3DXVECTOR2(),trans);
+		mListObjects[i]->Draw(mListObjects[i]->GetPosition(),RECT(),D3DXVECTOR2(),trans);
 		//mListBricks[i]->Draw(pos);
 	}
 
@@ -194,12 +199,12 @@ GameMap::~GameMap()
 	delete[]matrixTile;
 	delete mTileMap;
 	delete mCamera;
-	for (size_t i = 0; i < mListBricks.size(); i++)
+	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-		if (mListBricks[i])
-			delete mListBricks[i];
+		if (mListObjects[i])
+			delete mListObjects[i];
 	}
-	mListBricks.clear();
+	mListObjects.clear();
 	delete mQuadTree;
 }
 
@@ -217,9 +222,9 @@ int GameMap::GetWidth()
 {
 	return mcolumnCount * FrameWidth;
 }
-std::vector<Brick*> GameMap::GetListBrick()
+std::vector<GameObject*> GameMap::GetListObject()
 {
-	return mListBricks;
+	return mListObjects;
 }
 
 QuadTree * GameMap::GetQuadTree()

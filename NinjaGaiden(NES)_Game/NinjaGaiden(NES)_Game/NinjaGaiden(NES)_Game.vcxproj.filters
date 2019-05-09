@@ -28,14 +28,26 @@
     <Filter Include="FrameWork\GameObjects">
       <UniqueIdentifier>{aa84cd0c-8154-4676-a64a-237198b5e18e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\GameObjects\MapObjects">
-      <UniqueIdentifier>{8ea1568b-b091-43b9-8c22-d0e07e56b7b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FrameWork\GameObjects\Player">
-      <UniqueIdentifier>{7172375a-0c65-497e-a806-6f2626c11b53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Scenes">
       <UniqueIdentifier>{8f8a6bad-18f6-42db-8fa4-d43eb409ec30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\DynamicGameObject">
+      <UniqueIdentifier>{62018530-6daa-4115-82e6-a522b236d829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\StaticGameObject">
+      <UniqueIdentifier>{8ea1568b-b091-43b9-8c22-d0e07e56b7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Player">
+      <UniqueIdentifier>{7172375a-0c65-497e-a806-6f2626c11b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Boss">
+      <UniqueIdentifier>{c6c9adfd-563f-4fc8-a480-05cde58c081d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Enemy">
+      <UniqueIdentifier>{9d533f80-eb59-41c7-be67-ce15b0b25198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Weapon">
+      <UniqueIdentifier>{01579b89-0e8e-4496-9099-713b8186cdd4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,48 +78,6 @@
     <ClCompile Include="GameControllers\SceneManager.cpp">
       <Filter>FrameWork\GameControllers</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\MapObjects\Brick.cpp">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\MapObjects\BrickGold.cpp">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\MapObjects\BrickNormal.cpp">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\MapObjects\GameObject.cpp">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\Player.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerData.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerFallingState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerJumpingState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerRunningState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerSittingBeatState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerSittingState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerStandingBeatState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerStandingState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\Player\PlayerState.cpp">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClCompile>
     <ClCompile Include="GameObjects\Entity.cpp">
       <Filter>FrameWork\GameObjects</Filter>
     </ClCompile>
@@ -122,6 +92,57 @@
     </ClCompile>
     <ClCompile Include="GameComponents\QuadTree.cpp">
       <Filter>FrameWork\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\StaticGameObject\Butterfly.cpp">
+      <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\StaticGameObject\GameObject.cpp">
+      <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Brute.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Eagle.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Goblin.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Panther.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Swordman.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\Player.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerData.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerFallingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerJumpingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerRunningState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerSittingBeatState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerSittingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerStandingBeatState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerStandingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,48 +176,6 @@
     <ClInclude Include="GameDefine\GameDefine.h">
       <Filter>FrameWork\GameDefine</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\MapObjects\Brick.h">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\MapObjects\BrickGold.h">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\MapObjects\BrickNormal.h">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\MapObjects\GameObject.h">
-      <Filter>FrameWork\GameObjects\MapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\Player.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerData.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerFallingState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerJumpingState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerRunningState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerSittingBeatState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerSittingState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerStandingBeatState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerStandingState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\Player\PlayerState.h">
-      <Filter>FrameWork\GameObjects\Player</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects\Entity.h">
       <Filter>FrameWork\GameObjects</Filter>
     </ClInclude>
@@ -208,6 +187,57 @@
     </ClInclude>
     <ClInclude Include="GameComponents\QuadTree.h">
       <Filter>FrameWork\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\StaticGameObject\Butterfly.h">
+      <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\StaticGameObject\GameObject.h">
+      <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Brute.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Eagle.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Goblin.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Panther.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Swordman.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\Player.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerData.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerFallingState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerJumpingState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerRunningState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerSittingBeatState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerSittingState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerStandingBeatState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerStandingState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

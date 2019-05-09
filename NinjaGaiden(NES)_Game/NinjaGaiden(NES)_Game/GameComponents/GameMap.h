@@ -5,11 +5,9 @@
 #include <iostream>
 #include "Camera.h"
 #include "../GameDefine/GameDefine.h"
-#include "../GameObjects/MapObjects/Brick.h"
-#include "..//GameObjects/MapObjects/BrickNormal.h"
-#include "../GameObjects/MapObjects/BrickGold.h"
 #include "..//GameComponents/QuadTree.h"
 #include "../GameObjects/Entity.h"
+#include "../GameObjects/StaticGameObject/Butterfly.h"
 using namespace std;
 class GameMap
 {
@@ -18,6 +16,7 @@ public:
 	int GetHeight();
 	int GetWidth();
 	void Draw();
+
 	void Update(float dt);
 	void SetCamera(Camera *camera);
 	RECT GetWorldMapBound();
@@ -27,7 +26,7 @@ public:
 	bool IsBoundBottom(); // kiem tra xem co o vi tri bien ben phai worldmap khong
 	~GameMap();
 
-	std::vector<Brick*> GetListBrick();
+	std::vector<GameObject*> GetListObject();
 
 	QuadTree* GetQuadTree();
 private:
@@ -39,7 +38,7 @@ private:
 	Sprite * mTileMap;
 	Camera *mCamera;
 	QuadTree *mQuadTree;
-	std::vector<Brick*> mListBricks;
+	std::vector<GameObject*> mListObjects;
 	
 //	LPD3DXSPRITE                    mSpriteHandler;
 	//Sprite                          *mSpriteBricks;
