@@ -9,11 +9,11 @@ public:
 
 	~Butterfly();
 	D3DXVECTOR3 pos;
-	virtual const char* FileName();
-	virtual int TotalFrame();
-	virtual int Row();
-	virtual int Column();
-	virtual float SecondPerFrame();
+	 const char* FileName();
+	 int TotalFrame();
+	 int Row();
+	 int Column();
+     float SecondPerFrame();
 
 	void SetPos(D3DXVECTOR3); //Test 8/5
 };

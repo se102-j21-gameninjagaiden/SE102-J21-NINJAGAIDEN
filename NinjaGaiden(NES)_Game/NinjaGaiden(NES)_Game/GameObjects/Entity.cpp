@@ -33,6 +33,10 @@ void Entity::OnSetPosition(D3DXVECTOR3 pos)
 
 }
 
+void Entity::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+{
+}
+
 void Entity::Update(float dt)
 {
     //velocity = pixel / s
@@ -40,6 +44,10 @@ void Entity::Update(float dt)
     posY += vy * dt;
 	/*if (posY > 300)
 		posY = 300;*/
+}
+
+void Entity::Draw(D3DXVECTOR2 transform)
+{
 }
 
 void Entity::SetPosition(float x, float y)

@@ -29,11 +29,11 @@ void GameMap::LoadMap( const char *filepath)
 #pragma region -BRICK-
 	for (int i = 0; i <10 ; i++)
 	{
-		D3DXVECTOR3 position((13+i*2)*FrameWidth + FrameWidth/2,5*FrameHeight + FrameHeight/2-20,0 );
+		D3DXVECTOR3 position((13+i*2)*FrameWidth + FrameWidth/2,5*FrameHeight + FrameHeight/2-20,0 ); // xét tạm
 			//fstream fs("Brick");
 		GameObject *object = nullptr;
-		object = new Butterfly(position);
-		object->Tag = Entity::EntityTypes::Static;
+		object = new Swordman(position);
+		object->Tag = Entity::EntityTypes::Enemy;
 		
 		mListObjects.push_back(object);
 		if (object)
@@ -222,11 +222,15 @@ int GameMap::GetWidth()
 {
 	return mcolumnCount * FrameWidth;
 }
+//std::vector<Entity*> GameMap::GetListObject()
+//{
+//	return mListObjects;
+//}
+
 std::vector<GameObject*> GameMap::GetListObject()
 {
 	return mListObjects;
 }
-
 QuadTree * GameMap::GetQuadTree()
 {
 	return mQuadTree;

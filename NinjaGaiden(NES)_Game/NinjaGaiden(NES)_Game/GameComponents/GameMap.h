@@ -8,6 +8,7 @@
 #include "..//GameComponents/QuadTree.h"
 #include "../GameObjects/Entity.h"
 #include "../GameObjects/StaticGameObject/Butterfly.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Swordman.h"
 using namespace std;
 class GameMap
 {
@@ -26,6 +27,8 @@ public:
 	bool IsBoundBottom(); // kiem tra xem co o vi tri bien ben phai worldmap khong
 	~GameMap();
 
+	//std::vector<Entity*> GetListObject();
+
 	std::vector<GameObject*> GetListObject();
 
 	QuadTree* GetQuadTree();
@@ -39,6 +42,8 @@ private:
 	Camera *mCamera;
 	QuadTree *mQuadTree;
 	std::vector<GameObject*> mListObjects;
+
+	//std::vector<Entity*> mListObjects;
 	
 //	LPD3DXSPRITE                    mSpriteHandler;
 	//Sprite                          *mSpriteBricks;

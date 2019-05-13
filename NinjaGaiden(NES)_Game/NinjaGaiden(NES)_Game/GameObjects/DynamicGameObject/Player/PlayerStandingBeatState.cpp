@@ -20,7 +20,7 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 	{
 	case Entity::Left:
 	{
-		if (impactor->Tag == Entity::EntityTypes::Brick)
+		if (impactor->Tag == Entity::EntityTypes::Enemy)
 		{
 			this->mPlayerData->player->Tag = Entity::EntityTypes::None;
 
@@ -33,7 +33,7 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 	case Entity::Right:
 	{
 	
-		if (impactor->Tag==Entity::EntityTypes::Static)
+		if (impactor->Tag==Entity::EntityTypes::Enemy)
 		{
 			this->mPlayerData->player->Tag = Entity::EntityTypes::None;
 

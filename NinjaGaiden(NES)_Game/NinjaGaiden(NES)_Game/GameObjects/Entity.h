@@ -72,13 +72,15 @@ public:
 
     virtual D3DXVECTOR3 GetPosition();
 
+	virtual void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
     virtual void Update(float dt);
+	virtual void Draw(D3DXVECTOR2 transform);
 	//kiem soat viec va cham
 	//khi xay ra va cham voi 1 thuc the nao do thi ham nay se dc goi de xu ly
 	virtual void OnCollision(Entity *impactor, CollisionReturn data, SideCollisions side);
 
 	
-
+	
 protected:
 
     //duoc goi khi set position cua Entity, dung cho ke thua

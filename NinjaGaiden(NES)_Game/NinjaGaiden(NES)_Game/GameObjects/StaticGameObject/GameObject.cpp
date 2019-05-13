@@ -33,6 +33,8 @@ void GameObject::OnSetPosition(D3DXVECTOR3 pos)
 void GameObject::Update(float dt)
 {
 	mAnimation->Update(dt);
+	//vx -= 5 * dt;
+	//Entity::Update(dt);
 }
 
 void GameObject::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
