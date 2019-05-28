@@ -7,7 +7,7 @@ PlayerJumpingState::PlayerJumpingState(PlayerData *playerData)
 {
     this->mPlayerData = playerData;
     this->mPlayerData->player->SetVy(Define::PLAYER_MIN_JUMP_VELOCITY);
-
+	this->mPlayerData->player->isJummping = true;
     acceleratorY = 5.0f;
     acceleratorX = 6.0f;
 
@@ -22,15 +22,16 @@ PlayerJumpingState::~PlayerJumpingState()
 
 void PlayerJumpingState::Update(float dt)
 {
-    this->mPlayerData->player->AddVy(acceleratorY);   
+    this->mPlayerData->player->AddVy(acceleratorY);    
 
     if (mPlayerData->player->GetVy() >= 0)
     {
+	//	this->mPlayerData->player->isJummping = false;
         mPlayerData->player->SetState(new PlayerFallingState(this->mPlayerData));
 
         return;
     }
-
+	
     if (noPressed)
     {
         if (mPlayerData->player->getMoveDirection() == Player::MoveToLeft)
@@ -86,9 +87,9 @@ void PlayerJumpingState::HandleKeyboard()
             }
         }
 
-        noPressed = false;
+        noPressed = false; 
     }
-    else if (IsKeyDown(DIK_LEFTARROW))
+	else if (IsKeyDown(DIK_LEFTARROW))
     {
         mPlayerData->player->SetReverse(true);
 
@@ -107,10 +108,23 @@ void PlayerJumpingState::HandleKeyboard()
 	
 
     }
-    else
-    {
-        noPressed = true;
-    }
+	else 
+		if (IsKeyDown(DIK_Z))
+		{
+
+			if (mPlayerData->player->GetVy() <= -60 || mPlayerData->player->GetVy()>=-acceleratorY*8)
+			{
+				mPlayerData->player->SetVy(Define::PLAYER_MAX_JUMP_VELOCITY/2);
+			}
+
+			this->mPlayerData->player->SetState(new PlayerStandingBeatState(this->mPlayerData));
+			return;
+		}
+	
+	else
+	{
+		noPressed = true;
+	}
 }
 
 PlayerState::StateName PlayerJumpingState::GetState()
@@ -120,31 +134,74 @@ PlayerState::StateName PlayerJumpingState::GetState()
 
 void PlayerJumpingState::OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
 {
-	switch (side)
+	switch (side)	
 	{
 	case Entity::Left:
 	{
-		this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left, 0);
-		this->mPlayerData->player->SetVx(0);
-		break;
+		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		{
+			this->mPlayerData->player->invincible = true;
+			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
+			//this->mPlayerData->player->isJummping = false;
+			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+			break;
+		}
+		else
+		{
+			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left, 0);
+			this->mPlayerData->player->SetVx(0);
+		}
+		return;
 	}
 
 	case Entity::Right:
+
 	{
-		this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left), 0);
-		this->mPlayerData->player->SetVx(0);
-		break;
+		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		{
+			this->mPlayerData->player->invincible = true;
+
+			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
+			//this->mPlayerData->player->isJummping = false;
+			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+		}
+		else
+		{
+			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left), 0);
+			this->mPlayerData->player->SetVx(0);
+		}
+		return;
 	}
 
 	case Entity::TopRight: case Entity::TopLeft: case Entity::Top:
 	{
-		this->mPlayerData->player->AddPosition(0, data.RegionCollision.bottom - data.RegionCollision.top);
-		this->mPlayerData->player->SetVy(0);
+		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		{
+			this->mPlayerData->player->invincible = true;
+
+			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
+			//this->mPlayerData->player->isJummping = false;
+			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+		}
+		else
+		{
+			this->mPlayerData->player->AddPosition(0, data.RegionCollision.bottom - data.RegionCollision.top);
+			this->mPlayerData->player->SetVy(0);
+		}
 		break;
 	}
 
 	case Entity::BottomRight: case Entity::BottomLeft: case Entity::Bottom:
 	{
+		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		{
+			this->mPlayerData->player->invincible = true;
+
+			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
+			//this->mPlayerData->player->isJummping = false;
+			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+		}
+		else
 		this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
 	}
 

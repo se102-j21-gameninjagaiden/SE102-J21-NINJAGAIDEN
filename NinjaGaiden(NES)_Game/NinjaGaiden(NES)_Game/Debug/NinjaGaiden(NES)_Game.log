@@ -1,32 +1,9 @@
-﻿  Game.cpp
+﻿  GameUI.cpp
   c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\swordman.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\game.cpp(9): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\game.cpp(40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\game.cpp(324): warning C4244: 'argument': conversion from 'float' to 'DWORD', possible loss of data
-  GameMap.cpp
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\swordman.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(32): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(121): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(127): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\gamemap.cpp(128): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
-  Swordman.cpp
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\swordman.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  DemoScene.cpp
-  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\swordman.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(15): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(14): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(33): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(42): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(137): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(143): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(150): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(157): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-  Generating Code...
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\sprite.h(20): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(44): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(48): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(54): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(58): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(169): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   NinjaGaiden(NES)_Game.vcxproj -> C:\Users\thaon\Desktop\SE102-J21-NINJAGAIDEN\NinjaGaiden(NES)_Game\Debug\NinjaGaiden(NES)_Game.exe

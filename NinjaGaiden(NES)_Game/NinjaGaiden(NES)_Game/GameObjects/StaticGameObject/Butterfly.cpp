@@ -3,7 +3,7 @@
 Butterfly::Butterfly(D3DXVECTOR3 position)
 {
 	init(position);
-	SetPos(position); // xét tạm
+	
 }
 
 void Butterfly::OnCollision(Entity * impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
@@ -13,14 +13,15 @@ void Butterfly::OnCollision(Entity * impactor, Entity::CollisionReturn data, Ent
 
 
 		mAnimation = new Animation("Resources/normalbrick.png", 1, 1, 1, 1);
-		SetPosition(pos);
+		
 
 		Entity::SetWidth(mAnimation->GetWidth());
 		Entity::SetHeight(mAnimation->GetHeight());
 
-		impactor->Tag = Entity::EntityTypes::Ninja;
+	
 
 	}
+
 }
 
 
@@ -53,7 +54,3 @@ float Butterfly::SecondPerFrame()
 	return 0.3f;
 }
 
-void Butterfly::SetPos(D3DXVECTOR3 pos)
-{
-	this->pos = pos;
-}

@@ -3,7 +3,7 @@
 
 Scene::Scene()
 {
-    mBackColor = 0x4866ff;
+    mBackColor =0;
 
     LoadContent();
 }

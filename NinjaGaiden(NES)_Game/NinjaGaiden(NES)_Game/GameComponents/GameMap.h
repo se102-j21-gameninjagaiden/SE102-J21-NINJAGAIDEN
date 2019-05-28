@@ -9,6 +9,11 @@
 #include "../GameObjects/Entity.h"
 #include "../GameObjects/StaticGameObject/Butterfly.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Swordman.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Panther.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Eagle.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Goblin.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Brute.h"
+
 using namespace std;
 class GameMap
 {

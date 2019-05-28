@@ -33,4 +33,5 @@ int PlayerState::IsKeyDown(int keyCode)
 
 void PlayerState::OnCollision(Entity * impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
 {
+	
 }

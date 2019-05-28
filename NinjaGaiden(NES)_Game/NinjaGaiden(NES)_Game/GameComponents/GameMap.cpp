@@ -15,6 +15,7 @@ void GameMap::LoadMap( const char *filepath)
 		}
 	}
 	fs.close();
+	
 	mTileMap = new Sprite("Resources/tileSet.png");
 
 	RECT r;
@@ -26,20 +27,90 @@ void GameMap::LoadMap( const char *filepath)
 	mQuadTree = new QuadTree(1, r);
 	// Khởi tạo các viên gạch
 	//khoi tao cac khoi Brick (vien gach)
-#pragma region -BRICK-
-	for (int i = 0; i <10 ; i++)
+#pragma region -ENEMY , ITEM -
+	fstream f_ei("Resources/Enemy_Item.txt");
+	float idType, posX, posY;
+	while (!f_ei.eof())
 	{
-		D3DXVECTOR3 position((13+i*2)*FrameWidth + FrameWidth/2,5*FrameHeight + FrameHeight/2-20,0 ); // xét tạm
+		f_ei >> idType >> posX >> posY;
+		D3DXVECTOR3 position;
 			//fstream fs("Brick");
 		GameObject *object = nullptr;
-		object = new Swordman(position);
-		object->Tag = Entity::EntityTypes::Enemy;
+		switch (int(idType))
+		{
+		case 1:
+			position = D3DXVECTOR3(posX, posY, 0);
+			object = new Swordman(position);
+			
+			object->Tag = Entity::EntityTypes::Enemy;
+
+			mListObjects.push_back(object);
+			if (object)
+				mQuadTree->insertEntity(object);
+
+			break;
+		case 2:
+			position = D3DXVECTOR3(posX, posY, 0);	
+			object = new Butterfly(position);
+
+			object->Tag = Entity::EntityTypes::Item;
+
+			mListObjects.push_back(object);
+			/*if (object)
+				mQuadTree->insertEntity(object);*/
+
+			break;
+		case 3:
+			position = D3DXVECTOR3(posX, posY, 0);
+			object = new Panther(position);
+
+			object->Tag = Entity::EntityTypes::Enemy;
+
+			mListObjects.push_back(object);
+			if (object)
+				mQuadTree->insertEntity(object);
+			break;
+		case 4:
+			position = D3DXVECTOR3(posX, posY, 0);
+			object = new Eagle(position);
+
+			object->Tag = Entity::EntityTypes::Enemy;
+
+			mListObjects.push_back(object);
+			if (object)
+				mQuadTree->insertEntity(object);
+
+			break;
+		case 5:
+			position = D3DXVECTOR3(posX, posY, 0);
+			object = new Goblin(position);
+
+			object->Tag = Entity::EntityTypes::Enemy;
+
+			mListObjects.push_back(object);
+			if (object)
+				mQuadTree->insertEntity(object);
+
+			break;
+			break;
+		case 6:
+			position = D3DXVECTOR3(posX, posY, 0);
+			object = new Brute(position);
+
+			object->Tag = Entity::EntityTypes::Enemy;
+
+			mListObjects.push_back(object);
+			if (object)
+				mQuadTree->insertEntity(object);
+
+			break;
+			break;
+
+		}
 		
-		mListObjects.push_back(object);
-		if (object)
-			mQuadTree->insertEntity(object);
 	
 	}
+	f_ei.close();
 	
 #pragma endregion
 #pragma region -OBJECTGROUP, STATIC OBJECT-
@@ -98,8 +169,17 @@ void GameMap::Update(float dt)
 {
 	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-	
-		mListObjects[i]->Update(dt);
+		//if (mListObjects[i]->Tag ==Entity::EntityTypes ::None)
+		//{
+		//	mListObjects.erase(mListObjects.begin() + i);
+		//
+		//	//mListObjects[i]->Update(dt);
+
+		//}
+		//else
+		//{
+			mListObjects[i]->Update(dt);
+		//}
 	}
 }
 void GameMap::Draw()
@@ -108,7 +188,7 @@ void GameMap::Draw()
 	D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 		GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
  #pragma region DRAW TILESET
-	for (int rowIndex = 0; rowIndex < mrowCount; rowIndex++)
+	for (int rowIndex = 1; rowIndex < mrowCount; rowIndex++)
 	{
 		
 		for (int columIndex = 0; columIndex < mcolumnCount; columIndex++)
@@ -118,7 +198,7 @@ void GameMap::Draw()
 			rect.right = rect.left * FrameWidth;
 			rect.top = 0;
 			rect.bottom = rect.top + FrameHeight;
-			D3DXVECTOR3 position(columIndex*FrameWidth + FrameWidth / 2, rowIndex*FrameHeight + FrameHeight / 2, 0);
+			D3DXVECTOR3 position((columIndex)*FrameWidth + FrameWidth / 2, (rowIndex)*FrameHeight + FrameHeight / 2, 0);
 
 		//	mMap->SetSourceRect(rect);
 			if (mCamera != NULL)

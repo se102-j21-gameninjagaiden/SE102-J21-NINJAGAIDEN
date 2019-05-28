@@ -10,6 +10,7 @@
 #include "../GameComponents/GameMap.h"
 #include "../GameDefine/GameDefine.h"
 #include "../GameObjects/DynamicGameObject/Player/Player.h"
+#include "../GameUI/GameUI.h"
 
 class DemoScene : public Scene
 {
@@ -32,6 +33,9 @@ protected:
 	GameMap *mMap;
 	Camera *mCamera;
 	Player *mPlayer;
+	GameUI *gameUI;
+
     float mTimeCounter;
+	int score;
 };
 

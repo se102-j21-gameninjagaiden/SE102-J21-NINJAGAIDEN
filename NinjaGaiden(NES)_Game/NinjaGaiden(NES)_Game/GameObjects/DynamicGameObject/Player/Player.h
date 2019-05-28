@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -12,14 +12,16 @@
 #include "../../../GameComponents/Camera.h"
 #include "PlayerFallingState.h"
 
-
+#include "../../ExplosionEffect/ExplosionHit.h"
 
 class Player : public Entity
 {
 public:
+	
+	
     Player();
     ~Player();
-
+	
     enum MoveDirection
     {
         MoveToLeft, //chay tu phai sang trai
@@ -56,18 +58,27 @@ public:
 
 	bool allowMoveLeft;
 	bool allowMoveRight;
+	bool invincible;
+	bool isJummping;
+	
+	ExplosionHit *e_Hit;
+
 
 protected:
 	Camera *mCamera;
     PlayerData *mPlayerData;
 
-    Animation   *mCurrentAnimation,
-                *mAnimationStanding,
-                *mAnimationRunning,
-                *mAnimationJumping,
-				*mAnimationStandingBeat,
-				*mAnimationSitting,
-				*mAnimationSittingBeat;
+	//EffectHit  *e_Hit;
+
+	
+	Animation   *mCurrentAnimation,
+		*mAnimationStanding,
+		*mAnimationRunning,
+		*mAnimationJumping,
+		*mAnimationStandingBeat,
+		*mAnimationSitting,
+		*mAnimationSittingBeat,
+		*mAnimationDying;
 
     void changeAnimation(PlayerState::StateName state);
 
@@ -75,5 +86,11 @@ protected:
 
     //chi cho phep jump khi nhan nhim space, muon nhay lai phai tha phim space roi nhan lai
 	bool allowJump, mCurrentReverse;
+	//chi cho phep danh khi nhan Z, muon danh lai phai tha phim Z roi nhan lai
+	bool allowHit;
+	// cho phep invincible khi bị quái đánh
+
+	int InvincibleTime;
+
 };
 

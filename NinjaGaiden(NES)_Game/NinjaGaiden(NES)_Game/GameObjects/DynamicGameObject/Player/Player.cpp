@@ -5,20 +5,27 @@
 
 Player::Player()
 {
+	//e_Hit = nullptr;
 	mAnimationStanding = new Animation("Resources/Ninja/standing.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationJumping = new Animation("Resources/Ninja/jumping.png", 4, 1, 4, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationRunning = new Animation("Resources/Ninja/running.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationStandingBeat = new Animation("Resources/Ninja/standingbeat.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationSitting= new Animation ("Resources/Ninja/sitting.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationSittingBeat = new Animation("Resources/Ninja/sittingbeat.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationDying = new Animation("Resources/Ninja/dying.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
 	this->mPlayerData = new PlayerData();
     this->mPlayerData->player = this;
     this->vx = 0;
     this->vy = 0;
     this->SetState(new PlayerStandingState(this->mPlayerData));
-
-    allowJump = true;
+	invincible = false;
+    allowJump = false;
+	allowHit = false;
+	isJummping = false;
 	Tag = Ninja;
+	InvincibleTime = 100;
+	e_Hit = new ExplosionHit();
+	e_Hit->Active = false;
 	
 }
 
@@ -27,7 +34,20 @@ Player::~Player()
 }
 
 void Player::Update(float dt)
-{    
+{
+	
+	if (e_Hit->Active)
+	{ 
+		e_Hit->Update(dt);
+		if (e_Hit->timeSpawn >= e_Hit->Column()* e_Hit->SecondPerFrame())
+		{
+			e_Hit->Active = false;
+		}
+		else
+		{
+			e_Hit->timeSpawn += dt;
+		}
+	}
     mCurrentAnimation->Update(dt);
 
     if (this->mPlayerData->state)
@@ -52,23 +72,27 @@ void Player::OnKeyPressed(int key)
     {
         if (allowJump)
         {
-            if (mCurrentState == PlayerState::Running || mCurrentState == PlayerState::Standing)
+            if (mCurrentState == PlayerState::Running || mCurrentState == PlayerState::Standing || mCurrentState==PlayerState::Sitting)
             {
                 this->SetState(new PlayerJumpingState(this->mPlayerData));
             }
 
-           // allowJump = false;
+            allowJump = false;
         }
 		
     }
 	if (key == DIK_Z)
 	{
-		if (mCurrentState == PlayerState::Running || mCurrentState == PlayerState::Standing) //|| mCurrentState==PlayerState::Jumping)
+		if (allowHit)
 		{
-			this->SetState(new PlayerStandingBeatState(this->mPlayerData));
-			
-			
+			if (mCurrentState == PlayerState::Running || mCurrentState == PlayerState::Standing)// || mCurrentState == PlayerState::Falling || mCurrentState == PlayerState::Jumping)
+			{
+				this->SetState(new PlayerStandingBeatState(this->mPlayerData));
+
+
+			}
 		}
+		allowHit = false;
 	}
 }
 
@@ -76,6 +100,9 @@ void Player::OnKeyUp(int key)
 {
     if (key == DIK_SPACE)
         allowJump = true;
+	if (key == DIK_Z)
+		allowHit = true;
+
 }
 
 void Player::SetReverse(bool flag)
@@ -96,14 +123,35 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
    
 	if (mCamera)
 	{
+		
 		D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 			GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
-
-		mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
+		if (e_Hit->Active)
+		{
+			e_Hit->Draw(e_Hit->GetPosition(),RECT(),D3DXVECTOR2(),trans);
+		}
+		if (invincible)
+		{
+			InvincibleTime--;
+			if (InvincibleTime % 2 == 0 && InvincibleTime >=0)
+			{
+				mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
+			}
+			if (InvincibleTime <= 0)
+			{
+				invincible=false;
+				InvincibleTime = 40;
+			}
+		}
+		else mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
 	}
 	else
 	{
-		mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0));
+		if (e_Hit->Active)
+		{
+			e_Hit->Draw(e_Hit->GetPosition());
+		}
+		 mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0));
 	}
 }
 
@@ -159,6 +207,9 @@ void Player::changeAnimation(PlayerState::StateName state)
 		case PlayerState::SittingBeat:
 			mCurrentAnimation = mAnimationSittingBeat;
 			break;
+		case PlayerState::Die:
+			mCurrentAnimation = mAnimationDying;
+			break;
     }
 
     this->width = mCurrentAnimation->GetWidth();
@@ -180,11 +231,11 @@ Player::MoveDirection Player::getMoveDirection()
 }
 void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
-	this->mPlayerData->state->OnCollision(impactor, side, data);
+	 this->mPlayerData->state->OnCollision(impactor, side, data);
 }
 void Player::OnNoCollisionWithBottom()
 {
-	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling)
+	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling && mCurrentState != PlayerState::StandingBeat)
 	{
 		this->SetState(new PlayerFallingState(this->mPlayerData));
 	}

@@ -99,8 +99,9 @@ int Sprite::GetHeight()
     return mHeight;
 }
 
-void Sprite::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+void Sprite::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform , float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
 {
+	
     D3DXVECTOR3 inPosition = mPosition;
     RECT inSourceRect = mSourceRect;
     float inRotation = mRotation;
@@ -135,11 +136,12 @@ void Sprite::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 
     D3DXVECTOR3 center = D3DXVECTOR3(mWidth / 2, mHeight / 2, 0);
 
-    mSpriteHandler->Draw(mTexture,
-        &inSourceRect,
-        &center,
-        &inPosition,
-        D3DCOLOR_ARGB(255, 255, 255, 255)); // nhung pixel nao co mau trang se duoc to mau nay len
+	mSpriteHandler->Draw(mTexture,
+		&inSourceRect,
+		&center,
+		&inPosition,
+		
+       colorKey); // nhung pixel nao co mau trang se duoc to mau nay len
 
     mSpriteHandler->SetTransform(&oldMatrix); // set lai matrix cu~ de Sprite chi ap dung transfrom voi class nay
 }

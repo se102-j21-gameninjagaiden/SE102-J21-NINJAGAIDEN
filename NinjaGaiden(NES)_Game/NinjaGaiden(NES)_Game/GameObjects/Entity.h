@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <d3dx9.h>
 #include <d3d9.h>
@@ -31,7 +31,7 @@ public:
 	};
     enum EntityTypes
     {
-        None, Brick, Enemy, Ninja, Static, BrickGoldNormal, BrickGold , Dynamic
+        None, Brick, Enemy, Ninja, Static, Dynamic,Item
     };
 
     EntityTypes Tag; //Tag de nhan vien loai Entity
@@ -94,4 +94,7 @@ protected:
 
     //size cua entity
     float width, height;
+	////Cho phép Entity hồi sinh khi bằng 1
+	//float relive;
+	//float die;
 };

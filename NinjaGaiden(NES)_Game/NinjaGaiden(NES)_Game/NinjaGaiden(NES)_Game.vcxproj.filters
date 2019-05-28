@@ -49,6 +49,12 @@
     <Filter Include="FrameWork\GameObjects\DynamicGameObject\Weapon">
       <UniqueIdentifier>{01579b89-0e8e-4496-9099-713b8186cdd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\GameObjects\ExplosionEffect">
+      <UniqueIdentifier>{f93bd645-bf28-4a2f-8783-aa3cb05c9a9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameUI">
+      <UniqueIdentifier>{079083cf-7b7a-4015-8fa8-8a43f734af68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameComponents\Animation.cpp">
@@ -144,6 +150,18 @@
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerState.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\ExplosionEffect\ExplosionHit.cpp">
+      <Filter>FrameWork\GameObjects\ExplosionEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\GameUI.cpp">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\Font.cpp">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameComponents\Animation.h">
@@ -238,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerState.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\ExplosionEffect\ExplosionHit.h">
+      <Filter>FrameWork\GameObjects\ExplosionEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\GameUI.h">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\Font.h">
+      <Filter>FrameWork\GameUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

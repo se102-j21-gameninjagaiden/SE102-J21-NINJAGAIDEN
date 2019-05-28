@@ -25,7 +25,7 @@ Entity::CollisionReturn GameCollision::RecteAndRect(RECT rect1, RECT rect2)
 
     //chon max Left
     result.RegionCollision.left = rect1.left > rect2.left ? rect1.left : rect2.left;
-    //chon max right
+    //chon min right
     result.RegionCollision.right = rect1.right < rect2.right ? rect1.right : rect2.right;
     //chon min bottom
     result.RegionCollision.bottom = rect1.bottom < rect2.bottom ? rect1.bottom : rect2.bottom;

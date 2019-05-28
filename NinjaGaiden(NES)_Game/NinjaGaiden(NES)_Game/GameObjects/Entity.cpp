@@ -3,6 +3,7 @@
 Entity::Entity()
 {
     Tag = None;
+//	relive = 0;
 }
 
 D3DXVECTOR3 Entity::GetPosition()
@@ -24,6 +25,7 @@ RECT Entity::GetBound()
 void Entity::OnCollision(Entity *impactor, CollisionReturn data, Entity::SideCollisions side)
 {
 	vx = 0, vy = 0;
+	
 }
 
 

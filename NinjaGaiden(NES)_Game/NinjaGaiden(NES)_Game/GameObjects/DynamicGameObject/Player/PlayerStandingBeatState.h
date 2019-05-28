@@ -2,7 +2,7 @@
 
 #include "PlayerState.h"
 #include "Player.h"
-
+#include "../../ExplosionEffect/ExplosionHit.h"
 class PlayerStandingBeatState : public PlayerState
 {
 public:
@@ -15,8 +15,14 @@ public:
 
 	virtual StateName GetState();
 
+
 protected:
 	float                       mTimePerFrame, //thoi gian luan chuyen 1 frame
 		mCurrentTotalTime; //tong thoi gian hien tai de thuc hien timeperframe
+
+	//bool isLeftOrRightKeyPressed;
+	//float acceleratorY,
+	//	acceleratorX;
+
 };
 

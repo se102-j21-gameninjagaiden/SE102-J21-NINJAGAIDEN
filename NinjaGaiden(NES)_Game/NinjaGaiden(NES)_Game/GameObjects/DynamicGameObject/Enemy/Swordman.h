@@ -6,8 +6,10 @@
 #include "../../StaticGameObject/GameObject.h"
 class Swordman: public GameObject
 {
+private:
 public:
 	~Swordman();
+
 	Swordman(D3DXVECTOR3 position);
 	void Update(float dt);
 

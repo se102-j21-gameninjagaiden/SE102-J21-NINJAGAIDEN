@@ -11,7 +11,7 @@ class PlayerSittingBeatState : public PlayerState
 public:
 	PlayerSittingBeatState(PlayerData *playerData);
 	~PlayerSittingBeatState();
-
+	void OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data);
 	void Update(float dt);
 
 	void HandleKeyboard();

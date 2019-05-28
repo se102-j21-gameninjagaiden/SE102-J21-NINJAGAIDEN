@@ -13,14 +13,16 @@ void DemoScene::LoadContent()
 	mCamera = new Camera(GameGlobal::GetWidth(), GameGlobal::GetHeight());
 	mCamera->SetPosition(GameGlobal::GetWidth() / 2,
 		 GameGlobal::GetHeight() / 2);
-
+	
 		
 	mMap->SetCamera(mCamera);
 	mPlayer = new Player();
 	
-	mPlayer->SetPosition(GameGlobal::GetWidth() / 2,
-		mMap->GetHeight() -FrameHeight);
+	mPlayer->SetPosition(FrameWidth*2,
+		mMap->GetHeight() -FrameHeight*1.5);
 	mPlayer->SetCamera(mCamera);
+	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
+	gameUI->initTimer(150);
 }
 
 void DemoScene::Update(float dt)
@@ -52,20 +54,29 @@ void DemoScene::Update(float dt)
 		mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(0, CAMERA_SPEED, 0));
 	}*/
 	//
-	if (IsKeyDown(DIK_SPACE))
-	{
-		mPlayer->OnKeyPressed(DIK_SPACE);
-	}
 	if (IsKeyDown(DIK_Z))
 	{
+		mPlayer->OnKeyUp(DIK_Z);
+
 		mPlayer->OnKeyPressed(DIK_Z);
 	}
+	if (IsKeyDown(DIK_SPACE))
+	{
+		mPlayer->OnKeyUp(DIK_SPACE);
+		mPlayer->OnKeyPressed(DIK_SPACE);
+	}
+
 	checkCollision();
+
+
+
+	
 	
 	mMap->Update(dt);
-
 	mPlayer->HandleKeyboard();
 	mPlayer->Update(dt);
+	gameUI->Update(dt);
+
 	CheckCameraAndWorldMap();
 }
 
@@ -73,6 +84,8 @@ void DemoScene::Draw()
 {
 	mMap->Draw();
 	mPlayer->Draw();
+	gameUI->drawTable();
+	gameUI->drawScore();
 }
 
 void DemoScene::OnKeyDown(int keyCode)
@@ -160,14 +173,14 @@ void DemoScene::CheckCameraAndWorldMap()
 
 void DemoScene::checkCollision()
 {
-	/*su dung de kiem tra xem khi nao mario khong dung tren 1 object hoac
+	/*su dung de kiem tra xem khi nao ninja khong dung tren 1 object hoac
 	dung qua sat mep trai hoac phai cua object do thi se chuyen state la falling*/
 	int widthBottom = 0;
 
 	vector<Entity*> listCollision;
 
 	mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, mPlayer);
-
+	
 	for (size_t i = 0; i < listCollision.size(); i++)
 	{
 		Entity::CollisionReturn r = GameCollision::RecteAndRect(mPlayer->GetBound(),
@@ -181,24 +194,43 @@ void DemoScene::checkCollision()
 			//lay phia va cham cua Player so voi Entity
 			Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollision.at(i), r);
 
-			//goi den ham xu ly collision cua Player va Entity
+			//goi den ham xu ly collision cua Player va Entity		
+			if (listCollision.at(i)->Tag == Entity::EntityTypes::Enemy && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat)
+			{
+				gameUI->SetplayerHP(-1);
+			}
 			mPlayer->OnCollision(listCollision.at(i), r, sidePlayer);
-			listCollision.at(i)->OnCollision(mPlayer, r, sideImpactor);
+			if (mPlayer->getState() == PlayerState::StandingBeat && listCollision.at(i)->Tag == Entity::EntityTypes::Enemy || mPlayer->getState() == PlayerState::SittingBeat && listCollision.at(i)->Tag == Entity::EntityTypes::Enemy)
+			{
+				gameUI->SetplayerScore(100); // Sau nay xét Enemy Type để tính điểm
+
+			}
+			else
+			{
+				
+			}
+			
+				
+			
+			
+		//	listCollision.at(i)->OnCollision(mPlayer, r, sideImpactor);
 
 			//kiem tra neu va cham voi phia duoi cua Player 
 			if (sidePlayer == Entity::Bottom || sidePlayer == Entity::BottomLeft
 				|| sidePlayer == Entity::BottomRight)
 			{
-				//kiem cha do dai ma mario tiep xuc phia duoi day
+				//kiem cha do dai ma ninja tiep xuc phia duoi day
 				int bot = r.RegionCollision.right - r.RegionCollision.left;
 
 				if (bot > widthBottom)
 					widthBottom = bot;
 			}
+			//if (listCollision.at(i)->Tag == Entity::EntityTypes::Enemy)
+			//	break;
 		}
 	}
 
-	//Neu mario dung ngoai mep thi luc nay cho mario rot xuong duoi dat    
+	//Neu ninja dung ngoai mep thi luc nay cho ninja rot xuong duoi dat    
 	if (widthBottom < Define::PLAYER_BOTTOM_RANGE_FALLING)
 	{
 		mPlayer->OnNoCollisionWithBottom();
