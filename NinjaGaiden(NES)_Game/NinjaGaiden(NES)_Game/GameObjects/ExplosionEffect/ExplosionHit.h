@@ -10,8 +10,7 @@ public:
 	int Row();
 	int Column();
 	float SecondPerFrame();
-	bool Active;
-	float timeSpawn;
+	
 	~ExplosionHit();
 };
 

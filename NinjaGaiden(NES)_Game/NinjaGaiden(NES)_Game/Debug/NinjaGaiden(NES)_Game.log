@@ -1,9 +1,23 @@
-﻿  GameUI.cpp
+﻿  PlayerRunningState.cpp
   c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\sprite.h(20): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(44): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(48): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(54): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(58): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameui\gameui.cpp(169): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\animation.h(23): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\staticgameobject\gameobject.h(14): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playerrunningstate.cpp(95): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playerrunningstate.cpp(103): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playerrunningstate.cpp(124): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playerrunningstate.cpp(132): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playerrunningstate.cpp(148): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playerrunningstate.cpp(162): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+  PlayerUseWeaponState.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\animation.h(23): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\staticgameobject\gameobject.h(14): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(21): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(38): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(46): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(61): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(69): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(84): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\player\playeruseweaponstate.cpp(96): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
+  Generating Code...
   NinjaGaiden(NES)_Game.vcxproj -> C:\Users\thaon\Desktop\SE102-J21-NINJAGAIDEN\NinjaGaiden(NES)_Game\Debug\NinjaGaiden(NES)_Game.exe

@@ -11,8 +11,8 @@ ExplosionHit::ExplosionHit()
 ExplosionHit::ExplosionHit(D3DXVECTOR3 position)
 {
 	init(position);
-	Active = true;
-	timeSpawn = 0;
+	_Active = true;
+	_timeSpawn = 0;
 }
 
 const char * ExplosionHit::FileName()

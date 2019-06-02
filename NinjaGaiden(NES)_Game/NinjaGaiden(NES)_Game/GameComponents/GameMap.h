@@ -13,16 +13,26 @@
 #include "../GameObjects/DynamicGameObject/Enemy/Eagle.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Goblin.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Brute.h"
-
+#include "../GameObjects/StaticGameObject/Stair.h"
+#include "../GameObjects/Item/BlueMana.h"
+#include  "../GameObjects/Item/BlueBonus.h"
+#include  "../GameObjects/Item/Fire.h"
+#include  "../GameObjects/Item/RedBonus.h"
+#include  "../GameObjects/Item/RedHP.h"
+#include  "../GameObjects/Item/RedMana.h"
+#include  "../GameObjects/Item/ThrowingStar.h"
+#include  "../GameObjects/Item/TimeFreeze.h"
+#include  "../GameObjects/Item/WindmillStar.h"
 using namespace std;
 class GameMap
 {
-public:
-	GameMap(const char *filepath);
+public: 
+	GameMap(int level);
 	int GetHeight();
 	int GetWidth();
 	void Draw();
-
+	/*bool drawEffect;
+	int TimeDrawEffect;*/
 	void Update(float dt);
 	void SetCamera(Camera *camera);
 	RECT GetWorldMapBound();
@@ -38,7 +48,7 @@ public:
 
 	QuadTree* GetQuadTree();
 private:
-	void LoadMap(const char *filepath);
+	void LoadMap(int level);
 	int mrowCount, mcolumnCount, mtotalTile;
 	bool isContain(RECT rect1, RECT rect2);
 

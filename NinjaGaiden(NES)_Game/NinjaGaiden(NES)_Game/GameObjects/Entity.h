@@ -31,9 +31,18 @@ public:
 	};
     enum EntityTypes
     {
-        None, Brick, Enemy, Ninja, Static, Dynamic,Item
+        None, Brick, Enemy, Ninja, Static, Dynamic,Item , Stair
     };
-
+	enum ItemType
+	{
+		Container,BlueMana,RedMana,RedBonus,BlueBonus,RedHP,Fire,ThrowingStar,TimeFreeze,WindmillStar
+	};
+	enum WeaponType
+	{
+		ThrowingStarWeapon,FireWeapon,WindmillStarWeapon
+	};
+	WeaponType TagWeapon;
+	ItemType TagItem;
     EntityTypes Tag; //Tag de nhan vien loai Entity
 
     virtual RECT GetBound();
@@ -70,7 +79,7 @@ public:
 
     virtual void AddVy(float vy);
 
-    virtual D3DXVECTOR3 GetPosition();
+     virtual D3DXVECTOR3 GetPosition();
 
 	virtual void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
     virtual void Update(float dt);
@@ -78,8 +87,11 @@ public:
 	//kiem soat viec va cham
 	//khi xay ra va cham voi 1 thuc the nao do thi ham nay se dc goi de xu ly
 	virtual void OnCollision(Entity *impactor, CollisionReturn data, SideCollisions side);
+	virtual void Hidden();
+	virtual void OnCollision();
+	bool _allowPlayerpick;
+	bool _Active;
 
-	
 	
 protected:
 
@@ -87,7 +99,7 @@ protected:
     virtual void OnSetPosition(D3DXVECTOR3 pos);
 
     //vi tri tam position x va y
-    float posX, posY;
+     float posX, posY;
 
     //phan toc vx, vy
     float vx, vy;

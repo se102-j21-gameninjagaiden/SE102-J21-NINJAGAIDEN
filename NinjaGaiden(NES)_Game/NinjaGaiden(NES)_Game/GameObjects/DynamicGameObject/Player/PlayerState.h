@@ -15,7 +15,9 @@ public:
 		StandingBeat,
 		Sitting,
 		SittingBeat,
-        Die
+        Die,
+		Climbing,
+		UseWeapon
     };
 
     ~PlayerState();

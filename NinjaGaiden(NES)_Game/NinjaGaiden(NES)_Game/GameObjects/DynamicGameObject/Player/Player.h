@@ -11,8 +11,14 @@
 #include "../Player/PlayerStandingBeatState.h"
 #include "../../../GameComponents/Camera.h"
 #include "PlayerFallingState.h"
-
+#include "PlayerClimbingState.h"
 #include "../../ExplosionEffect/ExplosionHit.h"
+#include "PlayerJumpingState.h"
+#include "../../../GameDefine/GameDefine.h"
+#include "PlayerUseWeaponState.h"
+#include "../../Weapon/FireWeapon.h"
+#include "../../Weapon/ThrowingStarWeapon.h"
+#include "../../Weapon/WindmillStarWeapon.h"
 
 class Player : public Entity
 {
@@ -54,19 +60,24 @@ public:
 
     //true thi se lat nguoc anh theo truc y
     void SetReverse(bool flag);
+	bool GetReserse();
 
 
 	bool allowMoveLeft;
 	bool allowMoveRight;
 	bool invincible;
 	bool isJummping;
+	bool isOnStair;
+	bool isUpdate;
 	
 	ExplosionHit *e_Hit;
 
-
+	PlayerData *mPlayerData;
+	Weapon *mWeapon;
+	void setPlayerMana(int mana);
+	int getPlayerMana();
 protected:
 	Camera *mCamera;
-    PlayerData *mPlayerData;
 
 	//EffectHit  *e_Hit;
 
@@ -78,7 +89,9 @@ protected:
 		*mAnimationStandingBeat,
 		*mAnimationSitting,
 		*mAnimationSittingBeat,
-		*mAnimationDying;
+		*mAnimationDying,
+		*mAnimationClimbing,
+		*mAnimationUsingWeapon;
 
     void changeAnimation(PlayerState::StateName state);
 
@@ -89,8 +102,12 @@ protected:
 	//chi cho phep danh khi nhan Z, muon danh lai phai tha phim Z roi nhan lai
 	bool allowHit;
 	// cho phep invincible khi bị quái đánh
+	float timeStopUpdateAni;
+	
 
 	int InvincibleTime;
+
+	int playerMana;
 
 };
 

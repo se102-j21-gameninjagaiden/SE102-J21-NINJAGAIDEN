@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <math.h>
 #include <vector>
@@ -27,13 +27,17 @@ public:
 	int IsKeyDown(int KeyCode);
 
 protected:
-	void checkCollision();
+	D3DXVECTOR2 InitPosPlayer();
+	void checkRuleGame();
+	int CheckPositionPlayer(); // Kiểm tra xem player có rơi ra khỏi map hay không
 	void CheckCameraAndWorldMap();
+	//void CheckRuleGame();
 
 	GameMap *mMap;
 	Camera *mCamera;
 	Player *mPlayer;
 	GameUI *gameUI;
+	int level;
 
     float mTimeCounter;
 	int score;

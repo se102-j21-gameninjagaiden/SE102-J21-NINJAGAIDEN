@@ -4,6 +4,8 @@ Entity::Entity()
 {
     Tag = None;
 //	relive = 0;
+//	Active = true;
+	
 }
 
 D3DXVECTOR3 Entity::GetPosition()
@@ -27,6 +29,16 @@ void Entity::OnCollision(Entity *impactor, CollisionReturn data, Entity::SideCol
 	vx = 0, vy = 0;
 	
 }
+
+void Entity::Hidden()
+{
+}
+
+void Entity::OnCollision()
+{
+}
+
+
 
 
 

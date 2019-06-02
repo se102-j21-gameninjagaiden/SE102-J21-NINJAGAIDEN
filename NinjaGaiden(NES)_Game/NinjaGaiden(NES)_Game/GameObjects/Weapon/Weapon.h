@@ -1,0 +1,36 @@
+#pragma once
+#include "../Entity.h"
+#include "../../GameComponents/Sprite.h"
+#include "../StaticGameObject/GameObject.h"
+#include <vector>
+
+class Weapon : public Entity
+{
+public:
+	Weapon();
+	Weapon(D3DXVECTOR3 position);
+	~Weapon();
+	void Update(float dt);
+	void GetPositionPlayer(D3DXVECTOR3 posPlayer);
+	D3DXVECTOR3 GetPosWeaponAtPlayer();
+	bool getDirection();
+	void SetDirection(bool direction);
+	void setBoundLimit(RECT bound);
+	RECT getBoundLimit();
+	void SetPosLimitAtMap(D3DXVECTOR3 posLimit);
+	D3DXVECTOR3 GetPosLimitAtMap();
+	int getAmount();
+	void setAmount(int amount);
+	void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 163, 177));
+	std::vector<GameObject*> GetWeapon();
+
+protected:
+	std::vector<GameObject*> _Weapon;
+	
+	D3DXVECTOR3 PosWeaponAtPlayer;
+	D3DXVECTOR3 PosLimitAtMap;
+	bool _direction;
+	RECT _boundLimit;
+	int _amount;
+};
+

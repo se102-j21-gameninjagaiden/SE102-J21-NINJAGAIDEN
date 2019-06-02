@@ -7,7 +7,8 @@ PlayerSittingBeatState::PlayerSittingBeatState(PlayerData *playerData)
 	this->mPlayerData = playerData;
 	this->mPlayerData->player->SetVx(0);
 	this->mPlayerData->player->SetVy(0);
-	mTimePerFrame = 0.15;
+	mTimePerFrame = 0.25;
+	//this->mPlayerData->player->isUpdate = true;
 }
 
 
@@ -21,13 +22,21 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 	{
 	case Entity::Left:
 	{
-		if (impactor->Tag == Entity::EntityTypes::Enemy)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active)
 		{
 			//this->mPlayerData->player->Tag = Entity::EntityTypes::None;
+			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
+
+			impactor->OnCollision();
+
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
 
 
-			impactor->OnCollision(this->mPlayerData->player, data, Entity::SideCollisions::Right);
 
+			impactor->OnCollision();
+			//impactor->Hidden();
 		}
 		break;
 	}
@@ -35,18 +44,23 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 	case Entity::Right:
 	{
 
-		if (impactor->Tag == Entity::EntityTypes::Enemy)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active==true)
 		{
 
-			//this->mPlayerData->player->Tag = Entity::EntityTypes::None;
-		//	impactor->Tag = Entity::EntityTypes::None;
-		//	this->mPlayerData->player->e_Hit = new Ef
-		//	this->mPlayerData->player->e_Hit;
+			
 			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
 			//	this->mPlayerData->player->e_Hit->Draw(impactor->GetPosition());
 
-			impactor->OnCollision(this->mPlayerData->player, data, Entity::SideCollisions::Left);
+			impactor->OnCollision();
 
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
+
+
+
+			impactor->OnCollision();
+			//impactor->Hidden();
 		}
 		break;
 	}
@@ -59,6 +73,13 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 		{
 
 		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
+
+
+			impactor->OnCollision();
+			//impactor->Hidden();
+		}
 		break;
 	}
 
@@ -68,6 +89,12 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 		if (impactor->Tag == Entity::EntityTypes::Enemy)
 		{
 
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
+
+			impactor->OnCollision();
+			//impactor->Hidden();
 		}
 		else
 		{

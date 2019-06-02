@@ -15,11 +15,15 @@ void GameUI::_initialize()
 	// init hp sprite
 	//_hpSprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::HP_ID), 1);
 	_hpSprite = new Sprite("Resources/Item_Effect/heal.png");
+	_boxWeapon = new Sprite("Resources/Item_Effect/BoxWeapon.png");
+	_manaSprite = new Sprite("Resources/Item_Effect/mana.png");
+	//_Weapon = new Sprite("Resources/Item_Effect/ThrowingStarWeapon.png");
 	_gameTimer = 0;
 	_gameStage = 1;
 	_liveCount = 2;
 	_playerHP = 16;
 	_enemyHP = 16;
+	_playerMana = 0;
 }
 GameUI::GameUI(LPDIRECT3DDEVICE9 d3ddev_, int size_, int screenWidth_, int screenHeight_)
 {
@@ -30,8 +34,12 @@ GameUI::GameUI(LPDIRECT3DDEVICE9 d3ddev_, int size_, int screenWidth_, int scree
 void GameUI::drawTable()
 {
 	// draw table
-	//_sprite->Draw(260, 40);
-
+	
+	//draw Box Weapon
+	_boxWeapon->Draw(D3DXVECTOR3(95,8,0));
+	//_Weapon->Draw(D3DXVECTOR3(95, 8, 0));
+	// draw Mana
+	_manaSprite->Draw(D3DXVECTOR3(45,50,0));
 	// draw hp
 	// Vẽ hình thứ 2 của HP sprite
 	RECT rect;
@@ -84,11 +92,13 @@ void GameUI::drawScore()
 
 	_arial->render("STAGE: 3 -", 150, 0);
 	_arial->render(_gameStage, 215, 0);
-	_arial->render("PLAYER:", 85, 20);
+	_arial->render("PLAYER:", 85, 23);
 	_arial->render("ENEMY:", 90, 40);
 
 	_arial->render("P:", 5, 40);
 	_arial->render(_liveCount, 20, 40);
+
+	_arial->render(_playerMana, 54, 42);
 	//_arial->render(_weaponCount, 430, 50);
 
 	//_arial->render("collide ID: ", 150, 80);
@@ -129,17 +139,22 @@ void GameUI::SetTimer(int x)
 
 void GameUI::SetplayerScore(int x)
 {
-	_playerScore += x;
+	_playerScore = x;
+}
+
+int GameUI::GetplayerScore()
+{
+	return _playerScore;
 }
 
 void GameUI::SetplayerHP(int x)
 {
-	_playerHP += x;
+	_playerHP = x;
 }
 
 void GameUI::SetenemyHP(int x)
 {
-	_enemyHP += x;
+	_enemyHP = x;
 }
 
 int GameUI::GetplayerHP()
@@ -168,18 +183,47 @@ void GameUI::Update(float dt)
 	{
 		_gameTimer = _gameTimer - dt * 1000;
 	}
-	if (_playerHP == 0)
-	{
-		if (_liveCount > 0)
-		{
-			_liveCount--;
-			_playerHP = MAX_HP;
-		}
-		else
-		{
-			_liveCount = 2;
-		}
-	}
+	//if (_playerHP == 0)
+	//{
+	//	if (_liveCount > 0)
+	//	{
+	//		_liveCount--;
+	//		//_playerHP = MAX_HP;
+	//		SetplayerHP(MAX_HP);
+
+	//		initTimer (150);
+	//	}
+	//	else
+	//	{
+	//		_liveCount = 2;
+	//		SetplayerHP(MAX_HP);
+
+	//		_playerScore = 0;
+	//		initTimer(150);
+	//	}
+
+	//	
+	//}
+}
+
+void GameUI::SetLiveCount(int x)
+{
+	_liveCount = x;
+}
+
+int GameUI::GetLiveCount()
+{
+	return _liveCount;
+}
+
+void GameUI::SetplayerMana(int x)
+{
+	_playerMana = x;
+}
+
+int GameUI::GetplayerMana()
+{
+	return _playerMana;
 }
 
 

@@ -12,7 +12,9 @@ class GameUI
 {
 protected:
 	//GSprite* _sprite;
-	Sprite *sprite;
+	Sprite *_manaSprite;
+
+	//Sprite *_Weapon;
 
 	Font* _arial;
 	int _playerScore;
@@ -21,6 +23,7 @@ protected:
 	//int _weaponCount;
 	int _playerHP;
 	int _enemyHP;
+	int _playerMana;
 	int _liveCount;
 	//int _currentWeapon;
 
@@ -44,13 +47,19 @@ public:
 	//int GetWeaponCount();
 	//void SetWeaponCount(int x);
 	void SetplayerScore(int x);
+	int GetplayerScore();
 	void SetplayerHP(int x);
 	void SetenemyHP(int x);
 	int GetplayerHP();
 	int GetenemyHP();
 	void Update(float dt);
+	void SetLiveCount(int x);
+	int GetLiveCount();
+	void SetplayerMana(int x);
+	int GetplayerMana();
 	// deltaTime_ is in milisecond
 	//void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_ = 20);
+	Sprite * _boxWeapon;
 
 //	void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, int viewPortX, int viewPortY);
 

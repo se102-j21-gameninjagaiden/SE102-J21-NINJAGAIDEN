@@ -18,6 +18,7 @@ PlayerFallingState::PlayerFallingState(PlayerData *playerData)
         allowMoveX = true;
     }
 	this->mPlayerData->player->isJummping = true;
+	//this->mPlayerData->player->isUpdate = true;
 }
 
 
@@ -113,24 +114,35 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 {
 	//lay phia va cham so voi player
 	//GameCollision::SideCollisions side = GameCollision::getSideCollision(this->mPlayerData->player, data);
+	if (impactor->Tag == Entity::EntityTypes::Stair)
+	{
+		this->mPlayerData->player->SetState(new PlayerClimbingState(this->mPlayerData));
+	
+		return;
+	}
 
 	switch (side)
 	{
 	case Entity::Left:
 		//if (mPlayerData->player->getMoveDirection() == Player::MoveToLeft)
 		//{
-		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active==true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition((data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+			return;
 		}
+		
 		else
 		{
-			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left, 0);
-			this->mPlayerData->player->SetVx(0);
+			if (impactor->Tag != Entity::EntityTypes::Enemy)
+			{
+				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left, 0);
+				this->mPlayerData->player->SetVx(0);
+			}
 		}
 		//}
 		break;
@@ -138,30 +150,35 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 	case Entity::Right:
 		//if (mPlayerData->player->getMoveDirection() == Player::MoveToRight)
 		//{
-		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+			return;
 		}
 		else
 		{
-			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left), 0);
-			this->mPlayerData->player->SetVx(0);
+			if (impactor->Tag != Entity::EntityTypes::Enemy)
+			{
+				this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left), 0);
+				this->mPlayerData->player->SetVx(0);
+			}
 		}
 		//}
 		break;
 
 	case Entity::Top:
-		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+			return;
 		}
 		
 		break;
@@ -170,26 +187,32 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		if (data.RegionCollision.right - data.RegionCollision.left >= 8.0f)
 
 		{
-			if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 			{
 				this->mPlayerData->player->invincible = true;
 
 				this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
 				this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+				return;
 			}
 			
 		else {
-			this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
+				if (impactor->Tag != Entity::EntityTypes::Enemy)
+				{
+					this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
 
-			if (isLeftOrRightKeyPressed)
-			{
-				this->mPlayerData->player->SetState(new PlayerRunningState(this->mPlayerData));
-			}
-			else
-			{
-				this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
-			}
+					if (isLeftOrRightKeyPressed)
+					{
+						this->mPlayerData->player->SetState(new PlayerRunningState(this->mPlayerData));
+						return;
+					}
+					else
+					{
+						this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
+						return;
+					}
+				}
 		}
 		}
 		return ;

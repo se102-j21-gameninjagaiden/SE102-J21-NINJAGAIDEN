@@ -7,8 +7,8 @@ PlayerStandingBeatState::PlayerStandingBeatState(PlayerData *playerData)
 	
 	if (this->mPlayerData->player->isJummping)
 	{
-		this->mPlayerData->player->SetVy(Define::PLAYER_MAX_JUMP_VELOCITY/2);
-		this->mPlayerData->player->isJummping = false;
+		this->mPlayerData->player->AddVy(6);
+		//this->mPlayerData->player->isJummping = false;
 
 	}
 	else
@@ -19,7 +19,8 @@ PlayerStandingBeatState::PlayerStandingBeatState(PlayerData *playerData)
 	//this->mPlayerData->player->SetVy(this->mPlayerData->player->GetVy());
 	/*acceleratorY = 10;
 	acceleratorX = 3;*/
-	mTimePerFrame = 0.1;
+	mTimePerFrame = 0.15;
+	//this->mPlayerData->player->isUpdate = true;
 }
 
 
@@ -33,13 +34,21 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 	{
 	case Entity::Left:
 	{
-		if (impactor->Tag == Entity::EntityTypes::Enemy)
+		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active && this->mPlayerData->player->GetReserse())
 		{
 			//this->mPlayerData->player->Tag = Entity::EntityTypes::None;
 		
-
+			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
 			impactor->OnCollision(this->mPlayerData->player, data, Entity::SideCollisions::Right);
 
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
+
+			
+		
+			impactor->OnCollision();
+			//impactor->Hidden();
 		}
 		break;
 	}
@@ -47,29 +56,36 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 	case Entity::Right:
 	{
 	
-		if (impactor->Tag==Entity::EntityTypes::Enemy )
+		if (impactor->Tag==Entity::EntityTypes::Enemy && impactor->_Active == true && ! this->mPlayerData->player->GetReserse())
 		{
-			
-			//this->mPlayerData->player->Tag = Entity::EntityTypes::None;
-		//	impactor->Tag = Entity::EntityTypes::None;
-		//	this->mPlayerData->player->e_Hit = new Ef
-		//	this->mPlayerData->player->e_Hit;
+		
 			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
-		//	this->mPlayerData->player->e_Hit->Draw(impactor->GetPosition());
+		
+			impactor->Hidden();
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
 
-			impactor->OnCollision(this->mPlayerData->player,data,Entity::SideCollisions::Left);
 			
+
+			impactor->OnCollision();
+			//impactor->Hidden();
 		}
 		break;
 	}
 
 	case Entity::TopRight: case Entity::TopLeft: case Entity::Top:
-	{/*
-		this->mPlayerData->player->AddPosition(0, data.RegionCollision.bottom - data.RegionCollision.top);
-		this->mPlayerData->player->SetVy(0);*/
+	{
 		if (impactor->Tag == Entity::EntityTypes::Enemy)
 		{
 
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
+
+
+			impactor->OnCollision();
+			//impactor->Hidden();
 		}
 		break;
 	}
@@ -81,8 +97,15 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 		{
 
 		}
+		if (impactor->Tag == Entity::EntityTypes::Item)
+		{
+
+			impactor->OnCollision();
+			//impactor->Hidden();
+		}
 		else
 		{
+			this->mPlayerData->player->isJummping = false;
 		//	this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
 			this->mPlayerData->player->SetVy(0);
 
@@ -107,7 +130,16 @@ void PlayerStandingBeatState::Update(float dt)
 		return;
 		
 	}*/
+	if (this->mPlayerData->player->isJummping)
+	{
+		this->mPlayerData->player->AddVy(6);
+		if (this->mPlayerData->player->GetVy() >= Define::PLAYER_MAX_JUMP_VELOCITY)
+		{
+			this->mPlayerData->player->SetVy(Define::PLAYER_MAX_JUMP_VELOCITY);
+		}
+		//this->mPlayerData->player->isJummping = false;
 
+	}
 	if (mCurrentTotalTime >= mTimePerFrame * 3)
 	{
 

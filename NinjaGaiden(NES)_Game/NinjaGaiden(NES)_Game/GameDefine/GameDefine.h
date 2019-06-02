@@ -14,3 +14,4 @@ namespace Define
 	const float PLAYER_MAX_RUNNING_SPEED = 80.0f; //toc do chay nhanh nhat cua player
 	const float PLAYER_BOTTOM_RANGE_FALLING = 8.0f; // do dai va cham voi bottom neu nhu va cham bottom nho hon thi player se bi roi xuong
 }
+  //D3DXVECTOR3 positionPlayer;

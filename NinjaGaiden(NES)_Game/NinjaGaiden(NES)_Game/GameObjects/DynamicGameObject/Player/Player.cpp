@@ -2,17 +2,24 @@
 #include "PlayerStandingState.h"
 #include "PlayerJumpingState.h"
 #include "PlayerStandingBeatState.h"
+#include "../../..//GameDefine/GameDefine.h"
+
+
 
 Player::Player()
 {
+
+	
 	//e_Hit = nullptr;
 	mAnimationStanding = new Animation("Resources/Ninja/standing.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationJumping = new Animation("Resources/Ninja/jumping.png", 4, 1, 4, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationRunning = new Animation("Resources/Ninja/running.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationStandingBeat = new Animation("Resources/Ninja/standingbeat.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationSitting= new Animation ("Resources/Ninja/sitting.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
-	mAnimationSittingBeat = new Animation("Resources/Ninja/sittingbeat.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationSittingBeat = new Animation("Resources/Ninja/sittingbeat.png", 3, 1, 3, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationDying = new Animation("Resources/Ninja/dying.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationClimbing = new Animation("Resources/Ninja/Climbing.png", 2, 1, 2, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationUsingWeapon = new Animation("Resources/Ninja/usingweapon.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
 	this->mPlayerData = new PlayerData();
     this->mPlayerData->player = this;
     this->vx = 0;
@@ -24,8 +31,14 @@ Player::Player()
 	isJummping = false;
 	Tag = Ninja;
 	InvincibleTime = 100;
+	
 	e_Hit = new ExplosionHit();
-	e_Hit->Active = false;
+	e_Hit->_Active = false;
+	isOnStair = false;
+	timeStopUpdateAni = 0;
+	isUpdate = true;
+	//mWeapon = nullptr;
+	playerMana = 0;
 	
 }
 
@@ -35,27 +48,61 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	
-	if (e_Hit->Active)
+	// Effect Hit
+	if (e_Hit->_Active)
 	{ 
 		e_Hit->Update(dt);
-		if (e_Hit->timeSpawn >= e_Hit->Column()* e_Hit->SecondPerFrame())
+		if (e_Hit->_timeSpawn >= e_Hit->Column()* e_Hit->SecondPerFrame())
 		{
-			e_Hit->Active = false;
+			e_Hit->_Active = false;
+			e_Hit->_timeSpawn = 0;
 		}
 		else
 		{
-			e_Hit->timeSpawn += dt;
+			e_Hit->_timeSpawn += dt;
 		}
 	}
-    mCurrentAnimation->Update(dt);
-
+	//Weapon
+	if (mWeapon)
+	{
+		 
+			mWeapon->Update(dt);
+			mWeapon->GetPositionPlayer(mPlayerData->player->GetPosition());
+			//mWeapon->SetPosLimitAtMap(mCamera->GetPosition() + D3DXVECTOR3(mCamera->GetWidth() / 2, 0, 0));
+			mWeapon->setBoundLimit(mCamera->GetBound());
+			mWeapon->SetDirection(mCurrentReverse);
+		
+	}
+	/*if (mWeapon.size()>0 && mWeapon.at(0)->_Active)
+	{
+		for (int i = 0; i < mWeapon.size(); i++)
+		{
+			mWeapon[i]->Update(dt*(i+1)*5);
+			mWeapon[i]->GetPositionPlayer(mPlayerData->player->GetPosition()+ D3DXVECTOR3(2*i,i*2,0));
+			mWeapon[i]->SetPosLimitAtMap(mCamera->GetPosition() + D3DXVECTOR3(mCamera->GetWidth() / 2, 0, 0));
+			mWeapon[i]->setBoundLimit(mCamera->GetBound());
+			mWeapon[i]->SetDirection(mCurrentReverse);
+		}
+	}*/
+	if (timeStopUpdateAni < (mCurrentAnimation->getColums())*0.25 && this->isUpdate==true||this->mCurrentState!=PlayerState::Climbing)
+	{
+		mCurrentAnimation->Update(dt);
+		timeStopUpdateAni += dt;
+	}
+	else
+	{
+		mCurrentAnimation->ResetAnimation();
+		timeStopUpdateAni = 0;
+		isUpdate = false;
+	}
     if (this->mPlayerData->state)
     {
         this->mPlayerData->state->Update(dt);
     }
 
     Entity::Update(dt);
+	//Define::positionPlayer = this->GetPosition();
+	
 }
 
 void Player::HandleKeyboard()
@@ -94,6 +141,11 @@ void Player::OnKeyPressed(int key)
 		}
 		allowHit = false;
 	}
+	if (key == DIK_C)
+	{
+		this->SetState(new PlayerUseWeaponState(this->mPlayerData));
+	}
+	
 }
 
 void Player::OnKeyUp(int key)
@@ -102,12 +154,71 @@ void Player::OnKeyUp(int key)
         allowJump = true;
 	if (key == DIK_Z)
 		allowHit = true;
+	if (key == DIK_C)
+	{
+		/*for (int i = 0; i < mWeapon.size(); i++)
+		{
+			if (mWeapon[i])
+			{
+				mWeapon[i]->_Active = true;
+			}
+		}*/
+		if (mWeapon && mWeapon->_Active==false)
+		{
+			if (mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon && playerMana >= 3||
+				mWeapon->TagWeapon == Entity::WeaponType::WindmillStarWeapon && playerMana >=5 ||
+				mWeapon->TagWeapon == Entity::WeaponType::FireWeapon && playerMana >=5 )
+			{
+				mWeapon->_Active = true;
+				for (int i = 0; i < mWeapon->GetWeapon().size(); i++)
+				{
+					mWeapon->GetWeapon()[i]->_Active = true;
+				}
+				if (mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon)
+				{
+					playerMana -= 3;
+				}
+				else
+				{
+					playerMana -= 5;
+				}
+			}
+
+		}
+		else
+		{
+			if (mWeapon)
+			{
+				mWeapon->_Active = true;
+				for (int i = 0; i < mWeapon->GetWeapon().size(); i++)
+				{
+					mWeapon->GetWeapon()[i]->_Active = true;
+				}
+			}
+		}
+		
+	}
 
 }
 
 void Player::SetReverse(bool flag)
 {
     mCurrentReverse = flag;
+}
+
+bool Player::GetReserse()
+{
+	return mCurrentReverse;
+}
+
+void Player::setPlayerMana(int mana)
+{
+	playerMana = mana;
+}
+
+int Player::getPlayerMana()
+{
+	return playerMana;
 }
 
 void Player::SetCamera(Camera *camera)
@@ -126,10 +237,25 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 		
 		D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 			GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
-		if (e_Hit->Active)
+		if (e_Hit->_Active)
 		{
 			e_Hit->Draw(e_Hit->GetPosition(),RECT(),D3DXVECTOR2(),trans);
 		}
+
+	/*	for (int i = 0; i < mWeapon.size(); i++)
+		{
+			if (mWeapon[i])
+		{
+			mWeapon[i]->Draw(mWeapon[i]->GetPosition(), RECT(), D3DXVECTOR2(),trans);
+		}
+		}*/
+		 
+		// WEAPON
+		if (mWeapon && mWeapon->_Active)
+		{
+			mWeapon->Draw(mWeapon->GetPosition(), RECT(), D3DXVECTOR2(), trans);
+		}
+
 		if (invincible)
 		{
 			InvincibleTime--;
@@ -140,18 +266,22 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 			if (InvincibleTime <= 0)
 			{
 				invincible=false;
-				InvincibleTime = 40;
+				InvincibleTime = 100;
 			}
 		}
 		else mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
 	}
 	else
 	{
-		if (e_Hit->Active)
+		if (e_Hit->_Active)
 		{
 			e_Hit->Draw(e_Hit->GetPosition());
 		}
 		 mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0));
+		 if (mWeapon)
+		 {
+			 mWeapon->Draw(mWeapon->GetPosition());
+		 }
 	}
 }
 
@@ -210,6 +340,11 @@ void Player::changeAnimation(PlayerState::StateName state)
 		case PlayerState::Die:
 			mCurrentAnimation = mAnimationDying;
 			break;
+		case PlayerState::Climbing:
+			mCurrentAnimation = mAnimationClimbing;
+			break;
+		case PlayerState::UseWeapon:
+			mCurrentAnimation = mAnimationUsingWeapon;
     }
 
     this->width = mCurrentAnimation->GetWidth();
@@ -235,7 +370,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 }
 void Player::OnNoCollisionWithBottom()
 {
-	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling && mCurrentState != PlayerState::StandingBeat)
+	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling && mCurrentState != PlayerState::StandingBeat && mCurrentState!=PlayerState::Climbing && mCurrentState!=PlayerState::UseWeapon)
 	{
 		this->SetState(new PlayerFallingState(this->mPlayerData));
 	}

@@ -14,6 +14,7 @@ PlayerSittingState::PlayerSittingState(PlayerData *playerData)
 
 	this->mPlayerData->player->SetVx(0);
 	this->mPlayerData->player->SetVy(0);
+	//this->mPlayerData->player->isUpdate = true;
 }
 
 
@@ -31,7 +32,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 
 
 		//day Player ra phia ben phai de cho player khong bi xuyen qua object
-		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
 		{
 			this->mPlayerData->player->invincible = true;
@@ -51,7 +52,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 
 		this->mPlayerData->player->allowMoveRight = false;
 
-		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
@@ -65,7 +66,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 	}
 
 	case Entity::Top: case Entity::TopLeft: case Entity::TopRight:
-		if (impactor->Tag == Entity::EntityTypes::Enemy && this->mPlayerData->player->invincible == false)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-FrameWidth, data.RegionCollision.bottom - data.RegionCollision.top);
@@ -84,7 +85,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 		//	this->mPlayerData->player->AddPosition(0, data.RegionCollision.bottom - data.RegionCollision.top);
 		//	this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		//}
-		if (impactor->Tag == Entity::EntityTypes::Enemy)
+		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible==false)
 		{
 			//this->mPlayerData->player->OnNoCollisionWithBottom();
 			this->mPlayerData->player->invincible = true;

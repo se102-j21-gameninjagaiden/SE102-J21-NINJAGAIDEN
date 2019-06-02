@@ -86,3 +86,24 @@ void Animation::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale,
 
     Sprite::Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
+
+void Animation::ResetAnimation()
+{
+	RECT sourceRect;
+
+	sourceRect.left = 0;
+	sourceRect.right = mFrameWidth;
+	sourceRect.top = 0;
+	sourceRect.bottom = mFrameHeight;
+	SetSourceRect(sourceRect);
+}
+
+int Animation::getColums()
+{
+	return mColumns;
+}
+
+int Animation::getRows()
+{
+	return mRows;
+}

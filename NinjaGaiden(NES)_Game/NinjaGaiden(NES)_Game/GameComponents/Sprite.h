@@ -8,7 +8,7 @@
 class Sprite
 {
 public:
-    Sprite(const char* filePath, RECT sourceRect = RECT(), int width = NULL, int height = NULL, D3DCOLOR colorKey = NULL);
+    Sprite(const char* filePath, RECT sourceRect = RECT(), int width = NULL, int height = NULL, D3DCOLOR colorKey=  D3DCOLOR_XRGB(255, 163, 177));
 
     Sprite();
 
@@ -17,8 +17,8 @@ public:
     LPDIRECT3DTEXTURE9 GetTexture();
 
     //void Draw();
-    void Draw(D3DXVECTOR3 position = D3DXVECTOR3(),RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255,255, 255, 255));
-
+    void Draw(D3DXVECTOR3 position = D3DXVECTOR3(),RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
+	//void ReSet();
     void SetWidth(int width);
     int GetWidth();
 
@@ -51,7 +51,7 @@ public:
 
     void FlipVertical(bool flag); // true: lat hinh theo chieu ngang, false: binh thuong
     bool IsFlipVertical();
-
+	RECT GetBound();
 protected:
     //su dung cho ke thua
     void InitWithSprite(const char* filePath, RECT sourceRect = RECT(), int width = NULL, int height = NULL, D3DCOLOR colorKey = NULL);

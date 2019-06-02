@@ -37,23 +37,26 @@
     <Filter Include="FrameWork\GameObjects\StaticGameObject">
       <UniqueIdentifier>{8ea1568b-b091-43b9-8c22-d0e07e56b7b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Player">
-      <UniqueIdentifier>{7172375a-0c65-497e-a806-6f2626c11b53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\GameObjects\DynamicGameObject\Boss">
       <UniqueIdentifier>{c6c9adfd-563f-4fc8-a480-05cde58c081d}</UniqueIdentifier>
     </Filter>
     <Filter Include="FrameWork\GameObjects\DynamicGameObject\Enemy">
       <UniqueIdentifier>{9d533f80-eb59-41c7-be67-ce15b0b25198}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Weapon">
-      <UniqueIdentifier>{01579b89-0e8e-4496-9099-713b8186cdd4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\GameObjects\ExplosionEffect">
       <UniqueIdentifier>{f93bd645-bf28-4a2f-8783-aa3cb05c9a9d}</UniqueIdentifier>
     </Filter>
     <Filter Include="FrameWork\GameUI">
       <UniqueIdentifier>{079083cf-7b7a-4015-8fa8-8a43f734af68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\Item">
+      <UniqueIdentifier>{bb08f4c7-92a0-4ed6-bb27-52e7f50c727b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\Weapon">
+      <UniqueIdentifier>{c9a0b742-62a1-4377-a947-10ab02b33dd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\GameObjects\DynamicGameObject\Player">
+      <UniqueIdentifier>{ba950d6e-f055-4201-9f94-c89f7b205ba6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,10 +123,70 @@
     <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Swordman.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\ExplosionEffect\ExplosionHit.cpp">
+      <Filter>FrameWork\GameObjects\ExplosionEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\GameUI.cpp">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI\Font.cpp">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\StaticGameObject\Stair.cpp">
+      <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\BlueMana.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\Item.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\BlueBonus.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\Fire.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\RedBonus.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\RedHP.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\RedMana.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\ThrowingStar.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\TimeFreeze.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Item\WindmillStar.cpp">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Weapon\FireWeapon.cpp">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Weapon\ThrowingStarWeapon.cpp">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Weapon\Weapon.cpp">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Weapon\WindmillStarWeapon.cpp">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClCompile>
     <ClCompile Include="GameObjects\DynamicGameObject\Player\Player.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerClimbingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerData.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerFallingState.cpp">
@@ -150,17 +213,8 @@
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerState.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.cpp">
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerUseWeaponState.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjects\ExplosionEffect\ExplosionHit.cpp">
-      <Filter>FrameWork\GameObjects\ExplosionEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="GameUI\GameUI.cpp">
-      <Filter>FrameWork\GameUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GameUI\Font.cpp">
-      <Filter>FrameWork\GameUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,10 +281,70 @@
     <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Swordman.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjects\ExplosionEffect\ExplosionHit.h">
+      <Filter>FrameWork\GameObjects\ExplosionEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\GameUI.h">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI\Font.h">
+      <Filter>FrameWork\GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\StaticGameObject\Stair.h">
+      <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\BlueMana.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\Item.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\BlueBonus.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\Fire.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\RedBonus.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\RedHP.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\RedMana.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\ThrowingStar.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\TimeFreeze.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Item\WindmillStar.h">
+      <Filter>FrameWork\GameObjects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Weapon\FireWeapon.h">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Weapon\ThrowingStarWeapon.h">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Weapon\Weapon.h">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Weapon\WindmillStarWeapon.h">
+      <Filter>FrameWork\GameObjects\Weapon</Filter>
+    </ClInclude>
     <ClInclude Include="GameObjects\DynamicGameObject\Player\Player.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerClimbingState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerData.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerFallingState.h">
@@ -257,17 +371,8 @@
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerState.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.h">
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerUseWeaponState.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjects\ExplosionEffect\ExplosionHit.h">
-      <Filter>FrameWork\GameObjects\ExplosionEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="GameUI\GameUI.h">
-      <Filter>FrameWork\GameUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GameUI\Font.h">
-      <Filter>FrameWork\GameUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

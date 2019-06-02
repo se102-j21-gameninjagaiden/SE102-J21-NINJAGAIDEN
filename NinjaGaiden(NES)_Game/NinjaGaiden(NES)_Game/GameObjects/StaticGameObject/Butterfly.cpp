@@ -3,24 +3,13 @@
 Butterfly::Butterfly(D3DXVECTOR3 position)
 {
 	init(position);
+	this->TagItem = Entity::ItemType::Container;
 	
 }
 
 void Butterfly::OnCollision(Entity * impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
-	if (impactor->Tag == Entity::EntityTypes::None)
-	{
-
-
-		mAnimation = new Animation("Resources/normalbrick.png", 1, 1, 1, 1);
-		
-
-		Entity::SetWidth(mAnimation->GetWidth());
-		Entity::SetHeight(mAnimation->GetHeight());
-
-	
-
-	}
+	SetPosition(-100, 0);
 
 }
 

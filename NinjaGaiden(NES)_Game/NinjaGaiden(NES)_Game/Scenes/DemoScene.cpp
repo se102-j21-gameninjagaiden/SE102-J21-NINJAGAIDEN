@@ -2,24 +2,25 @@
 
 DemoScene::DemoScene()
 {
-    LoadContent();
+	LoadContent();
 }
 
 void DemoScene::LoadContent()
 {
-    //set mau backcolor cho scene o day la mau xanh
-	mMap = new GameMap("Resources/MaxtrixMap.txt");
-	
+	level = 1;
+	//set mau backcolor cho scene o day la mau xanh
+	mMap = new GameMap(level);
+	//	mMap = new GameMap("Resources/Map/Map1/MatrixMapLv1.txt");
 	mCamera = new Camera(GameGlobal::GetWidth(), GameGlobal::GetHeight());
 	mCamera->SetPosition(GameGlobal::GetWidth() / 2,
-		 GameGlobal::GetHeight() / 2);
-	
-		
+		GameGlobal::GetHeight() / 2);
+
+
 	mMap->SetCamera(mCamera);
 	mPlayer = new Player();
-	
-	mPlayer->SetPosition(FrameWidth*2,
-		mMap->GetHeight() -FrameHeight*1.5);
+
+	mPlayer->SetPosition(60,
+		30);
 	mPlayer->SetCamera(mCamera);
 	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
 	gameUI->initTimer(150);
@@ -27,55 +28,41 @@ void DemoScene::LoadContent()
 
 void DemoScene::Update(float dt)
 {
-	if (IsKeyDown(DIK_LEFTARROW))
-	{
-		mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(-CAMERA_SPEED, 0, 0));
-			if (mCamera->GetPosition().x <= mCamera->GetWidth() / 2)
-			{
-				mCamera->SetPosition(mCamera->GetWidth() / 2, mCamera->GetPosition().y);
 
-			}
-	}
-	if (IsKeyDown(DIK_RIGHTARROW))
-	{
-		mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(CAMERA_SPEED, 0, 0));
-		if (mCamera->GetPosition().x >= mMap->GetWidth() - GameGlobal::GetWidth() / 2)
-		{
-			mCamera->SetPosition(mMap->GetWidth() - GameGlobal::GetHeight() / 2, mCamera->GetPosition().y);
-
-		}
-	}
-	/*if (IsKeyDown(DIK_UPARROW))
-	{
-		mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(0, -CAMERA_SPEED, 0));
-	}
-	if (IsKeyDown(DIK_DOWNARROW))
-	{
-		mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(0, CAMERA_SPEED, 0));
-	}*/
-	//
 	if (IsKeyDown(DIK_Z))
 	{
 		mPlayer->OnKeyUp(DIK_Z);
 
 		mPlayer->OnKeyPressed(DIK_Z);
 	}
+	if (IsKeyDown(DIK_C))
+	{
+
+		mPlayer->OnKeyUp(DIK_C);
+
+		mPlayer->OnKeyPressed(DIK_C);
+		
+	
+	}
 	if (IsKeyDown(DIK_SPACE))
 	{
 		mPlayer->OnKeyUp(DIK_SPACE);
 		mPlayer->OnKeyPressed(DIK_SPACE);
 	}
+#pragma region - UI update-
+	gameUI->SetplayerMana(mPlayer->getPlayerMana());
+	gameUI->Update(dt);
+#pragma endregion
+	checkRuleGame();
 
-	checkCollision();
 
 
 
-	
-	
+
 	mMap->Update(dt);
+
 	mPlayer->HandleKeyboard();
 	mPlayer->Update(dt);
-	gameUI->Update(dt);
 
 	CheckCameraAndWorldMap();
 }
@@ -90,42 +77,7 @@ void DemoScene::Draw()
 
 void DemoScene::OnKeyDown(int keyCode)
 {
-	/*if (keyCode == VK_LEFT)
-	{
-		mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(-10, 0, 0));
-		if (mCamera->GetPosition().x <=mCamera->GetWidth()/2)
-		{
-			mCamera->SetPosition(mCamera->GetWidth()/2, mCamera->GetPosition().y);
 
-		}
-	}*/
-
-	//if (keyCode == VK_RIGHT)
-	//{
-	//	mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(10, 0, 0));
-	//	if (mCamera->GetPosition().x >= mMap->GetWidth()- GameGlobal::GetWidth()/2)
-	//	{
-	//		mCamera->SetPosition(mMap->GetWidth()-GameGlobal::GetHeight()/2, mCamera->GetPosition().y);
-	//			
-	//	}
-	//
-	//}
-
-	//if (keyCode == VK_UP)
-	//{
-	//	mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(0, -10, 0));
-	///*	if (mCamera->GetPosition().y >= mMap->GetHeight())
-	//	{
-	//		mCamera->SetPosition(mCamera->GetPosition().x,mCamera->GetHeight()/2);
-
-	//	}*/
-	//}
-
-	//if (keyCode == VK_DOWN)
-	//{
-	//	mCamera->SetPosition(mCamera->GetPosition() + D3DXVECTOR3(0, 10, 0));
-	//}
-	
 }
 
 void DemoScene::OnKeyUp(int keyCode)
@@ -171,51 +123,216 @@ void DemoScene::CheckCameraAndWorldMap()
 	}
 }
 
-void DemoScene::checkCollision()
+D3DXVECTOR2 DemoScene::InitPosPlayer()
 {
+	return D3DXVECTOR2(FrameWidth * 4,
+		mMap->GetHeight() - FrameHeight * 3);
+}
+
+
+
+void DemoScene::checkRuleGame()
+{
+
+
 	/*su dung de kiem tra xem khi nao ninja khong dung tren 1 object hoac
 	dung qua sat mep trai hoac phai cua object do thi se chuyen state la falling*/
 	int widthBottom = 0;
+	//mMap->GetListObject().at(3)->AddPosition(mPlayer->Ge)
+	vector<Entity*> listCollisionWithPlayer, listCollisionWithWeaponPlayer;
 
-	vector<Entity*> listCollision;
+	// Lấy danh sách có khả năng va chạm với Player
+	mMap->GetQuadTree()->getEntitiesCollideAble(listCollisionWithPlayer, mPlayer);
+	// Lấy danh sách có khả năng va chạm với Weapon of Player
+	//mMap->GetQuadTree()
 
-	mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, mPlayer);
-	
-	for (size_t i = 0; i < listCollision.size(); i++)
+	for (size_t i = 0; i < listCollisionWithPlayer.size(); i++)
 	{
-		Entity::CollisionReturn r = GameCollision::RecteAndRect(mPlayer->GetBound(),
-			listCollision.at(i)->GetBound());
+		
 
+
+
+#pragma region - Collision with Wepaon
+		if (mPlayer->mWeapon &&mPlayer->mWeapon->_Active)
+		{
+			for (int j = 0; j < mPlayer->mWeapon->GetWeapon().size(); j++)
+			{
+				if (mPlayer->mWeapon->GetWeapon()[j]->_Active)
+				{
+					Entity::CollisionReturn r2 = GameCollision::RecteAndRect(mPlayer->mWeapon->GetWeapon()[j]->GetBound(), listCollisionWithPlayer.at(i)->GetBound());
+					if (r2.IsCollided)
+					{
+						if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy && listCollisionWithPlayer.at(i)->_Active == true)
+						{
+							listCollisionWithPlayer.at(i)->_Active == false;
+							gameUI->SetplayerScore(gameUI->GetplayerScore() + 100); // Xét điểm tạm
+
+							mPlayer->e_Hit->_Active = true;
+							mPlayer->e_Hit->SetPosition(listCollisionWithPlayer.at(i)->GetPosition());
+							//listCollisionWithPlayer.at(i)->OnCollision()
+							mPlayer->mWeapon->GetWeapon()[j]->_Active = false;
+							mPlayer->mWeapon->GetWeapon()[j]->SetVx(0);
+							mPlayer->mWeapon->GetWeapon()[j]->SetVy(0);
+							mPlayer->mWeapon->SetVx(0);
+							mPlayer->mWeapon->SetVy(0);
+							mPlayer->mWeapon->_Active = false;
+
+							listCollisionWithPlayer.at(i)->Hidden();
+						}
+						if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Item)
+						{
+							if (listCollisionWithPlayer.at(i)->TagItem != Entity::ItemType::Container && listCollisionWithPlayer.at(i)->_Active == false)
+							{
+
+								mPlayer->mWeapon->GetWeapon()[j]->_Active = false;
+								//mPlayer->mWeapon->GetWeapon()[j]->SetVx(0);
+								//mPlayer->mWeapon->GetWeapon()[j]->SetVy(0);
+								mPlayer->mWeapon->SetVx(0);
+								mPlayer->mWeapon->SetVy(0);
+							}
+
+						}
+						else
+						{
+
+						}
+							listCollisionWithPlayer.at(i)->OnCollision();
+
+
+
+					}
+				}
+
+			}
+		    //	mPlayer->mWeapon->_Active = false;
+			////Trừ mana khi sử dụng weapon
+			//if (mPlayer->mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon)
+			//{
+			//	gameUI->SetplayerMana(gameUI->GetplayerMana() - 3);
+			//}
+			//else
+			//{
+			//	gameUI->SetplayerMana(gameUI->GetplayerMana() - 5);
+			//}
+			//mPlayer->setPlayerMana(gameUI->GetplayerMana());
+		}
+#pragma endregion
+
+		Entity::CollisionReturn r = GameCollision::RecteAndRect(mPlayer->GetBound(),
+			listCollisionWithPlayer.at(i)->GetBound());
 		if (r.IsCollided)
 		{
 			//lay phia va cham cua Entity so voi Player
 			Entity::SideCollisions sidePlayer = GameCollision::getSideCollision(mPlayer, r);
 
 			//lay phia va cham cua Player so voi Entity
-			Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollision.at(i), r);
+			Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollisionWithPlayer.at(i), r);
 
-			//goi den ham xu ly collision cua Player va Entity		
-			if (listCollision.at(i)->Tag == Entity::EntityTypes::Enemy && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat)
+#pragma region	-Update GUI theo luật game -
+			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat)
 			{
-				gameUI->SetplayerHP(-1);
+				gameUI->SetplayerHP(gameUI->GetplayerHP() - 1);
 			}
-			mPlayer->OnCollision(listCollision.at(i), r, sidePlayer);
-			if (mPlayer->getState() == PlayerState::StandingBeat && listCollision.at(i)->Tag == Entity::EntityTypes::Enemy || mPlayer->getState() == PlayerState::SittingBeat && listCollision.at(i)->Tag == Entity::EntityTypes::Enemy)
+			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Item && listCollisionWithPlayer.at(i)->_allowPlayerpick == true  )//&& mPlayer->getState()!=PlayerState::StandingBeat)
 			{
-				gameUI->SetplayerScore(100); // Sau nay xét Enemy Type để tính điểm
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::BlueMana)
+				{
+					//gameUI->SetplayerScore(gameUI->Ge)
+					gameUI->SetplayerMana(gameUI->GetplayerMana() + 5);
+					mPlayer->setPlayerMana(gameUI->GetplayerMana());
+					listCollisionWithPlayer.at(i)->Hidden();
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::RedMana)
+				{
+					//gameUI->SetplayerScore(gameUI->Ge)
+					gameUI->SetplayerMana(gameUI->GetplayerMana() + 10);
+					mPlayer->setPlayerMana(gameUI->GetplayerMana());
+					listCollisionWithPlayer.at(i)->Hidden();
+				}
+
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::BlueBonus)
+				{
+					//gameUI->SetplayerScore(gameUI->Ge)
+					gameUI->SetplayerScore(gameUI->GetplayerScore() + 500);
+					listCollisionWithPlayer.at(i)->Hidden();
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::RedBonus)
+				{
+					//gameUI->SetplayerScore(gameUI->Ge)
+					gameUI->SetplayerScore(gameUI->GetplayerScore() + 1000);
+					listCollisionWithPlayer.at(i)->Hidden();
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::RedHP)
+				{
+					//gameUI->SetplayerScore(gameUI->Ge)
+					gameUI->SetplayerHP(gameUI->GetplayerHP() + 6);
+					listCollisionWithPlayer.at(i)->Hidden();
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::ThrowingStar)
+				{
+
+					listCollisionWithPlayer.at(i)->SetPosition(-100, 14);
+					/*Weapon *wp = new ThrowingStarWeapon(mPlayer->GetPosition());
+					Weapon *w = new ThrowingStarWeapon(mPlayer->GetPosition());*/
+					//mPlayer->mWeapon = new ThrowingStarWeapon(mPlayer->GetPosition());
+					/*if (mPlayer->mWeapon.size() > 0)
+					{
+						mPlayer->mWeapon.clear();
+
+					}
+					mPlayer->mWeapon.push_back(wp);*/
+					mPlayer->mWeapon = new ThrowingStarWeapon(mPlayer->GetPosition());
+					gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/ThrowingStarBox.png");
+
+
+
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::WindmillStar)
+				{
+					listCollisionWithPlayer.at(i)->Hidden();
+
+					mPlayer->mWeapon = new WindmillStarWeapon(mPlayer->GetPosition());
+					gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/WindmillStarBox.png");
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::Fire)
+				{
+					listCollisionWithPlayer.at(i)->Hidden();
+
+					mPlayer->mWeapon = new FireWeapon(mPlayer->GetPosition());
+					gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/FireBox.png");
+				}
+				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::TimeFreeze)
+				{
+
+				}
+			}
+			if (mPlayer->getState() != PlayerState::StandingBeat && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Item)
+			{
+				goto ExitPlayerOnCollision;
+
+			}
+			if (mPlayer->getState() == PlayerState::StandingBeat && listCollisionWithPlayer.at(i)->_Active == true && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy || mPlayer->getState() == PlayerState::SittingBeat && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy)
+			{
+				gameUI->SetplayerScore(gameUI->GetplayerScore() + 100); // Sau nay xét Enemy Type để tính điểm
 
 			}
 			else
 			{
-				
-			}
-			
-				
-			
-			
-		//	listCollision.at(i)->OnCollision(mPlayer, r, sideImpactor);
 
-			//kiem tra neu va cham voi phia duoi cua Player 
+			}
+		
+#pragma endregion
+			mPlayer->OnCollision(listCollisionWithPlayer.at(i), r, sidePlayer);
+		ExitPlayerOnCollision:
+
+
+
+
+
+
+			//	listCollision.at(i)->OnCollision(mPlayer, r, sideImpactor);
+
+				//kiem tra neu va cham voi phia duoi cua Player 
 			if (sidePlayer == Entity::Bottom || sidePlayer == Entity::BottomLeft
 				|| sidePlayer == Entity::BottomRight)
 			{
@@ -225,14 +342,77 @@ void DemoScene::checkCollision()
 				if (bot > widthBottom)
 					widthBottom = bot;
 			}
+			/*if (sidePlayer == Entity::Top || sidePlayer == Entity::TopLeft
+				|| sidePlayer == Entity::TopRight)
+			{
+				widthBottom = 8;
+			}*/
 			//if (listCollision.at(i)->Tag == Entity::EntityTypes::Enemy)
 			//	break;
 		}
 	}
 
+	// Chỉnh sửa các thông số theo luật game 
+	if (gameUI->GetplayerHP() == 0 || CheckPositionPlayer())
+	{
+		Sleep(1000);
+
+		mPlayer->SetPosition(InitPosPlayer());
+		mPlayer->SetState(new PlayerStandingState(mPlayer->mPlayerData));
+		mMap->GetQuadTree()->Clear();
+		mMap = new GameMap(level);
+		//mMap = new GameMap("Resources/Map/Map1/TestMap.txt");
+
+		mMap->SetCamera(mCamera);
+
+		//gameUI->SetTimer(150);
+
+
+		if (gameUI->GetLiveCount() > 0)
+		{
+			gameUI->SetLiveCount(gameUI->GetLiveCount() - 1);
+
+			//_playerHP = MAX_HP;
+			gameUI->SetplayerHP(MAX_HP);
+
+			gameUI->initTimer(150);
+		}
+		else
+		{
+			//mMap->drawEffect = true;
+			gameUI->SetLiveCount(2);
+			gameUI->SetplayerHP(MAX_HP);
+			gameUI->SetplayerMana(0);
+
+			gameUI->SetplayerScore(0);
+			gameUI->initTimer(150);
+			gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/BoxWeapon.png");
+		}
+	}
+	if (mPlayer->GetPosition().x >= mMap->GetWidth())
+	{
+		level++;
+		mMap = new GameMap(level);
+		gameUI->SetplayerHP(MAX_HP);
+
+		gameUI->initTimer(150);
+		mPlayer->SetPosition(InitPosPlayer());
+		mMap->SetCamera(mCamera);
+	}
+	
 	//Neu ninja dung ngoai mep thi luc nay cho ninja rot xuong duoi dat    
 	if (widthBottom < Define::PLAYER_BOTTOM_RANGE_FALLING)
 	{
 		mPlayer->OnNoCollisionWithBottom();
 	}
+}
+
+int DemoScene::CheckPositionPlayer()
+{
+	if (mPlayer->GetPosition().y > mMap->GetHeight())
+	{
+		return 1;
+	}
+
+	return 0;
 }
