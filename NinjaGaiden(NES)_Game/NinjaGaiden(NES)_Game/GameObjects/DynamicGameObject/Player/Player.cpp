@@ -38,7 +38,7 @@ Player::Player()
 	timeStopUpdateAni = 0;
 	isUpdate = true;
 	//mWeapon = nullptr;
-	playerMana = 0;
+	playerMana = 1000;
 	
 }
 
@@ -71,19 +71,10 @@ void Player::Update(float dt)
 			//mWeapon->SetPosLimitAtMap(mCamera->GetPosition() + D3DXVECTOR3(mCamera->GetWidth() / 2, 0, 0));
 			mWeapon->setBoundLimit(mCamera->GetBound());
 			mWeapon->SetDirection(mCurrentReverse);
+			mWeapon->setBoundplayer(this->mPlayerData->player->GetBound());
 		
 	}
-	/*if (mWeapon.size()>0 && mWeapon.at(0)->_Active)
-	{
-		for (int i = 0; i < mWeapon.size(); i++)
-		{
-			mWeapon[i]->Update(dt*(i+1)*5);
-			mWeapon[i]->GetPositionPlayer(mPlayerData->player->GetPosition()+ D3DXVECTOR3(2*i,i*2,0));
-			mWeapon[i]->SetPosLimitAtMap(mCamera->GetPosition() + D3DXVECTOR3(mCamera->GetWidth() / 2, 0, 0));
-			mWeapon[i]->setBoundLimit(mCamera->GetBound());
-			mWeapon[i]->SetDirection(mCurrentReverse);
-		}
-	}*/
+	
 	if (timeStopUpdateAni < (mCurrentAnimation->getColums())*0.25 && this->isUpdate==true||this->mCurrentState!=PlayerState::Climbing)
 	{
 		mCurrentAnimation->Update(dt);
@@ -101,7 +92,7 @@ void Player::Update(float dt)
     }
 
     Entity::Update(dt);
-	//Define::positionPlayer = this->GetPosition();
+	
 	
 }
 
@@ -163,7 +154,7 @@ void Player::OnKeyUp(int key)
 				mWeapon[i]->_Active = true;
 			}
 		}*/
-		if (mWeapon && mWeapon->_Active==false)
+		if (mWeapon && mWeapon->GetWeapon()[0]->_Active==false)
 		{
 			if (mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon && playerMana >= 3||
 				mWeapon->TagWeapon == Entity::WeaponType::WindmillStarWeapon && playerMana >=5 ||
@@ -183,6 +174,7 @@ void Player::OnKeyUp(int key)
 					playerMana -= 5;
 				}
 			}
+			mWeapon->SetDirection2(mCurrentReverse);
 
 		}
 		else

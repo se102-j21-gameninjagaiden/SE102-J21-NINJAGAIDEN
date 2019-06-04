@@ -12,6 +12,7 @@ WindmillStarWeapon::WindmillStarWeapon(D3DXVECTOR3 position)
 	this->SetWidth(_Weapon[0]->GetWidth());
 	this->SetHeight(_Weapon[0]->GetHeight());
 	this->TagWeapon = Entity::WeaponType::WindmillStarWeapon;
+	oT = 65840;
 }
 
 WindmillStarWeapon::~WindmillStarWeapon()
@@ -20,56 +21,88 @@ WindmillStarWeapon::~WindmillStarWeapon()
 
 void WindmillStarWeapon::Update(float dt)
 {
-	if (posX >= _boundLimit.right || posX <= _boundLimit.left  || posY <= _boundLimit.top)
-	{
-		this->SetPosition(GetPosWeaponAtPlayer());
-		vx = 0;
-		vy = 0;
-		_Active = false;
-	}
-	if (_Active)
-	{
-		if (this->vx >= 40)
-		{
-			int a = (GetPosWeaponAtPlayer().y - posY) / (GetPosWeaponAtPlayer().x - posX);
-			int b = posY - posX * a;
-			if (!_direction)
-			{
-				this->vx += 5;
-				this->vy = - (a * vx + b);
-			}
-			else
-			{
+	//Entity::CollisionReturn r = GameCollision::RecteAndRect(_Weapon[0]->GetBound(), _boundPlayer);
 
-				this->vx -= 5;
-				this->vy = a * vx + b;
-			}
-		}
-		else
-		{
-			if (!_direction)
-			{
-				this->vx += 5;
-				
-			}
-			else
-			{
-				this->vx -= 5;
-				
+	//
+	//if (r.IsCollided)
+	//{
+	//	//_Active = false;
 
-			}
+	//	vx += 5;
+
+	//	Entity::Update(dt);
+
+	//}
+	//else
+	{
+		if (posX >= _boundLimit.right || posX <= _boundLimit.left || posY <= _boundLimit.top )
+		{
+			this->SetPosition(GetPosWeaponAtPlayer());
+			vx = 0;
+			vy = 0;
+			_Active = false;
+			oT = 65840;
 		}
+		if (oT >= 66040)
+		{
+			oT = 65840;
+		}
+		if (_Active)
+		{
+			oT+=1;
+			
+			Entity::CollisionReturn r = GameCollision::RecteAndRect(_Weapon[0]->GetBound(), _boundPlayer);
+
+	
+			if (r.IsCollided && oT>= 65940 )
+			{
+				_Active = false;
+				oT = 65840;
+			}
+	    
+		
+
 		
 
 		Entity::Update(dt);
 
-		
-		//GetPosWeaponAtPlayer().y
+	
+			if (_direction2)
+			{
+
+				this->vx = ((100 * cos(2 * 3.14*0.005*oT + 3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
+				this->vy = (GetPosWeaponAtPlayer().y - 10 - this->posY);
+				//int x = (100 * cos(2 * 3.14*0.005*oT + 3.14 / 2));
+
+			}
+			else
+			{
+
+				this->vx = ((100 * cos(2 * 3.14*0.005*oT + -3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
+				this->vy = (GetPosWeaponAtPlayer().y - 10 - this->posY);
+
+			}
+
+			posX = vx * dt ;
+
+			posY += vy * dt;
+
 		
 
-		_Weapon[0]->SetPosition(this->GetPosition());
+
+
+
+			//Entity::Update(dt);
+
+
+			//GetPosWeaponAtPlayer().y
+
+
+			_Weapon[0]->SetPosition(this->GetPosition());
+		}
+		else {
+			this->SetPosition(GetPosWeaponAtPlayer());
+		}
 	}
-	else {
-		this->SetPosition(GetPosWeaponAtPlayer());
-	}
+	
 }

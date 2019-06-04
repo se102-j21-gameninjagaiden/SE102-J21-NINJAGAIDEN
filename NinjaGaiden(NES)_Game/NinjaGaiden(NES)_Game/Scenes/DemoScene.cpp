@@ -19,7 +19,7 @@ void DemoScene::LoadContent()
 	mMap->SetCamera(mCamera);
 	mPlayer = new Player();
 
-	mPlayer->SetPosition(60,
+	mPlayer->SetPosition(336,
 		30);
 	mPlayer->SetCamera(mCamera);
 	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
@@ -189,6 +189,7 @@ void DemoScene::checkRuleGame()
 								//mPlayer->mWeapon->GetWeapon()[j]->SetVy(0);
 								mPlayer->mWeapon->SetVx(0);
 								mPlayer->mWeapon->SetVy(0);
+								mPlayer->mWeapon->_Active = false;
 							}
 
 						}

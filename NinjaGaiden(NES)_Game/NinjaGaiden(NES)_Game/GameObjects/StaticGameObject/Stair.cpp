@@ -7,7 +7,7 @@ Stair::~Stair()
 {
 }
 
-Stair::Stair(D3DXVECTOR3 position)
+Stair::Stair(D3DXVECTOR3 position, float pposStop)
 {
 	init(position);
 }

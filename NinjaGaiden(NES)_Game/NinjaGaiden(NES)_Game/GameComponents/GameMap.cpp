@@ -245,7 +245,17 @@ void GameMap::LoadMap( int level)
 
 			break;
 
-		
+		case 10:
+			position = D3DXVECTOR3(posX, posY, 0);
+			object = new Stair(position, posStop);
+
+			object->Tag = Entity::EntityTypes::Stair;
+
+			mListObjects.push_back(object);
+			if (object)
+				mQuadTree->insertEntity(object);
+
+			break;
 		
 		}
 	}
@@ -280,13 +290,29 @@ void GameMap::LoadMap( int level)
 	//f >> widthObject;
 	while (!f.eof())
 	{
-		f >> widthObject >> heightObject >> idX_Object >> idY_Object;
-		Entity *entity = new Entity();
-		entity->SetPosition(idX_Object*FrameWidth + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
-		entity->SetWidth(widthObject);
-		entity->SetHeight(heightObject);
-		entity->Tag = Entity::EntityTypes::Static;
-		mQuadTree->insertEntity(entity);
+		f >>idType>> widthObject >> heightObject >> idX_Object >> idY_Object;
+		Entity *entity = nullptr;
+		switch (int (idType))
+		{
+
+		case 0:
+			entity= new Entity();
+			entity->SetPosition(idX_Object*FrameWidth + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
+			entity->SetWidth(widthObject);
+			entity->SetHeight(heightObject);
+			entity->Tag = Entity::EntityTypes::Static;
+			mQuadTree->insertEntity(entity);
+			break;
+		case 1:
+			entity = new Entity();
+			entity->SetPosition(idX_Object*FrameWidth + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
+			entity->SetWidth(widthObject);
+			entity->SetHeight(heightObject);
+			entity->Tag = Entity::EntityTypes::Stair;
+			mQuadTree->insertEntity(entity);
+			break;
+		}
+		
 	}
 	f.close();
 

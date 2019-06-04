@@ -36,6 +36,16 @@ void Weapon::SetDirection(bool direction)
 	_direction = direction;
 }
 
+bool Weapon::getDirection2()
+{
+	return _direction2;
+}
+
+void Weapon::SetDirection2(bool direction)
+{
+	_direction2 = direction;
+}
+
 void Weapon::setBoundLimit(RECT bound)
 {
 	_boundLimit = bound;
@@ -44,6 +54,16 @@ void Weapon::setBoundLimit(RECT bound)
 RECT Weapon::getBoundLimit()
 {
 	return _boundLimit;
+}
+
+void Weapon::setBoundplayer(RECT bound)
+{
+	_boundPlayer = bound;
+}
+
+RECT Weapon::getBoundplayer()
+{
+	return _boundPlayer;
 }
 
 void Weapon::SetPosLimitAtMap(D3DXVECTOR3 posLimit)

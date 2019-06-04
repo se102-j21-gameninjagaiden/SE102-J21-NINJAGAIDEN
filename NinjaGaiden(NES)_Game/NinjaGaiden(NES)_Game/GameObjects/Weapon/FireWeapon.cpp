@@ -46,13 +46,13 @@ void FireWeapon::Update(float dt)
 		if (_Weapon[i]->_Active)
 		{
 			
-			this->vx += 5;
+			this->vx += 2;
 			this->vy -= 4;
-			if (!_direction)
+			if (!_direction2)
 			{
 				_Weapon[i]->SetVx(vx);
 				_Weapon[i]->SetVy((vy));
-				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+5)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(-30)*(i+1)*dt));
+				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+5)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(120)*(i+1)*dt));
 
 			}
 			else
@@ -60,7 +60,7 @@ void FireWeapon::Update(float dt)
 				_Weapon[i]->SetVx(-(vx));
 				_Weapon[i]->SetVy((vy));
 				//_Weapon[i]->Update(dt);
-				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+5)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(-30)*(i+1)*dt));
+				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+5)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(120)*(i+1)*dt));
 
 			}
 			//Entity::Update(dt);

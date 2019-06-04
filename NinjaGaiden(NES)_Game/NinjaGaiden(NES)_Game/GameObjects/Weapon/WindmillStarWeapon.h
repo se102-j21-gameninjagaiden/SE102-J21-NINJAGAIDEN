@@ -9,5 +9,6 @@ public:
 	void Update(float dt);
 private:
 	int flag;
+	int oT;
 };
 

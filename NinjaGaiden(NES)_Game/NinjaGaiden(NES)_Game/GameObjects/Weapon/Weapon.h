@@ -3,6 +3,7 @@
 #include "../../GameComponents/Sprite.h"
 #include "../StaticGameObject/GameObject.h"
 #include <vector>
+#include"../../GameComponents/GameCollision.h"
 
 class Weapon : public Entity
 {
@@ -15,8 +16,13 @@ public:
 	D3DXVECTOR3 GetPosWeaponAtPlayer();
 	bool getDirection();
 	void SetDirection(bool direction);
+	bool getDirection2();
+	void SetDirection2(bool direction);
 	void setBoundLimit(RECT bound);
+	
 	RECT getBoundLimit();
+	void setBoundplayer(RECT bound);
+	RECT getBoundplayer();
 	void SetPosLimitAtMap(D3DXVECTOR3 posLimit);
 	D3DXVECTOR3 GetPosLimitAtMap();
 	int getAmount();
@@ -30,7 +36,10 @@ protected:
 	D3DXVECTOR3 PosWeaponAtPlayer;
 	D3DXVECTOR3 PosLimitAtMap;
 	bool _direction;
+
+	bool _direction2;
 	RECT _boundLimit;
 	int _amount;
+	RECT _boundPlayer;
 };
 
