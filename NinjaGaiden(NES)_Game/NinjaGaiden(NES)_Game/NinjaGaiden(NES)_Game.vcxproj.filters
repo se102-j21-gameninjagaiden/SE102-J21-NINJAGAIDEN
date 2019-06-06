@@ -219,6 +219,12 @@
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerClingingState.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Sound.cpp">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\GameLog.cpp">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameComponents\Animation.h">
@@ -379,6 +385,12 @@
     </ClInclude>
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerClingingState.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Sound.h">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\GameLog.h">
+      <Filter>FrameWork\GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

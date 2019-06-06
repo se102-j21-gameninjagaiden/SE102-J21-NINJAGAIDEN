@@ -7,10 +7,11 @@ DemoScene::DemoScene()
 
 void DemoScene::LoadContent()
 {
-	level = 3;
-	//set mau backcolor cho scene o day la mau xanh
+	level = 1;
+	Sound::getInstance()->LoadAllSound();
+	
+	Sound::getInstance()->play("Level" + to_string(level), true,0,1);
 	mMap = new GameMap(level);
-	//	mMap = new GameMap("Resources/Map/Map1/MatrixMapLv1.txt");
 	mCamera = new Camera(GameGlobal::GetWidth(), GameGlobal::GetHeight());
 	mCamera->SetPosition(GameGlobal::GetWidth() / 2,
 		GameGlobal::GetHeight() / 2);
@@ -22,7 +23,7 @@ void DemoScene::LoadContent()
 	mPlayer->SetPosition(50,	20);
 	mPlayer->SetCamera(mCamera);
 	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
-	gameUI->initTimer(15000);
+	gameUI->initTimer(150);
 }
 
 void DemoScene::Update(float dt)
@@ -40,6 +41,7 @@ void DemoScene::Update(float dt)
 		mPlayer->OnKeyUp(DIK_C);
 
 		mPlayer->OnKeyPressed(DIK_C);
+		
 		
 	
 	}
@@ -165,7 +167,7 @@ void DemoScene::checkRuleGame()
 						{
 							listCollisionWithPlayer.at(i)->_Active == false;
 							gameUI->SetplayerScore(gameUI->GetplayerScore() + 100); // Xét điểm tạm
-
+							Sound::getInstance()->play("BeatEnemy", true, 0);
 							mPlayer->e_Hit->_Active = true;
 							mPlayer->e_Hit->SetPosition(listCollisionWithPlayer.at(i)->GetPosition());
 							//listCollisionWithPlayer.at(i)->OnCollision()
@@ -204,17 +206,7 @@ void DemoScene::checkRuleGame()
 				}
 
 			}
-		    //	mPlayer->mWeapon->_Active = false;
-			////Trừ mana khi sử dụng weapon
-			//if (mPlayer->mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon)
-			//{
-			//	gameUI->SetplayerMana(gameUI->GetplayerMana() - 3);
-			//}
-			//else
-			//{
-			//	gameUI->SetplayerMana(gameUI->GetplayerMana() - 5);
-			//}
-			//mPlayer->setPlayerMana(gameUI->GetplayerMana());
+		   
 		}
 #pragma endregion
 
@@ -232,9 +224,14 @@ void DemoScene::checkRuleGame()
 			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat)
 			{
 				gameUI->SetplayerHP(gameUI->GetplayerHP() - 1);
+				
+				Sound::getInstance()->play("Injured", true, 0);
+				
 			}
 			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Item && listCollisionWithPlayer.at(i)->_allowPlayerpick == true  )//&& mPlayer->getState()!=PlayerState::StandingBeat)
 			{
+				
+				Sound::getInstance()->play("PickItem", true, 0);
 				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::BlueMana)
 				{
 					//gameUI->SetplayerScore(gameUI->Ge)
@@ -266,21 +263,14 @@ void DemoScene::checkRuleGame()
 				{
 					//gameUI->SetplayerScore(gameUI->Ge)
 					gameUI->SetplayerHP(gameUI->GetplayerHP() + 6);
+					Sound::getInstance()->play("BonusHP", true, 0);
 					listCollisionWithPlayer.at(i)->Hidden();
 				}
 				if (listCollisionWithPlayer.at(i)->TagItem == Entity::ItemType::ThrowingStar)
 				{
 
 					listCollisionWithPlayer.at(i)->SetPosition(-100, 14);
-					/*Weapon *wp = new ThrowingStarWeapon(mPlayer->GetPosition());
-					Weapon *w = new ThrowingStarWeapon(mPlayer->GetPosition());*/
-					//mPlayer->mWeapon = new ThrowingStarWeapon(mPlayer->GetPosition());
-					/*if (mPlayer->mWeapon.size() > 0)
-					{
-						mPlayer->mWeapon.clear();
-
-					}
-					mPlayer->mWeapon.push_back(wp);*/
+				
 					mPlayer->mWeapon = new ThrowingStarWeapon(mPlayer->GetPosition());
 					gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/ThrowingStarBox.png");
 
@@ -314,7 +304,7 @@ void DemoScene::checkRuleGame()
 			if (mPlayer->getState() == PlayerState::StandingBeat && listCollisionWithPlayer.at(i)->_Active == true && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy || mPlayer->getState() == PlayerState::SittingBeat && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy)
 			{
 				gameUI->SetplayerScore(gameUI->GetplayerScore() + 100); // Sau nay xét Enemy Type để tính điểm
-
+				Sound::getInstance()->play("BeatEnemy", true, 0);
 			}
 			else
 			{
@@ -370,31 +360,40 @@ void DemoScene::checkRuleGame()
 	// Chỉnh sửa các thông số theo luật game 
 	if (gameUI->GetplayerHP() == 0 || CheckPositionPlayer())
 	{
-		Sleep(1000);
+		Sound::getInstance()->play("Death", true, 0);
+		Sound::getInstance()->stop("Level" + to_string(level) );
+		//Sound::getInstance()->play("Death", true, 0);
+		Sleep(2000);
 
 		mPlayer->SetPosition(InitPosPlayer());
 		mPlayer->SetState(new PlayerStandingState(mPlayer->mPlayerData));
+		mPlayer->mWeapon = nullptr;
+		gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/BoxWeapon.png");
+
 		mMap->GetQuadTree()->Clear();
 		mMap = new GameMap(level);
-		//mMap = new GameMap("Resources/Map/Map1/TestMap.txt");
+
+		Sound::getInstance()->play("Level"+ to_string(level), true, 0,1);
 
 		mMap->SetCamera(mCamera);
 
-		//gameUI->SetTimer(150);
+		
 
 
 		if (gameUI->GetLiveCount() > 0)
 		{
 			gameUI->SetLiveCount(gameUI->GetLiveCount() - 1);
 
-			//_playerHP = MAX_HP;
+			
 			gameUI->SetplayerHP(MAX_HP);
-			gameUI->SetplayerMana(gameUI->GetplayerMana() / 2);
+			mPlayer->setPlayerMana(mPlayer->getPlayerMana() / 2);
+			
+
 			gameUI->initTimer(150);
 		}
 		else
 		{
-			//mMap->drawEffect = true;
+			
 			gameUI->SetLiveCount(2);
 			gameUI->SetplayerHP(MAX_HP);
 			gameUI->SetplayerMana(0);
@@ -402,6 +401,7 @@ void DemoScene::checkRuleGame()
 			gameUI->SetplayerScore(0);
 			gameUI->initTimer(150);
 			gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/BoxWeapon.png");
+			mPlayer->mWeapon = nullptr;
 		}
 	}
 	if (mPlayer->GetPosition().x >= mMap->GetWidth())

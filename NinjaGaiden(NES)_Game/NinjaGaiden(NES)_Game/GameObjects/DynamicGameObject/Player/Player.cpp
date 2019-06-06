@@ -32,7 +32,7 @@ Player::Player()
 	allowHit = false;
 	isJummping = false;
 	Tag = Ninja;
-	InvincibleTime = 100;
+	InvincibleTime = 70;
 	
 	e_Hit = new ExplosionHit();
 	e_Hit->_Active = false;
@@ -149,14 +149,8 @@ void Player::OnKeyUp(int key)
 		allowHit = true;
 	if (key == DIK_C)
 	{
-		/*for (int i = 0; i < mWeapon.size(); i++)
-		{
-			if (mWeapon[i])
-			{
-				mWeapon[i]->_Active = true;
-			}
-		}*/
-		if (mWeapon && mWeapon->GetWeapon()[0]->_Active==false)
+		
+		if (mWeapon && mWeapon->_Active==false)
 		{
 			if (mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon && playerMana >= 3||
 				mWeapon->TagWeapon == Entity::WeaponType::WindmillStarWeapon && playerMana >=5 ||
@@ -170,9 +164,18 @@ void Player::OnKeyUp(int key)
 				if (mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon)
 				{
 					playerMana -= 3;
+					Sound::getInstance()->play("ThrowingStarWeapon", true, 0);
 				}
 				else
 				{
+					if (mWeapon->TagWeapon == Entity::WeaponType::ThrowingStarWeapon)
+					{
+						Sound::getInstance()->play("WindmillStarWeapon", true, 0);
+					}
+					else
+					{
+						Sound::getInstance()->play("FireWeapon", true, 0);
+					}
 					playerMana -= 5;
 				}
 			}
@@ -238,13 +241,7 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 			e_Hit->Draw(e_Hit->GetPosition(),RECT(),D3DXVECTOR2(),trans);
 		}
 
-	/*	for (int i = 0; i < mWeapon.size(); i++)
-		{
-			if (mWeapon[i])
-		{
-			mWeapon[i]->Draw(mWeapon[i]->GetPosition(), RECT(), D3DXVECTOR2(),trans);
-		}
-		}*/
+	
 		 
 		// WEAPON
 		if (mWeapon && mWeapon->_Active)
@@ -262,7 +259,7 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 			if (InvincibleTime <= 0)
 			{
 				invincible=false;
-				InvincibleTime = 100;
+				InvincibleTime = 70;
 			}
 		}
 		else mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);

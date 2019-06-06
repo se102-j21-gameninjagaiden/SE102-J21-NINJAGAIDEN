@@ -11,6 +11,7 @@
 #include "../GameDefine/GameDefine.h"
 #include "../GameObjects/DynamicGameObject/Player/Player.h"
 #include "../GameUI/GameUI.h"
+#include  "../GameComponents/Sound.h"
 
 class DemoScene : public Scene
 {

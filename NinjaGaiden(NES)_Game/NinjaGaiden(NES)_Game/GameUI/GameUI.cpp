@@ -49,21 +49,21 @@ void GameUI::drawTable()
 	rect.bottom = _hpSprite->GetHeight();
 	for (int i = 0; i < MAX_HP; i++)
 	{
-		_hpSprite->Draw(D3DXVECTOR3(150 + 10 * i, 30, 0), rect);
+		_hpSprite->Draw(D3DXVECTOR3(150 + 7.5 * i, 30, 0), rect);
 	}
 	for (int i = 0; i < _playerHP; i++)
 	{
-		_hpSprite->Draw(D3DXVECTOR3(150 + 10 * i, 30, 0));
+		_hpSprite->Draw(D3DXVECTOR3(150 + 7.5 * i, 30, 0));
 	}
 	
 	// boss
 	for (int i = 0; i < MAX_HP; i++)
 	{
-		_hpSprite->Draw(D3DXVECTOR3(150 + 10 * i, 45, 0), rect);
+		_hpSprite->Draw(D3DXVECTOR3(150 + 7.5 * i, 45, 0), rect);
 	}
 	for (int i = 0; i < _enemyHP; i++)
 	{
-		_hpSprite->Draw(D3DXVECTOR3(150 + 10 * i, 45, 0));
+		_hpSprite->Draw(D3DXVECTOR3(150 +7.5 * i, 45, 0));
 	}
 	
 

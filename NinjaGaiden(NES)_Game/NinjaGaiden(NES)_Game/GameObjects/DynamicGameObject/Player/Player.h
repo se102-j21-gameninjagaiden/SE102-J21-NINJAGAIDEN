@@ -21,6 +21,7 @@
 #include "../../Weapon/ThrowingStarWeapon.h"
 #include "../../Weapon/WindmillStarWeapon.h"
 #include "../Player/PlayerClingingState.h"
+#include "../../../GameComponents/Sound.h"
 
 class Player : public Entity
 {

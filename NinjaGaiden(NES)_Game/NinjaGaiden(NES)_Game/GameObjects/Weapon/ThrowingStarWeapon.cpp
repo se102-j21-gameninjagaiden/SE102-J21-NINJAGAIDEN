@@ -32,6 +32,7 @@ void ThrowingStarWeapon::Update(float dt)
 		this->SetPosition(GetPosWeaponAtPlayer());
 		vx = 0;
 		_Active = false;
+
 	}
 	if (_Active)
 	{
@@ -47,6 +48,7 @@ void ThrowingStarWeapon::Update(float dt)
 		Entity::Update(dt);
 		//this->S
 		_Weapon[0]->SetPosition(this->GetPosition());
+
 	}
 	else {
 		this->SetPosition(GetPosWeaponAtPlayer());

@@ -13,23 +13,31 @@ PlayerStandingBeatState::PlayerStandingBeatState(PlayerData *playerData)
 	}
 	else
 	{
-		this->mPlayerData->player->SetVy(0);
+		//this->mPlayerData->player->SetVy(0);
 		this->mPlayerData->player->SetVx(0);
 	}
 	//this->mPlayerData->player->SetVy(this->mPlayerData->player->GetVy());
 	/*acceleratorY = 10;
 	acceleratorX = 3;*/
 	mTimePerFrame = 0.15;
+	
+	Sound::getInstance()->play("Beat", true, 0);
+	
 	//this->mPlayerData->player->isUpdate = true;
 }
 
 
 PlayerStandingBeatState::~PlayerStandingBeatState()
 {
+	//Sound::getInstance()->stop("Best");
 }
 
 void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
 {
+	if (impactor->Tag == Entity::EntityTypes::Static)
+	{
+		this->mPlayerData->player->SetVx(0);
+	}
 	switch (side)
 	{
 	case Entity::Left:
@@ -122,14 +130,7 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 void PlayerStandingBeatState::Update(float dt)
 {
 	
-	//if (mPlayerData->player->GetVy() <= -Define::PLAYER_MAX_JUMP_VELOCITY )
-	/*if (mPlayerData->player->GetVy() >=0)
-	{
-		mPlayerData->player->SetState(new PlayerFallingState(this->mPlayerData));
-
-		return;
-		
-	}*/
+	
 	if (this->mPlayerData->player->isJummping)
 	{
 		this->mPlayerData->player->AddVy(6);
@@ -144,29 +145,10 @@ void PlayerStandingBeatState::Update(float dt)
 	{
 
 		mCurrentTotalTime = 0;
-		//mPlayerData->player->SetVy(0);
-	//	if (IsKeyDown(DIK_LEFTARROW) || IsKeyDown(DIK_RIGHTARROW))
-	//{
-	//	this->mPlayerData->player->SetState(new PlayerRunningState(this->mPlayerData));
-	//	return;
-	//}
-		
-		//}
-		//if (mPlayerData->player->GetVy() >= 0)
-		//{
-		//	//mPlayerData->player->SetState(new PlayerFallingState(this->mPlayerData));
-
-		//	return;
-		//}
-		//if (mPlayerData->player->GetVy() == 0)
-		//{
+	
 			mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
 			return;
-		//}
-		/*else {
-			mPlayerData->player->SetState(new PlayerFallingState(this->mPlayerData));
-			return;
-		}*/
+		
 
 
 	}
@@ -178,48 +160,7 @@ void PlayerStandingBeatState::Update(float dt)
 
 void PlayerStandingBeatState::HandleKeyboard()
 {
-	/*if (IsKeyDown(DIK_LEFTARROW) || IsKeyDown(DIK_RIGHTARROW))
-	{
-		this->mPlayerData->player->SetState(new PlayerRunningState(this->mPlayerData));
-		return;
-	}*/
-	//if (IsKeyDown(DIK_RIGHTARROW))
-	//{
-	//	mPlayerData->player->SetReverse(false);
-
-	//	isLeftOrRightKeyPressed = true;
-	//	//di chuyen sang phai
-	//	if (this->mPlayerData->player->GetVx() < Define::PLAYER_MAX_RUNNING_SPEED)
-	//	{
-	//		this->mPlayerData->player->AddVx(acceleratorX);
-
-	//		if (this->mPlayerData->player->GetVx() >= Define::PLAYER_MAX_RUNNING_SPEED)
-	//		{
-	//			this->mPlayerData->player->SetVx(Define::PLAYER_MAX_RUNNING_SPEED);
-	//		}
-	//	}
-	//}
-	//else if (IsKeyDown(DIK_LEFTARROW))
-	//{
-	//	mPlayerData->player->SetReverse(true);
-
-	//	isLeftOrRightKeyPressed = true;
-	//	//di chuyen sang trai
-	//	if (this->mPlayerData->player->GetVx() > -Define::PLAYER_MAX_RUNNING_SPEED)
-	//	{
-	//		this->mPlayerData->player->AddVx(-acceleratorX);
-
-	//		if (this->mPlayerData->player->GetVx() <= -Define::PLAYER_MAX_RUNNING_SPEED)
-	//		{
-	//			this->mPlayerData->player->SetVx(-Define::PLAYER_MAX_RUNNING_SPEED);
-	//		}
-	//	}
-	//}
-	//else
-
-	//{
-	//	isLeftOrRightKeyPressed = false;
-	//}
+	
 }
 
 PlayerState::StateName PlayerStandingBeatState::GetState()

@@ -9,6 +9,8 @@ PlayerSittingBeatState::PlayerSittingBeatState(PlayerData *playerData)
 	this->mPlayerData->player->SetVy(0);
 	mTimePerFrame = 0.25;
 	//this->mPlayerData->player->isUpdate = true;
+	
+	Sound::getInstance()->play("Beat", true, 0);
 }
 
 

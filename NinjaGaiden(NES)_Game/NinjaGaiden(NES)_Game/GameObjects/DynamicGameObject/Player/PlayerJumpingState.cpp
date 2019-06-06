@@ -13,6 +13,7 @@ PlayerJumpingState::PlayerJumpingState(PlayerData *playerData)
 
     noPressed = false;
 	this->mPlayerData->player->isUpdate = true;
+	Sound::getInstance()->play("Jump", true, 0);
 }
 
 

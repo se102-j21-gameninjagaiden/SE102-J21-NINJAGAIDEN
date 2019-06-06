@@ -41,6 +41,10 @@ void FireWeapon::Update(float dt)
 			//_Weapon[i]->SetVx(0);
 			//_Weapon[i]->SetVy(0);
 			_Weapon[i]->_Active = false;
+			if (i == 0)
+			{
+				_Active = false;
+			}
 			
 		}
 		if (_Weapon[i]->_Active)
