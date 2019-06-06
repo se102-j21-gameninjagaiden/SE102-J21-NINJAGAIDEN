@@ -18,7 +18,7 @@ PlayerUseWeaponState::PlayerUseWeaponState(PlayerData * playerData)
 		this->mPlayerData->player->SetVy(0);
 		this->mPlayerData->player->SetVx(0);
 	}
-	mTimePerFrame = 0.15;
+	mTimePerFrame = 0.1;
 }
 
 PlayerUseWeaponState::~PlayerUseWeaponState()

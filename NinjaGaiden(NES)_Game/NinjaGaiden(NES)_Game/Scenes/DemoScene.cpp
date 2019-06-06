@@ -7,7 +7,7 @@ DemoScene::DemoScene()
 
 void DemoScene::LoadContent()
 {
-	level = 1;
+	level = 3;
 	//set mau backcolor cho scene o day la mau xanh
 	mMap = new GameMap(level);
 	//	mMap = new GameMap("Resources/Map/Map1/MatrixMapLv1.txt");
@@ -19,11 +19,10 @@ void DemoScene::LoadContent()
 	mMap->SetCamera(mCamera);
 	mPlayer = new Player();
 
-	mPlayer->SetPosition(336,
-		30);
+	mPlayer->SetPosition(50,	20);
 	mPlayer->SetCamera(mCamera);
 	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
-	gameUI->initTimer(150);
+	gameUI->initTimer(15000);
 }
 
 void DemoScene::Update(float dt)
@@ -323,6 +322,16 @@ void DemoScene::checkRuleGame()
 			}
 		
 #pragma endregion
+			if ( (mPlayer->getState() != PlayerState::Climbing && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::StairTop) 
+				|| ( mPlayer->getState() != PlayerState::Climbing && listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::StairBottom) 
+				|| (mPlayer->getState() == PlayerState::Climbing && listCollisionWithPlayer[i]->Tag == Entity::EntityTypes::Grass))
+			{
+			 
+			
+				goto ExitPlayerOnCollision;
+				//mPlayer->OnNoCollisionWithBottom();
+			}
+			
 			mPlayer->OnCollision(listCollisionWithPlayer.at(i), r, sidePlayer);
 		ExitPlayerOnCollision:
 
@@ -337,11 +346,16 @@ void DemoScene::checkRuleGame()
 			if (sidePlayer == Entity::Bottom || sidePlayer == Entity::BottomLeft
 				|| sidePlayer == Entity::BottomRight)
 			{
+
 				//kiem cha do dai ma ninja tiep xuc phia duoi day
 				int bot = r.RegionCollision.right - r.RegionCollision.left;
 
 				if (bot > widthBottom)
 					widthBottom = bot;
+			}
+			if (listCollisionWithPlayer[i]->Tag == Entity::EntityTypes::Grass)
+			{
+				widthBottom = Define::PLAYER_BOTTOM_RANGE_FALLING + 5; // cho khỏi bị rơi
 			}
 			/*if (sidePlayer == Entity::Top || sidePlayer == Entity::TopLeft
 				|| sidePlayer == Entity::TopRight)
@@ -375,7 +389,7 @@ void DemoScene::checkRuleGame()
 
 			//_playerHP = MAX_HP;
 			gameUI->SetplayerHP(MAX_HP);
-
+			gameUI->SetplayerMana(gameUI->GetplayerMana() / 2);
 			gameUI->initTimer(150);
 		}
 		else

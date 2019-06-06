@@ -17,6 +17,7 @@ public:
 		SittingBeat,
         Die,
 		Climbing,
+		Clinging,
 		UseWeapon
     };
 

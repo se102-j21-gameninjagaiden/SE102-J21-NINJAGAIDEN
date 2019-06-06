@@ -13,6 +13,8 @@ WindmillStarWeapon::WindmillStarWeapon(D3DXVECTOR3 position)
 	this->SetHeight(_Weapon[0]->GetHeight());
 	this->TagWeapon = Entity::WeaponType::WindmillStarWeapon;
 	oT = 65840;
+	this->_Active = false;
+	_Weapon[0]->_Active = false;
 }
 
 WindmillStarWeapon::~WindmillStarWeapon()
@@ -21,19 +23,7 @@ WindmillStarWeapon::~WindmillStarWeapon()
 
 void WindmillStarWeapon::Update(float dt)
 {
-	//Entity::CollisionReturn r = GameCollision::RecteAndRect(_Weapon[0]->GetBound(), _boundPlayer);
-
-	//
-	//if (r.IsCollided)
-	//{
-	//	//_Active = false;
-
-	//	vx += 5;
-
-	//	Entity::Update(dt);
-
-	//}
-	//else
+	
 	{
 		if (posX >= _boundLimit.right || posX <= _boundLimit.left || posY <= _boundLimit.top )
 		{
@@ -72,7 +62,7 @@ void WindmillStarWeapon::Update(float dt)
 
 				this->vx = ((100 * cos(2 * 3.14*0.005*oT + 3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
 				this->vy = (GetPosWeaponAtPlayer().y - 10 - this->posY);
-				//int x = (100 * cos(2 * 3.14*0.005*oT + 3.14 / 2));
+				
 
 			}
 			else

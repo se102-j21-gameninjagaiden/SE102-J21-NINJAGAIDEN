@@ -114,13 +114,26 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 {
 	//lay phia va cham so voi player
 	//GameCollision::SideCollisions side = GameCollision::getSideCollision(this->mPlayerData->player, data);
-	if (impactor->Tag == Entity::EntityTypes::Stair)
+	if (impactor->Tag == Entity::EntityTypes::Stair&& side == Entity::Right)
 	{
 		this->mPlayerData->player->SetState(new PlayerClimbingState(this->mPlayerData));
 	
 		return;
 	}
+	if (impactor->Tag == Entity::EntityTypes::Wall)
+	{
+		/*if (side == Entity::Bottom || side == Entity::BottomRight || side == Entity::BottomLeft)
+		{
+			this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
+			return;
+		}*/
 
+		//else
+		{
+			this->mPlayerData->player->SetState(new PlayerClingingState(this->mPlayerData));
+			return;
+		}
+	}
 	switch (side)
 	{
 	case Entity::Left:
@@ -197,9 +210,9 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 				return;
 			}
 			
-		else {
-				if (impactor->Tag != Entity::EntityTypes::Enemy)
-				{
+		else {	
+				if (impactor->Tag == Entity::EntityTypes::Static)
+ 				{
 					this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
 
 					if (isLeftOrRightKeyPressed)
@@ -209,11 +222,17 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 					}
 					else
 					{
+						//if (impactor->Tag== Entity::EntityTypes::Stair)
 						this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
 						return;
 					}
 				}
 		}
+		}
+		if (impactor->Tag == Entity::EntityTypes::Grass)
+		{
+			this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
+			return;
 		}
 		return ;
 

@@ -216,6 +216,9 @@
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerUseWeaponState.cpp">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerClingingState.cpp">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameComponents\Animation.h">
@@ -372,6 +375,9 @@
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerUseWeaponState.h">
+      <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerClingingState.h">
       <Filter>FrameWork\GameObjects\DynamicGameObject\Player</Filter>
     </ClInclude>
   </ItemGroup>

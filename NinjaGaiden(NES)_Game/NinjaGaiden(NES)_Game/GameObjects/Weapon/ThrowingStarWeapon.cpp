@@ -6,7 +6,7 @@ ThrowingStarWeapon::ThrowingStarWeapon(D3DXVECTOR3 position)
 {
 	_amount = 1;
 	//= new GameObject(position,"Resources/Item_Effect/ThrowingStar.png",1,);
-	GameObject  *object = new GameObject(position, "Resources/Item_Effect/ThrowingStar.png", 1, 1, 1, 1);
+	GameObject  *object = new GameObject(position, "Resources/Item_Effect/ThrowingStarWeapon.png", 1, 1, 1, 1);
 
 	
 	
@@ -35,13 +35,13 @@ void ThrowingStarWeapon::Update(float dt)
 	}
 	if (_Active)
 	{
-		if (! _direction)
+		if (! _direction2)
 		{
-			this->vx += 5;
+			this->vx += 10;
 		}
 		else
 		{
-			this->vx -= 5;
+			this->vx -=10 ;
 		}
 		
 		Entity::Update(dt);

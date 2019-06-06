@@ -31,7 +31,7 @@ public:
 	};
     enum EntityTypes
     {
-        None, Brick, Enemy, Ninja, Static, Dynamic,Item , Stair
+        None, Brick, Enemy, Ninja, Static, Dynamic,Item , Stair , StairTop, StairBottom,Grass,Wall
     };
 	enum ItemType
 	{

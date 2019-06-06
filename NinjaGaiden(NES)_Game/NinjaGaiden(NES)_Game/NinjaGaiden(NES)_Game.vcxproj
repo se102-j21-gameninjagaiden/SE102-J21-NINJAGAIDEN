@@ -139,6 +139,7 @@
     <ClCompile Include="GameObjects\DynamicGameObject\Enemy\Swordman.cpp" />
     <ClCompile Include="GameObjects\DynamicGameObject\Player\Player.cpp" />
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerClimbingState.cpp" />
+    <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerClingingState.cpp" />
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerData.cpp" />
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.cpp" />
     <ClCompile Include="GameObjects\DynamicGameObject\Player\PlayerFallingState.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="GameObjects\DynamicGameObject\Enemy\Swordman.h" />
     <ClInclude Include="GameObjects\DynamicGameObject\Player\Player.h" />
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerClimbingState.h" />
+    <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerClingingState.h" />
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerData.h" />
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerDyingState.h" />
     <ClInclude Include="GameObjects\DynamicGameObject\Player\PlayerFallingState.h" />

@@ -118,14 +118,16 @@ void PlayerStandingState::OnCollision(Entity * impactor, Entity::SideCollisions 
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 			return;
 		}
-		else
-			/*if (impactor->Tag == Entity::EntityTypes::Static)
-			{*/if (impactor->Tag!= Entity::EntityTypes::Enemy)
-			{ 
-				this->mPlayerData->player->SetVy(0);
+			else
+			{
+				if (impactor->Tag == Entity::EntityTypes::Static)
+				{
+					this->mPlayerData->player->SetVy(0);
+					return;
+
+				}
 			}
 
-		return ;
 	}
 	}
 }

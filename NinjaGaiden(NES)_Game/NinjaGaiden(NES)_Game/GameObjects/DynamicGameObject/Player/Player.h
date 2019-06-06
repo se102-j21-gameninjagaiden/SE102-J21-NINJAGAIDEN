@@ -9,6 +9,7 @@
 #include "PlayerState.h"
 #include "PlayerRunningState.h"
 #include "../Player/PlayerStandingBeatState.h"
+#include "../Player/PlayerSittingState.h"
 #include "../../../GameComponents/Camera.h"
 #include "PlayerFallingState.h"
 #include "PlayerClimbingState.h"
@@ -19,6 +20,7 @@
 #include "../../Weapon/FireWeapon.h"
 #include "../../Weapon/ThrowingStarWeapon.h"
 #include "../../Weapon/WindmillStarWeapon.h"
+#include "../Player/PlayerClingingState.h"
 
 class Player : public Entity
 {
@@ -91,6 +93,7 @@ protected:
 		*mAnimationSittingBeat,
 		*mAnimationDying,
 		*mAnimationClimbing,
+		*mAnimationClinging,
 		*mAnimationUsingWeapon;
 
     void changeAnimation(PlayerState::StateName state);

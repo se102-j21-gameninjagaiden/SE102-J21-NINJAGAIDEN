@@ -135,10 +135,24 @@ PlayerState::StateName PlayerJumpingState::GetState()
 
 void PlayerJumpingState::OnCollision(Entity *impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
 {
-	if (impactor->Tag == Entity::EntityTypes::Stair)
+	if (impactor->Tag == Entity::EntityTypes::Stair && side==Entity::Right)
 	{
 		this->mPlayerData->player->SetState(new PlayerClimbingState(this->mPlayerData));
 		return;
+	}
+	if (impactor->Tag == Entity::EntityTypes::Wall)
+	{
+		/*if (side == Entity::Bottom || side == Entity::BottomRight || side == Entity::BottomLeft)
+		{
+			this->mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
+			return;
+		}
+
+		else*/
+		{
+			this->mPlayerData->player->SetState(new PlayerClingingState(this->mPlayerData));
+			return;
+		}
 	}
 	switch (side)	
 	{
@@ -154,7 +168,7 @@ void PlayerJumpingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		}
 		else
 		{
-			if (impactor->Tag != Entity::EntityTypes::Enemy)
+			if (impactor->Tag == Entity::EntityTypes::Static)
 			{
 				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left, 0);
 				this->mPlayerData->player->SetVx(0);
@@ -176,7 +190,7 @@ void PlayerJumpingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		}
 		else
 		{
-			if (impactor->Tag != Entity::EntityTypes::Enemy)
+			if (impactor->Tag == Entity::EntityTypes::Static)
 			{
 				this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left), 0);
 				this->mPlayerData->player->SetVx(0);
@@ -214,7 +228,7 @@ void PlayerJumpingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
 		else
-			if (impactor->Tag != Entity::EntityTypes::Enemy)
+			if (impactor->Tag == Entity::EntityTypes::Static)
 			{
 				this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
 			}

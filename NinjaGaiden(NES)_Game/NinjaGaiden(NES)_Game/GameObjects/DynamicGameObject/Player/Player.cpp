@@ -19,7 +19,9 @@ Player::Player()
 	mAnimationSittingBeat = new Animation("Resources/Ninja/sittingbeat.png", 3, 1, 3, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationDying = new Animation("Resources/Ninja/dying.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationClimbing = new Animation("Resources/Ninja/Climbing.png", 2, 1, 2, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
-	mAnimationUsingWeapon = new Animation("Resources/Ninja/usingweapon.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationClinging = new Animation("Resources/Ninja/Clinging.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationUsingWeapon = new Animation("Resources/Ninja/usingweapon.png", 3, 1, 3, 0.1f, D3DCOLOR_XRGB(255, 163, 177));
+
 	this->mPlayerData = new PlayerData();
     this->mPlayerData->player = this;
     this->vx = 0;
@@ -70,7 +72,7 @@ void Player::Update(float dt)
 			mWeapon->GetPositionPlayer(mPlayerData->player->GetPosition());
 			//mWeapon->SetPosLimitAtMap(mCamera->GetPosition() + D3DXVECTOR3(mCamera->GetWidth() / 2, 0, 0));
 			mWeapon->setBoundLimit(mCamera->GetBound());
-			mWeapon->SetDirection(mCurrentReverse);
+			//mWeapon->SetDirection(mCurrentReverse);
 			mWeapon->setBoundplayer(this->mPlayerData->player->GetBound());
 		
 	}
@@ -186,6 +188,8 @@ void Player::OnKeyUp(int key)
 				{
 					mWeapon->GetWeapon()[i]->_Active = true;
 				}
+				mWeapon->SetDirection2(mCurrentReverse);
+				
 			}
 		}
 		
@@ -337,6 +341,10 @@ void Player::changeAnimation(PlayerState::StateName state)
 			break;
 		case PlayerState::UseWeapon:
 			mCurrentAnimation = mAnimationUsingWeapon;
+			break;
+		case PlayerState::Clinging:
+			mCurrentAnimation = mAnimationClinging;
+			break;
     }
 
     this->width = mCurrentAnimation->GetWidth();
@@ -362,7 +370,8 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 }
 void Player::OnNoCollisionWithBottom()
 {
-	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling && mCurrentState != PlayerState::StandingBeat && mCurrentState!=PlayerState::Climbing && mCurrentState!=PlayerState::UseWeapon)
+	if (mCurrentState != PlayerState::Jumping && mCurrentState != PlayerState::Falling && mCurrentState != PlayerState::StandingBeat && mCurrentState!=PlayerState::Climbing && mCurrentState!=PlayerState::UseWeapon
+		&& mCurrentState != PlayerState::Clinging)
 	{
 		this->SetState(new PlayerFallingState(this->mPlayerData));
 	}

@@ -43,64 +43,30 @@ void GameMap::LoadMap( int level)
 		f_ei >> idType >> posX >> posY;
 		D3DXVECTOR3 position;
 			//fstream fs("Brick");
+		position = D3DXVECTOR3(posX, posY, 0);
+
 		GameObject *object = nullptr;
 		switch (int(idType))
 		{
 		case 1:
-			position = D3DXVECTOR3(posX, posY, 0);
-			object = new Swordman(position);
-			
+			object = new Swordman(position);			
 			object->Tag = Entity::EntityTypes::Enemy;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
-			break;
-		
+			break;		
 		case 3:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Panther(position);
-
-			object->Tag = Entity::EntityTypes::Enemy;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
+			object->Tag = Entity::EntityTypes::Enemy;		
 			break;
 		case 4:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Eagle(position);
-
-			object->Tag = Entity::EntityTypes::Enemy;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Enemy;		
 			break;
 		case 5:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Goblin(position);
-
-			object->Tag = Entity::EntityTypes::Enemy;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
-			break;
-			
+			object->Tag = Entity::EntityTypes::Enemy;	
+			break;		
 		case 6:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Brute(position);
-
-			object->Tag = Entity::EntityTypes::Enemy;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Enemy;		
 			break;
 		/*case 7 :	
 			position = D3DXVECTOR3(posX, posY, 0);
@@ -112,8 +78,15 @@ void GameMap::LoadMap( int level)
 			if (object)
 				mQuadTree->insertEntity(object);
 			break;*/
-		
+	
 
+
+		}
+		if (object)
+		{
+			mListObjects.push_back(object);
+
+			mQuadTree->insertEntity(object);
 		}
 		
 	
@@ -129,123 +102,52 @@ void GameMap::LoadMap( int level)
 	{
 		f_item >> idType >> posX >> posY >> posStop;
 		D3DXVECTOR3 position;
-		//fstream fs("Brick");
+		position = D3DXVECTOR3(posX, posY, 0);
 		GameObject *object = nullptr;
 		switch (int(idType))
 		{
 		case 0:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Butterfly(position);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;	
 			break;
-
 		case 1:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new BlueMana(position,posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;			
 			break;
 		case 2:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new RedMana(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 3:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new RedBonus(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 4:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new BlueBonus(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;	
 			break;
 		case 5:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new RedHP(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 6:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Fire(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 7:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new ThrowingStar(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;	
 			break;
 		case 8:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new TimeFreeze(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 9:
-			position = D3DXVECTOR3(posX, posY, 0);
 			object = new WindmillStar(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Item;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
+			object->Tag = Entity::EntityTypes::Item;		
 			break;
 
-		case 10:
+		/*case 10:
 			position = D3DXVECTOR3(posX, posY, 0);
 			object = new Stair(position, posStop);
 
@@ -255,8 +157,15 @@ void GameMap::LoadMap( int level)
 			if (object)
 				mQuadTree->insertEntity(object);
 
-			break;
+			break;*/
 		
+		}
+		
+		if (object)
+		{
+			mListObjects.push_back(object);
+			mQuadTree->insertEntity(object);
+
 		}
 	}
 		f_item.close();
@@ -265,54 +174,51 @@ void GameMap::LoadMap( int level)
 #pragma endregion
 #pragma region -OBJECTGROUP, STATIC OBJECT-
 
-	//for (size_t i = 0; i < mMap->GetNumObjectGroups(); i++)
-	//{
-	//	const Tmx::ObjectGroup *objectGroup = mMap->GetObjectGroup(i);
-
-	//	for (size_t j = 0; j < objectGroup->GetNumObjects(); j++)
-	//	{
-	//		//lay object group chu khong phai layer
-	//		//object group se chua nhung body
-	//		Tmx::Object *object = objectGroup->GetObjects().at(j);
-
-	//		Entity *entity = new Entity();
-	//		entity->SetPosition(object->GetX() + object->GetWidth() / 2,
-	//			object->GetY() + object->GetHeight() / 2);
-	//		entity->SetWidth(object->GetWidth());
-	//		entity->SetHeight(object->GetHeight());
-	//		entity->Tag = Entity::EntityTypes::Static;
-
-	//		mQuadTree->insertEntity(entity);
-	//	}
-	//}
+	
 	fstream f("Resources/Map/Map" + to_string(level) + "/StaticObjectMap.txt");
-	float widthObject, heightObject, idX_Object, idY_Object;
+	float widthObject, heightObject;
 	//f >> widthObject;
 	while (!f.eof())
 	{
-		f >>idType>> widthObject >> heightObject >> idX_Object >> idY_Object;
+		f >>idType>> widthObject >> heightObject >> posX >> posY;
 		Entity *entity = nullptr;
+		entity = new Entity();
+		entity->SetPosition(posX,posY);
+		entity->SetWidth(widthObject);
+		entity->SetHeight(heightObject);
+		
 		switch (int (idType))
 		{
 
 		case 0:
-			entity= new Entity();
-			entity->SetPosition(idX_Object*FrameWidth + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
-			entity->SetWidth(widthObject);
-			entity->SetHeight(heightObject);
+			
+			
 			entity->Tag = Entity::EntityTypes::Static;
-			mQuadTree->insertEntity(entity);
+
 			break;
 		case 1:
-			entity = new Entity();
-			entity->SetPosition(idX_Object*FrameWidth + widthObject / 2, idY_Object*FrameHeight + heightObject / 2);
-			entity->SetWidth(widthObject);
-			entity->SetHeight(heightObject);
+		
+			entity->Tag = Entity::EntityTypes::StairTop;
+
+			break;
+		case 2:
+			
+			entity->Tag = Entity::EntityTypes::StairBottom;
+
+			break;
+		case 3:
+			
 			entity->Tag = Entity::EntityTypes::Stair;
-			mQuadTree->insertEntity(entity);
+
+			break;
+		case 4: entity->Tag = Entity::EntityTypes::Grass;
+			break;
+		case 5: entity->Tag = Entity::EntityTypes::Wall;
 			break;
 		}
 		
+		mQuadTree->insertEntity(entity);
+
 	}
 	f.close();
 
@@ -335,17 +241,9 @@ void GameMap::Update(float dt)
 {
 	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-		//if (mListObjects[i]->Tag ==Entity::EntityTypes ::None)
-		//{
-		//	mListObjects.erase(mListObjects.begin() + i);
-		//
-		//	//mListObjects[i]->Update(dt);
-
-		//}
-		//else
-		//{
+		
 			mListObjects[i]->Update(dt);
-		//}
+		
 	}
 }
 void GameMap::Draw()

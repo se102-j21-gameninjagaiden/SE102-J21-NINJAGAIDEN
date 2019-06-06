@@ -1,9 +1,20 @@
-﻿  FireWeapon.cpp
+﻿  DemoScene.cpp
   c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gamecomponents\animation.h(23): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
 c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\staticgameobject\gameobject.h(14): warning C4002: too many arguments for function-like macro invocation 'D3DCOLOR_XRGB'
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\weapon\fireweapon.cpp(15): warning C4018: '<': signed/unsigned mismatch
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\weapon\fireweapon.cpp(34): warning C4018: '<': signed/unsigned mismatch
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\weapon\fireweapon.cpp(55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\weapon\fireweapon.cpp(63): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\swordman.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\panther.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\eagle.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\goblin.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\gameobjects\dynamicgameobject\enemy\brute.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(16): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(15): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(101): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(107): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(114): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(121): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(128): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(157): warning C4018: '<': signed/unsigned mismatch
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(166): warning C4553: '==': result of expression not used; did you intend '='?
+c:\users\thaon\desktop\se102-j21-ninjagaiden\ninjagaiden(nes)_game\ninjagaiden(nes)_game\scenes\demoscene.cpp(358): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   NinjaGaiden(NES)_Game.vcxproj -> C:\Users\thaon\Desktop\SE102-J21-NINJAGAIDEN\NinjaGaiden(NES)_Game\Debug\NinjaGaiden(NES)_Game.exe

@@ -21,7 +21,7 @@ PlayerRunningState::~PlayerRunningState()
 
 void PlayerRunningState::Update(float dt)
 {
-
+	
 }
 
 void PlayerRunningState::HandleKeyboard()
@@ -44,7 +44,7 @@ void PlayerRunningState::HandleKeyboard()
 	else if (IsKeyDown(DIK_LEFTARROW))
 	{
 		mPlayerData->player->SetReverse(true);
-
+		
 		//di chuyen sang trai
 		if (this->mPlayerData->player->GetVx() > -Define::PLAYER_MAX_RUNNING_SPEED)
 		{
@@ -73,17 +73,18 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 {
 	//lay phia va cham so voi player
 	//GameCollision::SideCollisions side = GameCollision::getSideCollision(this->mPlayerData->player, data);
-	if (impactor->Tag == Entity::EntityTypes::Stair)
+	if (impactor->Tag == Entity::EntityTypes::Stair&& side == Entity::Right)
 	{
 		this->mPlayerData->player->SetState(new PlayerClimbingState(this->mPlayerData));
 		return;
 	}
+	
 	switch (side)
 	{
 	case Entity::Left:
 	{
 		//va cham phia ben trai player
-		if (this->mPlayerData->player->getMoveDirection() == Player::MoveToLeft)
+		if (this->mPlayerData->player->getMoveDirection() == Player::MoveToLeft )
 		{
 			this->mPlayerData->player->allowMoveLeft = false;
 
@@ -166,14 +167,15 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 			return;
 		}
 		else
-
-			if (impactor->Tag != Entity::EntityTypes::Enemy)
+		{
+			if (impactor->Tag == Entity::EntityTypes::Static)
 			{
 				this->mPlayerData->player->SetVy(0);
 			}
 
 
-		return;
+			
+		}
 	}
 	}
 }

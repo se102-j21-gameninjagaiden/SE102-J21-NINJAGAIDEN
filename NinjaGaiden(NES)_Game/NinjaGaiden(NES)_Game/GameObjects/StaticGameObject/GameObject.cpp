@@ -82,7 +82,7 @@ void GameObject::Update(float dt)
 
 void GameObject::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
 {
-	if (this->_Active)
+	//if (this->_Active)
 	{
 		mAnimation->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 	}
