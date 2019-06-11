@@ -38,10 +38,14 @@ void Scene::OnKeyUp(int keyCode)
     
 }
 
-void Scene::OnMouseDown(float x, float y)
-{
-
-}
+//void Scene::OnMouseDown(float x, float y)
+//{
+//
+//}
+//
+//void Scene::OnMouseMove(float x, float y)
+//{
+//}
 
 D3DCOLOR Scene::GetBackcolor()
 {

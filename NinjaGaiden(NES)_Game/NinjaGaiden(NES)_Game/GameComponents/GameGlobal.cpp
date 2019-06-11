@@ -13,6 +13,7 @@ LPDIRECTINPUT8 GameGlobal::mDirectInput = nullptr;
 LPDIRECTINPUTDEVICE8 GameGlobal::mKeyBoard = NULL;
 
 BYTE GameGlobal::mKeyStates[256];
+bool GameGlobal::mKeyPress[256];
 GameGlobal::GameGlobal()
 {
 
@@ -118,6 +119,24 @@ void GameGlobal::SetCurrentKeyState(BYTE keyStates[256])
 		mKeyStates[i] = keyStates[i];
 	}
 }
+
+void GameGlobal::SetCurrentKeyPress(bool Keyspress[256])
+{
+	for (int i = 0; i < 256; i++)
+	{
+		mKeyPress[i] = Keyspress[i];
+	}
+}
+
+bool * GameGlobal::getCurrentKeypress()
+{
+	return mKeyPress;
+}
+
+//bool * GameGlobal::getCurrentKeypress()
+//{
+//	return mKeyPress;
+//}
 
 BYTE* GameGlobal::GetCurrentKeyState()
 {

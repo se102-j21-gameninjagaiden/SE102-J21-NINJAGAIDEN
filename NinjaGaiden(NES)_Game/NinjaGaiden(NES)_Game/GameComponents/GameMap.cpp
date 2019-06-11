@@ -37,14 +37,14 @@ void GameMap::LoadMap( int level)
 	//khoi tao cac khoi Brick (vien gach)
 #pragma region -ENEMY-
 	fstream f_ei("Resources/Map/Map" + to_string(level) + "/Enemy.txt");
-	float idType, posX, posY;
+	float idType, posX, posY, minX, maxX, originalTurn;
 	while (!f_ei.eof())
 	{
-		f_ei >> idType >> posX >> posY;
+		f_ei >> idType >> posX >> posY >> minX >> maxX >> originalTurn;
 		D3DXVECTOR3 position;
 			//fstream fs("Brick");
 		position = D3DXVECTOR3(posX, posY, 0);
-
+		
 		GameObject *object = nullptr;
 		switch (int(idType))
 		{
@@ -63,29 +63,66 @@ void GameMap::LoadMap( int level)
 		case 5:
 			object = new Goblin(position);
 			object->Tag = Entity::EntityTypes::Enemy;	
+			for (int i = 0; i < object->GetBullet().size(); i++)
+			{
+				object->GetBullet()[i]->Tag = Entity::EntityTypes::Enemy;
+				mListObjects.push_back(object->GetBullet()[i]);
+				mQuadTree->insertEntity(object->GetBullet()[i]);
+			}
 			break;		
 		case 6:
 			object = new Brute(position);
-			object->Tag = Entity::EntityTypes::Enemy;		
+			object->Tag = Entity::EntityTypes::Enemy;	
+			for (int i = 0; i < object->GetBullet().size(); i++)
+			{
+				object->GetBullet()[i]->Tag = Entity::EntityTypes::Enemy;
+				mListObjects.push_back(object->GetBullet()[i]);
+				mQuadTree->insertEntity(object->GetBullet()[i]);
+			}
 			break;
-		/*case 7 :	
-			position = D3DXVECTOR3(posX, posY, 0);
-			object = new Stair(position);
+		case 7:
+			object = new Canoneer(position);
 
-			object->Tag = Entity::EntityTypes::Stair;
+			object->Tag = Entity::EntityTypes::Enemy;
 
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-			break;*/
+
+			for (int i = 0; i < object->GetBullet().size(); i++)
+			{
+				object->GetBullet()[i]->Tag = Entity::EntityTypes::Enemy;
+				mListObjects.push_back(object->GetBullet()[i]);
+				mQuadTree->insertEntity(object->GetBullet()[i]);
+			}
+
+			break;
+		case 8:
+			object = new Runner(position);
+
+			object->Tag = Entity::EntityTypes::Enemy;
+			break;
+		case 9:
+			object = new Boss(position);
+		    object->Tag = Entity::EntityTypes::Enemy;
+			object->TagEnemy = Entity::EnemyType::Boss;
+
+		
+			for (int i = 0; i < object->GetBullet().size(); i++)
+			{
+				object->GetBullet()[i]->Tag = Entity::EntityTypes::Enemy;
+
+				mListObjects.push_back(object->GetBullet()[i]);
+				mQuadTree->insertEntity(object->GetBullet()[i]);
+			}
+			
+			break;
 	
 
 
 		}
 		if (object)
 		{
+			object->SetRange(minX, maxX);
+			object->SetOriginalTurn(originalTurn);
 			mListObjects.push_back(object);
-
 			mQuadTree->insertEntity(object);
 		}
 		
@@ -108,61 +145,45 @@ void GameMap::LoadMap( int level)
 		{
 		case 0:
 			object = new Butterfly(position);
-			object->Tag = Entity::EntityTypes::Item;	
 			break;
 		case 1:
 			object = new BlueMana(position,posStop);
-			object->Tag = Entity::EntityTypes::Item;			
 			break;
 		case 2:
 			object = new RedMana(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 3:
 			object = new RedBonus(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 4:
 			object = new BlueBonus(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;	
 			break;
 		case 5:
 			object = new RedHP(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 6:
 			object = new Fire(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 7:
 			object = new ThrowingStar(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;	
 			break;
 		case 8:
 			object = new TimeFreeze(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;		
 			break;
 		case 9:
 			object = new WindmillStar(position, posStop);
-			object->Tag = Entity::EntityTypes::Item;		
 			break;
-
-		/*case 10:
-			position = D3DXVECTOR3(posX, posY, 0);
-			object = new Stair(position, posStop);
-
-			object->Tag = Entity::EntityTypes::Stair;
-
-			mListObjects.push_back(object);
-			if (object)
-				mQuadTree->insertEntity(object);
-
-			break;*/
+		case 10:
+			object = new BirdBrown(position);
+			break;
+		
 		
 		}
-		
+
 		if (object)
 		{
+			object->Tag = Entity::EntityTypes::Item;
+
 			mListObjects.push_back(object);
 			mQuadTree->insertEntity(object);
 
@@ -239,12 +260,22 @@ bool GameMap::isContain(RECT rect1, RECT rect2)
 
 void GameMap::Update(float dt)
 {
+
 	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-		
+		//int k= mQuadTree->getTotalEntities();
+	
+			if (!isContain(mListObjects[i]->GetBound(), mCamera->GetBound()) && mListObjects[i]->Tag == Entity::EntityTypes::Enemy)
+			{
+				//mListObjects[i]->SetActive(true);
+				mListObjects[i]->SetActive(false);
+			}
 			mListObjects[i]->Update(dt);
+
+			
 		
 	}
+	
 }
 void GameMap::Draw()
 {
@@ -301,11 +332,14 @@ void GameMap::Draw()
  #pragma endregion
 
 #pragma region DRAW BRICK
-
+	
 	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-		//D3DXVECTOR2 pos(200,80);
-		mListObjects[i]->Draw(mListObjects[i]->GetPosition(),RECT(),D3DXVECTOR2(),trans);
+		if (isContain(mListObjects[i]->GetBound(), mCamera->GetBound()))
+		{
+			mListObjects[i]->Draw(mListObjects[i]->GetPosition(), RECT(), D3DXVECTOR2(), trans);
+
+		}
 		//mListBricks[i]->Draw(pos);
 	}
 

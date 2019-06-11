@@ -71,7 +71,6 @@ public:
 	bool invincible;
 	bool isJummping;
 	bool isOnStair;
-	bool isUpdate;
 	
 	ExplosionHit *e_Hit;
 
@@ -79,6 +78,12 @@ public:
 	Weapon *mWeapon;
 	void setPlayerMana(int mana);
 	int getPlayerMana();
+	void setPlayerHP(int HP);
+	int getPlayerHP();
+	int getIndex();
+	void setIndex(int _index);
+	void setAllowHit(bool allow);
+	bool getAllowHit();
 protected:
 	Camera *mCamera;
 
@@ -110,8 +115,9 @@ protected:
 	
 
 	int InvincibleTime;
-
+	int playerHP;
 	int playerMana;
+	int index;
 
 };
 

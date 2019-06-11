@@ -1,7 +1,7 @@
 #include "PlayerStandingBeatState.h"
 #include"PlayerStandingState.h"
 PlayerStandingBeatState::PlayerStandingBeatState(PlayerData *playerData)
-{
+{ 
 	this->mPlayerData = playerData;
 //	this->mPlayerData->player->SetVx(0);
 	
@@ -16,20 +16,20 @@ PlayerStandingBeatState::PlayerStandingBeatState(PlayerData *playerData)
 		//this->mPlayerData->player->SetVy(0);
 		this->mPlayerData->player->SetVx(0);
 	}
-	//this->mPlayerData->player->SetVy(this->mPlayerData->player->GetVy());
-	/*acceleratorY = 10;
-	acceleratorX = 3;*/
-	mTimePerFrame = 0.15;
+	
+	mTimePerFrame = 0.3;
 	
 	Sound::getInstance()->play("Beat", true, 0);
-	
+	mTimeHit = 15;
+	mCurrentTotalTime = 0;
+	mTimeChangeState = 0;
 	//this->mPlayerData->player->isUpdate = true;
 }
 
 
 PlayerStandingBeatState::~PlayerStandingBeatState()
 {
-	//Sound::getInstance()->stop("Best");
+	
 }
 
 void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
@@ -44,10 +44,27 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 	{
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active && this->mPlayerData->player->GetReserse())
 		{
-			//this->mPlayerData->player->Tag = Entity::EntityTypes::None;
+			
+			if (impactor->TagEnemy == Entity::EnemyType::Boss)
+			{
+				mTimeHit--;
+				if (mTimeHit <= 0)
+				{
+					impactor->_HP -= 1;
+				//	this->mPlayerData->player->setAllowHit(false);
+					mTimeHit = 15;
+				}
+				
+				//this->mPlayerData->player->
+			}
+			else
+			{
+				this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
+				this->mPlayerData->player->setAllowHit(false);
+				impactor->Hidden();
+				
+			}
 		
-			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
-			impactor->OnCollision(this->mPlayerData->player, data, Entity::SideCollisions::Right);
 
 		}
 		if (impactor->Tag == Entity::EntityTypes::Item)
@@ -56,7 +73,7 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 			
 		
 			impactor->OnCollision();
-			//impactor->Hidden();
+			
 		}
 		break;
 	}
@@ -66,10 +83,24 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 	
 		if (impactor->Tag==Entity::EntityTypes::Enemy && impactor->_Active == true && ! this->mPlayerData->player->GetReserse())
 		{
-		
-			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
-		
-			impactor->Hidden();
+			if (impactor->TagEnemy == Entity::EnemyType::Boss)
+			{
+				mTimeHit--;
+				if (mTimeHit <= 0)
+				{
+					impactor->_HP -= 1;
+					//this->mPlayerData->player->setAllowHit(false);
+					mTimeHit = 15;
+				}
+			}
+				
+			else
+			{
+				this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
+				this->mPlayerData->player->setAllowHit(false);
+				impactor->Hidden();
+			}
+			
 		}
 		if (impactor->Tag == Entity::EntityTypes::Item)
 		{
@@ -84,16 +115,23 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 
 	case Entity::TopRight: case Entity::TopLeft: case Entity::Top:
 	{
-		if (impactor->Tag == Entity::EntityTypes::Enemy)
-		{
+	
+			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
-		}
+			{
+				this->mPlayerData->player->invincible = true;
+				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
+
+				this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+				return;
+			}
+		
 		if (impactor->Tag == Entity::EntityTypes::Item)
 		{
 
 
 			impactor->OnCollision();
-			//impactor->Hidden();
+			
 		}
 		break;
 	}
@@ -103,7 +141,15 @@ void PlayerStandingBeatState::OnCollision(Entity * impactor, Entity::SideCollisi
 		
 		if (impactor->Tag == Entity::EntityTypes::Enemy)
 		{
+			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
+			{
+				this->mPlayerData->player->invincible = true;
+				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
+
+				this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+				return;
+			}
 		}
 		if (impactor->Tag == Entity::EntityTypes::Item)
 		{
@@ -141,10 +187,10 @@ void PlayerStandingBeatState::Update(float dt)
 		//this->mPlayerData->player->isJummping = false;
 
 	}
-	if (mCurrentTotalTime >= mTimePerFrame * 3)
+	if (mTimeChangeState >= mTimePerFrame * 2)
 	{
 
-		mCurrentTotalTime = 0;
+		mTimeChangeState = 0;
 	
 			mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
 			return;
@@ -155,6 +201,12 @@ void PlayerStandingBeatState::Update(float dt)
 	else
 	{
 		mCurrentTotalTime += dt;
+		mTimeChangeState += dt;
+		if (mCurrentTotalTime >= mTimePerFrame)
+		{
+			this->mPlayerData->player->setIndex(1);
+			mCurrentTotalTime = 0;
+		}
 	}
 }
 

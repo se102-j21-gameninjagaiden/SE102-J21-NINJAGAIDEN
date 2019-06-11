@@ -3,14 +3,15 @@
 Entity::Entity()
 {
     Tag = None;
+	TagWeapon = NoneWeapon;
 //	relive = 0;
 //	Active = true;
-	
+	TagEnemy = NoneEnemy;
 }
 
 D3DXVECTOR3 Entity::GetPosition()
 {
-    return D3DXVECTOR3(posX, posY, 0);
+	    return D3DXVECTOR3(posX, posY, 0);
 }
 
 RECT Entity::GetBound()

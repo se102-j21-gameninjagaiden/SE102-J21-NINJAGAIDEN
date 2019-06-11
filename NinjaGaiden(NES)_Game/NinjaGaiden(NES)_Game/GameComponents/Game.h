@@ -66,6 +66,7 @@ protected:
 	void Update(float dt);
 
 	BYTE  mKeyStates[256]; // DirectInput keyboard state buffer 
+	bool pressKey[256];
 	
 
 	DIDEVICEOBJECTDATA mKeyEvents[KEYBOARD_BUFFERD_SIZE]; // Buffered keyboard data

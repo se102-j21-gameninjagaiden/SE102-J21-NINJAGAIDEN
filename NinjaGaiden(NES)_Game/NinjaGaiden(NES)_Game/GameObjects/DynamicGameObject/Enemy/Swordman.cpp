@@ -6,34 +6,49 @@ Swordman::~Swordman()
 
 Swordman::Swordman(D3DXVECTOR3 position)
 {
-	//mAnimation = new Animation("Resources/Enemy/Swordman.png", 3, 1, 3, 0.25f);
-	////this->vx = 0;
-	////this->vy = 0;
-	//Tag = Enemy;
-	////mAnimation->SetPosition(position);
-	//this->SetPosition(position);
-	//Entity::SetWidth(mAnimation->GetWidth());
-	//Entity::SetHeight(mAnimation->GetHeight());
-	init(position);
+	
 
+	init(position);
+	turnLeft = -1;
+
+	//vx = turnLeft*SPEED;
+	originalPos = position;
+	minX = -999;
+	maxX = 999;
+	TagEnemy = Entity::Swordman;
 }
 void Swordman::Update(float dt)
 {
 	GameObject::Update(dt);
-	//vx -= 5 * dt;
-	//Entity::Update(dt);
-	/*relive += dt;
-	if (die ==1 && relive >= 10)
+	mAnimation->SetPosition(this->GetPosition());
+	if (_Active == true)
 	{
-		this->SetPosition(200, 150);
-		relive = 0;
-		die = 0;
-	}*/
-	//if (die == 1)
-	//{
-	//	delete mAnimation;
-	//}
-	
+		if (turnLeft == -1)
+			mAnimation->FlipVertical(true);
+		else
+			mAnimation->FlipVertical(false);
+		vx = turnLeft * SPEED;
+		//vy = 10;
+		if (posX >= maxX)
+			turnLeft = -1;
+		if (posX <= minX)
+			turnLeft = 1;
+	}
+	else
+	{
+		vx = 0;
+		vy = 0;
+		if (mPlayer != NULL)
+		{
+			if (mPlayer->GetPosition().x >= originalPos.x)
+			{
+				turnLeft = 1;
+			}
+			else
+				turnLeft = -1;
+		}
+		
+	}
 	
 }
 
@@ -63,15 +78,37 @@ float Swordman::SecondPerFrame()
 	return 0.3f;
 }
 
+void Swordman::turn()
+{
+	turnLeft = -turnLeft;
+	vx = vx*turnLeft;
+}
+
+void Swordman::checkPlayerPosition()
+{
+}
+
+void Swordman::SetActive(bool variable)
+{
+	GameObject::SetActive(variable);
+}
+
 
 
 void Swordman::OnCollision(Entity * impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	////this->SetPosition(-100, 0);
 	//die = 1;
-	vx = 0;
-	vy = 0;
-	//Cho ra khỏi màn hình
-	this->SetPosition(-100, -100);
+	if (impactor->Tag == EntityTypes::Ninja)
+	{
+		vx = 0;
+		vy = 0;
+		//Cho ra khỏi màn hình
+		this->SetPosition(-100, -100);
+	}
+	if ((impactor->Tag == EntityTypes::Static))
+	{
+		vy = 0;
+	}
 }
  

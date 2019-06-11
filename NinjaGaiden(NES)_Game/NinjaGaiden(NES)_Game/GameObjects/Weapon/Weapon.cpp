@@ -1,15 +1,16 @@
-#include "Weapon.h"
+﻿#include "Weapon.h"
 
 
 
 Weapon::Weapon()
 {
-	
+	mTimeHit = 5;
 }
 
 Weapon::Weapon(D3DXVECTOR3 postition)
 {
 	_amount = 1;
+	
 }
 
 
@@ -108,4 +109,78 @@ void Weapon::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 std::vector<GameObject*> Weapon::GetWeapon()
 {
 	return _Weapon;
+}
+
+void Weapon::OnCollision(Entity * impactor,ExplosionHit *e_Hit ,Weapon* mWeapon,GameUI *gameUI, int indexWeapon)
+{
+	if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true)
+	{
+		impactor->_Active == false;
+
+		if (impactor->TagEnemy == Entity::Boss)
+		{
+			mTimeHit--;
+			if (mTimeHit <= 0)
+			{
+				impactor->_HP -= 1;
+				gameUI->SetenemyHP(impactor->_HP);
+				mTimeHit = 5;
+			}
+		}
+		else
+		//if ()   Xét loại Enemy để tính điểm
+		{
+			switch (impactor->TagEnemy)
+			{
+			case Entity::Swordman: case Entity ::Axe_E:
+				gameUI->SetplayerScore(gameUI->GetplayerScore() + 100);
+				break;
+			case Entity::Paner: case Entity::Brute: case Entity::Cannoer: case Entity::Ball_E: case Entity::Runner:
+				gameUI->SetplayerScore(gameUI->GetplayerScore() + 200);
+				break;
+			case Entity::Eagle: case Entity::Goblin:
+				gameUI->SetplayerScore(gameUI->GetplayerScore() + 300);
+				break;
+
+			default:
+				break;
+			}
+			e_Hit->_Active = true;
+			e_Hit ->SetPosition ( impactor->GetPosition());
+			//e_Hit = new ExplosionHit(impactor->GetPosition());
+			impactor->Hidden();
+
+		}
+		Sound::getInstance()->play("BeatEnemy", true, 0);
+		
+		
+
+		mWeapon->GetWeapon()[indexWeapon]->_Active = false;
+		mWeapon->GetWeapon()[indexWeapon]->SetVx(0);
+		mWeapon->GetWeapon()[indexWeapon]->SetVy(0);
+		mWeapon->SetVx(0);
+		mWeapon->SetVy(0);
+		mWeapon->_Active = false;
+
+	}
+	if (impactor->Tag == Entity::EntityTypes::Item)
+	{
+		if (impactor->TagItem != Entity::ItemType::Container && impactor->_Active == false)
+		{
+
+			impactor->_Active = false;
+
+			mWeapon->SetVx(0);
+			mWeapon->SetVy(0);
+			mWeapon->_Active = false;
+		}
+		impactor->OnCollision();
+
+
+	}
+	else
+	{
+
+	}
+
 }

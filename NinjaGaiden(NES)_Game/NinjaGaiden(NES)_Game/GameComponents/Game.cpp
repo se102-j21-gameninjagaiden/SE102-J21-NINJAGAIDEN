@@ -1,7 +1,8 @@
 #include "Game.h"
 #include "GameGlobal.h"
 #include "../GameControllers/SceneManager.h"
-#include "../Scenes/DemoScene.h"
+#include "../Scenes/SceneGame.h"
+#include"../Scenes/SceneStartGame.h"
 
 
 Game::Game(int fps)
@@ -9,7 +10,7 @@ Game::Game(int fps)
 	mFPS = fps;
 	/*mBackground = CreateSurfaceFromFile(GameGlobal::GetCurrentDevice(), "Resources/background.jpg");
 	GameGlobal::GetCurrentDevice()->StretchRect(mBackground, NULL, mBackBuffer, NULL, D3DTEXF_NONE);*/
-	SceneManager::GetInstance()->ReplaceScene(new DemoScene());
+	SceneManager::GetInstance()->ReplaceScene(new SceneStartGame());
 
 
 
@@ -127,14 +128,18 @@ void Game::ProcessKeyBoard()
 	hr = GameGlobal::GetCurrentKeyBoard()->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), mKeyEvents, &dwElements, 0);
 	//	GameGlobal::SetCurrentKeyBoard(G_KeyBoard);
 		// Scan through all data, check if the key is pressed or released
+	for (int i = 0; i < 256; i++)
+	{
+		pressKey[i] = false;
+	}
 	for (DWORD i = 0; i < dwElements; i++)
 	{
 		int KeyCode = mKeyEvents[i].dwOfs;
 		int KeyState = mKeyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			SceneManager::GetInstance()->GetCurrentScene()->OnKeyDown(KeyCode);
-		else
-			SceneManager::GetInstance()->GetCurrentScene()->OnKeyUp(KeyCode);
+		{
+			pressKey[KeyCode] = true;
+		}
 	}
 }
 
@@ -151,6 +156,7 @@ void Game::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta)
 
 	
 	GameGlobal::SetCurrentKeyState(mKeyStates);
+	GameGlobal::SetCurrentKeyPress(pressKey);
 	
 
 }
@@ -273,6 +279,7 @@ su dung cac event cua window
 		GameGlobal::isGameRunning = false;
 		PostQuitMessage(0);
 		break;
+
 
 		/*case WM_LBUTTONDOWN:
 			SceneManager::GetInstance()->GetCurrentScene()->OnMouseDown((float)GET_X_LPARAM(lParam),

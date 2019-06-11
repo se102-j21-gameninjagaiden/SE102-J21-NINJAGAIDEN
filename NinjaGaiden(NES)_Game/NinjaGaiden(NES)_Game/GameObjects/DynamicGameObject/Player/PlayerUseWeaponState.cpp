@@ -81,7 +81,7 @@ void PlayerUseWeaponState::OnCollision(Entity * impactor, Entity::SideCollisions
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
-			this->mPlayerData->player->AddPosition(-FrameWidth, data.RegionCollision.bottom - data.RegionCollision.top);
+			this->mPlayerData->player->AddPosition(-FrameWidth, -FrameHeight/2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
 		break;

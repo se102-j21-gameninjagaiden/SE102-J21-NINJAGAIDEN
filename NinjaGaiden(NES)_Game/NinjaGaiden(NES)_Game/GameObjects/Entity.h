@@ -39,11 +39,16 @@ public:
 	};
 	enum WeaponType
 	{
-		ThrowingStarWeapon,FireWeapon,WindmillStarWeapon
+		NoneWeapon,ThrowingStarWeapon,FireWeapon,WindmillStarWeapon , BallWeapon
+	};
+	enum EnemyType
+	{
+		NoneEnemy,Brute, Swordman, Goblin ,Paner, Eagle , Cannoer,Boss ,Ball_E ,Axe_E, Runner
 	};
 	WeaponType TagWeapon;
 	ItemType TagItem;
     EntityTypes Tag; //Tag de nhan vien loai Entity
+	EnemyType TagEnemy;
 
     virtual RECT GetBound();
 
@@ -91,13 +96,14 @@ public:
 	virtual void OnCollision();
 	bool _allowPlayerpick;
 	bool _Active;
+	int _HP;
+	bool isUpdate;
 
 	
 protected:
 
     //duoc goi khi set position cua Entity, dung cho ke thua
     virtual void OnSetPosition(D3DXVECTOR3 pos);
-
     //vi tri tam position x va y
      float posX, posY;
 

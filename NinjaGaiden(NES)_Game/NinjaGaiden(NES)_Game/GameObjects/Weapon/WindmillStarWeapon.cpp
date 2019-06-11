@@ -2,7 +2,7 @@
 
 WindmillStarWeapon::WindmillStarWeapon(D3DXVECTOR3 position)
 {
-	GameObject  *object = new GameObject(position, "Resources/Item_Effect/WindmillStar.png", 1, 1, 1, 1);
+	GameObject  *object = new GameObject(position, "Resources/Item_Effect/WindmillStarWeapon.png", 1, 1, 1, 1);
 	flag = 1;
 
 
@@ -33,7 +33,7 @@ void WindmillStarWeapon::Update(float dt)
 			_Active = false;
 			oT = 65840;
 		}
-		if (oT >= 66040)
+		if (oT >= 65931)
 		{
 			oT = 65840;
 		}
@@ -44,7 +44,7 @@ void WindmillStarWeapon::Update(float dt)
 			Entity::CollisionReturn r = GameCollision::RecteAndRect(_Weapon[0]->GetBound(), _boundPlayer);
 
 	
-			if (r.IsCollided && oT>= 65940 )
+			if (r.IsCollided && oT>= 65885 )
 			{
 				_Active = false;
 				oT = 65840;
@@ -60,7 +60,7 @@ void WindmillStarWeapon::Update(float dt)
 			if (_direction2)
 			{
 
-				this->vx = ((100 * cos(2 * 3.14*0.005*oT + 3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
+				this->vx = ((100 * cos(2 * 3.14*0.01*oT + 3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
 				this->vy = (GetPosWeaponAtPlayer().y - 10 - this->posY);
 				
 
@@ -68,7 +68,7 @@ void WindmillStarWeapon::Update(float dt)
 			else
 			{
 
-				this->vx = ((100 * cos(2 * 3.14*0.005*oT + -3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
+				this->vx = ((100 * cos(2 * 3.14*0.01*oT + -3.14 / 2)) + GetPosWeaponAtPlayer().x) / dt;
 				this->vy = (GetPosWeaponAtPlayer().y - 10 - this->posY);
 
 			}

@@ -19,23 +19,37 @@ public:
 	void OnCollision();
 	float _timeSpawn;
 	float _posStop;
+	//Add
+	virtual vector<GameObject*> GetBullet();
+	virtual void SetActive(bool variable);
+	void GetPLayer(Entity* player);
+	void SetRange(float min, float max);
+	void SetOriginalTurn(int turn);
+	bool mCurrentServe;
+	//add
 	GameObject(D3DXVECTOR3 position, const char* filename, int totalFrame, int row, int colum, int seconeFrame);
 
 protected:
 
 	GameObject();
-
-
+	int originalTurn;
+	//Add
+	float minX;
+	float maxX;
+	Entity* mPlayer;
+	D3DXVECTOR3 originalPos;
+	int turnLeft;
+	//add
 	bool init(D3DXVECTOR3 position);
 
 	void OnSetPosition(D3DXVECTOR3 poks);
 
-	virtual const char* FileName() ; // bat buoc phai override ham nay
+	virtual const char* FileName() ; 
 	virtual int TotalFrame() ; //so frame cua animation
 	virtual int Row() ; // so row cua resource hinh anh animation
 	virtual int Column() ; // so cot cua resource hinh anh animation
 	virtual float SecondPerFrame() ; //so giay de chuyen frame cua animation
-	//virtual D3DCOLOR Color() = 0;
+	
 
 	Animation *mAnimation;
 };      

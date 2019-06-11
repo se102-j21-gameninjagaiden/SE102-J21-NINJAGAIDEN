@@ -3,21 +3,13 @@
 
 void GameUI::_initialize()
 {
-	// init weaponSprite
-	// _currentWeapon dùng để vẽ hình weapon trên UI thôi
-	//weapons = vector<GSprite*>();
-	/*weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::Dagger_ID), 1));
-	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::Boomerang_ID), 1));
-	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::Throw_Axe_ID), 1));
-	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::StopWatch_ID), 1));
-	weapons.push_back(new GSprite(TextureManager::getInstance()->getTexture(EnumID::HolyWaterItem_ID), 1));*/
+	
 
-	// init hp sprite
-	//_hpSprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::HP_ID), 1);
+	
 	_hpSprite = new Sprite("Resources/Item_Effect/heal.png");
 	_boxWeapon = new Sprite("Resources/Item_Effect/BoxWeapon.png");
 	_manaSprite = new Sprite("Resources/Item_Effect/mana.png");
-	//_Weapon = new Sprite("Resources/Item_Effect/ThrowingStarWeapon.png");
+	
 	_gameTimer = 0;
 	_gameStage = 1;
 	_liveCount = 2;
@@ -28,7 +20,7 @@ void GameUI::_initialize()
 GameUI::GameUI(LPDIRECT3DDEVICE9 d3ddev_, int size_, int screenWidth_, int screenHeight_)
 {
 	this->_initialize();
-	//_sprite = new GSprite(TextureManager::getInstance()->getTexture(EnumID::GameUI_ID), 1);
+	
 	_arial = new Font(d3ddev_, size_, screenWidth_, screenHeight_);
 }
 void GameUI::drawTable()
@@ -36,7 +28,7 @@ void GameUI::drawTable()
 	// draw table
 	
 	//draw Box Weapon
-	_boxWeapon->Draw(D3DXVECTOR3(95,8,0));
+	_boxWeapon->Draw(D3DXVECTOR3(115,8,0));
 	//_Weapon->Draw(D3DXVECTOR3(95, 8, 0));
 	// draw Mana
 	_manaSprite->Draw(D3DXVECTOR3(45,50,0));
@@ -69,12 +61,7 @@ void GameUI::drawTable()
 
 
 
-	// draw weapon
-	/*if (_currentWeapon != -1)
-	{
-		weapons.at(_currentWeapon)->Draw(345, 48);
-	}
-*/
+	
 }
 
 void GameUI::drawScore()
@@ -99,17 +86,7 @@ void GameUI::drawScore()
 	_arial->render(_liveCount, 20, 40);
 
 	_arial->render(_playerMana, 54, 42);
-	//_arial->render(_weaponCount, 430, 50);
-
-	//_arial->render("collide ID: ", 150, 80);
-	//_arial->render(_collideID, 250, 80);
-	//_arial->render("colstair: ", 390, 80);
-	//_arial->render(_colabc, 480, 80);
-	//_arial->render("ranger: ", 290, 80);
-	//_arial->render(_rang, 360, 80);
-	////_arial->render("onstair: ", 290, 80);
-	//_arial->render(_onstair, 390, 100);
-	//_arial->render(_checkCameraHaft, 100, 100);
+	
 }
 
 void GameUI::initTimer(int deltaTime_)
@@ -127,15 +104,7 @@ void GameUI::SetTimer(int x)
 	_gameTimer += x;
 }
 
-//int GameUI::GetWeaponCount()
-//{
-//	return _weaponCount;
-//}
 
-//void GameUI::SetWeaponCount(int x)
-//{
-//	_weaponCount += x;
-//}
 
 void GameUI::SetplayerScore(int x)
 {
@@ -183,27 +152,7 @@ void GameUI::Update(float dt)
 	{
 		_gameTimer = _gameTimer - dt * 1000;
 	}
-	//if (_playerHP == 0)
-	//{
-	//	if (_liveCount > 0)
-	//	{
-	//		_liveCount--;
-	//		//_playerHP = MAX_HP;
-	//		SetplayerHP(MAX_HP);
-
-	//		initTimer (150);
-	//	}
-	//	else
-	//	{
-	//		_liveCount = 2;
-	//		SetplayerHP(MAX_HP);
-
-	//		_playerScore = 0;
-	//		initTimer(150);
-	//	}
-
-	//	
-	//}
+	
 }
 
 void GameUI::SetLiveCount(int x)
@@ -225,133 +174,89 @@ int GameUI::GetplayerMana()
 {
 	return _playerMana;
 }
+/*
+ void GameUI::CheckRuleGame(GameUI * gameUI, Player * mPlayer, Entity * impactor)
+{
+	if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat)
+		{
+			gameUI->SetplayerHP(gameUI->GetplayerHP() - 1);
+			
+			Sound::getInstance()->play("Injured", true, 0);
+			
+		}
+		if (impactor->Tag == Entity::EntityTypes::Item && impactor->_allowPlayerpick == true  )//&& mPlayer->getState()!=PlayerState::StandingBeat)
+		{
+			
+			Sound::getInstance()->play("PickItem", true, 0);
+			if (impactor->TagItem == Entity::ItemType::BlueMana)
+			{
+				//gameUI->SetplayerScore(gameUI->Ge)
+				gameUI->SetplayerMana(gameUI->GetplayerMana() + 5);
+				mPlayer->setPlayerMana(gameUI->GetplayerMana());
+				impactor->Hidden();
+			}
+			if (impactor->TagItem == Entity::ItemType::RedMana)
+			{
+				//gameUI->SetplayerScore(gameUI->Ge)
+				gameUI->SetplayerMana(gameUI->GetplayerMana() + 10);
+				mPlayer->setPlayerMana(gameUI->GetplayerMana());
+				impactor->Hidden();
+			}
+
+			if (impactor->TagItem == Entity::ItemType::BlueBonus)
+			{
+				//gameUI->SetplayerScore(gameUI->Ge)
+				gameUI->SetplayerScore(gameUI->GetplayerScore() + 500);
+				impactor->Hidden();
+			}
+			if (impactor->TagItem == Entity::ItemType::RedBonus)
+			{
+				//gameUI->SetplayerScore(gameUI->Ge)
+				gameUI->SetplayerScore(gameUI->GetplayerScore() + 1000);
+				impactor->Hidden();
+			}
+			if (impactor->TagItem == Entity::ItemType::RedHP)
+			{
+				//gameUI->SetplayerScore(gameUI->Ge)
+				gameUI->SetplayerHP(gameUI->GetplayerHP() + 6);
+				Sound::getInstance()->play("BonusHP", true, 0);
+				impactor->Hidden();
+			}
+			if (impactor->TagItem == Entity::ItemType::ThrowingStar)
+			{
+
+				impactor->SetPosition(-100, 14);
+			
+				mPlayer->mWeapon = new ThrowingStarWeapon(mPlayer->GetPosition());
+				gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/ThrowingStarBox.png");
 
 
 
-//void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_)
-//{
-//	//(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, EnumID weaponID_, int weaponCount_, int enemyHP_)
-//	_gameStage = gameStage_;
-//	_playerScore = playerScore_;
-//	if (_gameTimer <= 0)
-//	{
-//	}
-//	else
-//		_gameTimer = _gameTimer - deltaTime_;
-//	//_weaponCount = weaponCount_;
-//	_playerHP = playerHP_;
-//	_enemyHP = enemyHP_;
-//	_liveCount = liveCount_;
+			}
+			if (impactor->TagItem == Entity::ItemType::WindmillStar)
+			{
+				impactor->Hidden();
 
-	//switch (weaponID_)
-	//{
+				mPlayer->mWeapon = new WindmillStarWeapon(mPlayer->GetPosition());
+				gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/WindmillStarBox.png");
+			}
+			if (impactor->TagItem == Entity::ItemType::Fire)
+			{
+				impactor->Hidden();
 
-	//case Dagger_ID:
-	//	_currentWeapon = 0;
-	//	break;
-	//case Boomerang_ID:
-	//	_currentWeapon = 1;
-	//	break;
-	//case Throw_Axe_ID:
-	//	_currentWeapon = 2;
-	//	break;
-	//case StopWatch_ID:
-	//	_currentWeapon = 3;
-	//	break;
-	//case HolyWaterItem_ID:
-	//	_currentWeapon = 4;
-	//	break;
-	//default:
-	//	_currentWeapon = -1;
-	//	break;
-	//}
+				mPlayer->mWeapon = new FireWeapon(mPlayer->GetPosition());
+				gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/FireBox.png");
+			}
+			if (impactor->TagItem == Entity::ItemType::TimeFreeze)
+			{
 
-//}
-
-
-//void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, int viewPortX, int viewPortY)
-//{
-//	//(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, EnumID weaponID_, int weaponCount_, int enemyHP_)
-//	_gameStage = gameStage_;
-//	_playerScore = playerScore_;
-//	if (_gameTimer <= 0)
-//	{
-//	}
-//	else
-//		_gameTimer = _gameTimer - deltaTime_;
-//	//_weaponCount = weaponCount_;
-//	_playerHP = playerHP_;
-//	_enemyHP = enemyHP_;
-//	_liveCount = liveCount_;
-	/*_playerX = _x;
-	_playerY = _y;
-	_viewPortY = viewPortY;
-	_viewPortX = viewPortX;*/
-	//switch (weaponID_)
-	//{
-	//	/*case Watch_ID:
-	//	_currentWeapon = 0;
-	//	break;*/
-	//case Dagger_ID:
-	//	_currentWeapon = 0;
-	//	break;
-	//case Boomerang_ID:
-	//	_currentWeapon = 1;
-	//	break;
-	//case Throw_Axe_ID:
-	//	_currentWeapon = 2;
-	//	break;
-	//default:
-	//	_currentWeapon = -1;
-	//	break;
-	//}
-
-//}
+			}
+		}
+}
+*/
 
 
 
-//void GameUI::updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, int viewPortX, int viewPortY, int collideId, bool abc, int rang, bool onstair, float checkCameraHaft)
-//{
-//
-//	_gameStage = gameStage_;
-//	_playerScore = playerScore_;
-//	if (_gameTimer <= 0)
-//	{
-//	}
-//	else
-//		_gameTimer = _gameTimer - deltaTime_;
-//	//_weaponCount = weaponCount_;
-//	_playerHP = playerHP_;
-//	_enemyHP = enemyHP_;
-//	_liveCount = liveCount_;
-//
-//	_checkCameraHaft = checkCameraHaft;
-//
-	//switch (weaponID_)
-	//{
-
-	//case Dagger_ID:
-	//	_currentWeapon = 0;
-	//	break;
-	//case Boomerang_ID:
-	//	_currentWeapon = 1;
-	//	break;
-	//case Throw_Axe_ID:
-	//	_currentWeapon = 2;
-	//	break;
-	//case StopWatch_ID:
-	//	_currentWeapon = 3;
-	//	break;
-
-	//case HolyWater_ID:
-	//	_currentWeapon = 4;
-	//	break;
-	//default:
-	//	_currentWeapon = -1;
-	//	break;
-	//}
-
-//}
 
 GameUI::~GameUI(void)
 {

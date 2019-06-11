@@ -62,6 +62,8 @@ public:
 	
 
 	static void SetCurrentKeyState(BYTE keyStates[256]);
+	static void SetCurrentKeyPress(bool Keyspress[256]);
+	static bool* getCurrentKeypress();
 	static BYTE* GetCurrentKeyState();
 
 private:
@@ -75,6 +77,7 @@ private:
 	
 
 	static BYTE  mKeyStates[256]; // DirectInput keyboard state buffer 
+	static  bool mKeyPress[256];
 	
 };
 

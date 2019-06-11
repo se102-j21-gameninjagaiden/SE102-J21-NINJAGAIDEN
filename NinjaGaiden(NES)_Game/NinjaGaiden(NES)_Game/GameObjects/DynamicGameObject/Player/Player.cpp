@@ -14,9 +14,9 @@ Player::Player()
 	mAnimationStanding = new Animation("Resources/Ninja/standing.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationJumping = new Animation("Resources/Ninja/jumping.png", 4, 1, 4, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationRunning = new Animation("Resources/Ninja/running.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
-	mAnimationStandingBeat = new Animation("Resources/Ninja/standingbeat.png", 3, 1, 3, 0.15f, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationStandingBeat = new Animation("Resources/Ninja/standingbeat.png", 2, 1, 2, 0.3f, D3DCOLOR_XRGB(255, 163, 177));
     mAnimationSitting= new Animation ("Resources/Ninja/sitting.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
-	mAnimationSittingBeat = new Animation("Resources/Ninja/sittingbeat.png", 3, 1, 3, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
+	mAnimationSittingBeat = new Animation("Resources/Ninja/sittingbeat.png", 2, 1, 2, 0.3f, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationDying = new Animation("Resources/Ninja/dying.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationClimbing = new Animation("Resources/Ninja/Climbing.png", 2, 1, 2, 0.25f, D3DCOLOR_XRGB(255, 163, 177));
 	mAnimationClinging = new Animation("Resources/Ninja/Clinging.png", 1, 1, 1, 0, D3DCOLOR_XRGB(255, 163, 177));
@@ -31,16 +31,18 @@ Player::Player()
     allowJump = false;
 	allowHit = false;
 	isJummping = false;
+	index = 0;
 	Tag = Ninja;
-	InvincibleTime = 70;
+	InvincibleTime = 80;
 	
-	e_Hit = new ExplosionHit();
+	e_Hit = new ExplosionHit(this->GetPosition());
 	e_Hit->_Active = false;
 	isOnStair = false;
 	timeStopUpdateAni = 0;
 	isUpdate = true;
 	//mWeapon = nullptr;
-	playerMana = 1000;
+	playerMana = 0;
+	playerHP = 16;
 	
 }
 
@@ -132,7 +134,7 @@ void Player::OnKeyPressed(int key)
 
 			}
 		}
-		allowHit = false;
+		//allowHit = false;
 	}
 	if (key == DIK_C)
 	{
@@ -145,6 +147,7 @@ void Player::OnKeyUp(int key)
 {
     if (key == DIK_SPACE)
         allowJump = true;
+
 	if (key == DIK_Z)
 		allowHit = true;
 	if (key == DIK_C)
@@ -220,6 +223,36 @@ int Player::getPlayerMana()
 	return playerMana;
 }
 
+void Player::setPlayerHP(int HP)
+{
+	playerHP = HP;
+}
+
+int Player::getPlayerHP()
+{
+	return playerHP;
+}
+
+int Player::getIndex()
+{
+	return index;
+}
+
+void Player::setIndex(int _index)
+{
+	index = _index;
+}
+
+void Player::setAllowHit(bool allow)
+{
+	allowHit = allow;
+}
+
+bool Player::getAllowHit()
+{
+	return allowHit;
+}
+
 void Player::SetCamera(Camera *camera)
 {
 	this->mCamera = camera;
@@ -259,7 +292,7 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 			if (InvincibleTime <= 0)
 			{
 				invincible=false;
-				InvincibleTime = 70;
+				InvincibleTime = 80;
 			}
 		}
 		else mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);

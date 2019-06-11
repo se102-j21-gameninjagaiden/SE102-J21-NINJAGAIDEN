@@ -4,6 +4,8 @@
 #include "Font.h"
 #include <vector>
 #include "../GameComponents/Sprite.h"
+//#include "../GameObjects/DynamicGameObject/Player/Player.h"
+#include "../GameComponents/Sound.h"
 using namespace std;
 
 #define MAX_HP 16
@@ -25,12 +27,7 @@ protected:
 	int _enemyHP;
 	int _playerMana;
 	int _liveCount;
-	//int _currentWeapon;
-
-
-	//float _checkCameraHaft;
-	//vector<GSprite*> weapons;
-	//GSprite* _hpSprite;
+	
 	Sprite* _hpSprite;
 	void _initialize();
 
@@ -57,13 +54,11 @@ public:
 	int GetLiveCount();
 	void SetplayerMana(int x);
 	int GetplayerMana();
+	//void CheckRuleGame(GameUI *gameUI, Player *mPlayer, Entity *impactor);
 	// deltaTime_ is in milisecond
-	//void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_ = 20);
 	Sprite * _boxWeapon;
 
-//	void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, int viewPortX, int viewPortY);
 
-	//void updateScore(int gameStage_, int playerScore_, int deltaTime_, int playerHP_, int liveCount_, int weaponCount_, EnumID weaponID_, int enemyHP_, int _x, int _y, int viewPortX, int viewPortY, int collideId, bool abc, int rang, bool onstair, float checkCameraHaft);
 	~GameUI(void);
 };
 

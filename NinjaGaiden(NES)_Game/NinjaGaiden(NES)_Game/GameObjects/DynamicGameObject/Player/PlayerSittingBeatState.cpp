@@ -7,10 +7,11 @@ PlayerSittingBeatState::PlayerSittingBeatState(PlayerData *playerData)
 	this->mPlayerData = playerData;
 	this->mPlayerData->player->SetVx(0);
 	this->mPlayerData->player->SetVy(0);
-	mTimePerFrame = 0.25;
+	mTimePerFrame = 0.3;
 	//this->mPlayerData->player->isUpdate = true;
 	
 	Sound::getInstance()->play("Beat", true, 0);
+	mTimeHit = 15;
 }
 
 
@@ -24,12 +25,29 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 	{
 	case Entity::Left:
 	{
-		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active)
+		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active && this->mPlayerData->player->GetReserse())
 		{
-			//this->mPlayerData->player->Tag = Entity::EntityTypes::None;
-			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
 
-			impactor->OnCollision();
+			if (impactor->TagEnemy == Entity::EnemyType::Boss)
+			{
+				mTimeHit--;
+				if (mTimeHit <= 0)
+				{
+					impactor->_HP -= 1;
+					//	this->mPlayerData->player->setAllowHit(false);
+					mTimeHit = 15;
+				}
+
+				//this->mPlayerData->player->
+			}
+			else
+			{
+				this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
+				this->mPlayerData->player->setAllowHit(false);
+				impactor->Hidden();
+
+			}
+
 
 		}
 		if (impactor->Tag == Entity::EntityTypes::Item)
@@ -46,14 +64,25 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 	case Entity::Right:
 	{
 
-		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active==true)
+		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && !this->mPlayerData->player->GetReserse())
 		{
+			if (impactor->TagEnemy == Entity::EnemyType::Boss)
+			{
+				mTimeHit--;
+				if (mTimeHit <= 0)
+				{
+					impactor->_HP -= 1;
+					//this->mPlayerData->player->setAllowHit(false);
+					mTimeHit = 15;
+				}
+			}
 
-			
-			this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
-			//	this->mPlayerData->player->e_Hit->Draw(impactor->GetPosition());
-
-			impactor->OnCollision();
+			else
+			{
+				this->mPlayerData->player->e_Hit = new ExplosionHit(impactor->GetPosition());
+				this->mPlayerData->player->setAllowHit(false);
+				impactor->Hidden();
+			}
 
 		}
 		if (impactor->Tag == Entity::EntityTypes::Item)
@@ -68,19 +97,24 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 	}
 
 	case Entity::TopRight: case Entity::TopLeft: case Entity::Top:
-	{/*
-		this->mPlayerData->player->AddPosition(0, data.RegionCollision.bottom - data.RegionCollision.top);
-		this->mPlayerData->player->SetVy(0);*/
-		if (impactor->Tag == Entity::EntityTypes::Enemy)
-		{
+	{
+		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
+		{
+			this->mPlayerData->player->invincible = true;
+			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
+
+			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+			return;
 		}
+		
+		
 		if (impactor->Tag == Entity::EntityTypes::Item)
 		{
 
 
 			impactor->OnCollision();
-			//impactor->Hidden();
+			
 		}
 		break;
 	}
@@ -88,6 +122,18 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 	case Entity::BottomRight: case Entity::BottomLeft: case Entity::Bottom:
 	{
 
+		if (impactor->Tag == Entity::EntityTypes::Enemy)
+		{
+			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
+
+			{
+				this->mPlayerData->player->invincible = true;
+				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
+
+				this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
+				return;
+			}
+		}
 		if (impactor->Tag == Entity::EntityTypes::Enemy)
 		{
 
@@ -114,11 +160,11 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 
 void PlayerSittingBeatState::Update(float dt)
 {
-	if (mCurrentTotalTime >= mTimePerFrame * 3)
+	if (mCurrentTotalTime >= mTimePerFrame * 2)
 	{
 
 		mCurrentTotalTime = 0;
-		mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
+		mPlayerData->player->SetState(new PlayerSittingState(this->mPlayerData));
 		return;
 
 

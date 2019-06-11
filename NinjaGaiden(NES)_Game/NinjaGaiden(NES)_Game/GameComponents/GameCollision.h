@@ -23,7 +23,5 @@ public:
     //kiem tra 1 diem co nam trong hinh chu nhat hay khong
     static bool PointAndRectangle(float x, float y, RECT rect);
 
-    //hinh chu nhat va hinh tron
-    static bool RectangleAndCircle(RECT rect, int circlex, int circley, int circleRadius);
     ~GameCollision();
 };

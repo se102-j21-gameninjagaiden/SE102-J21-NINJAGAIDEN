@@ -20,6 +20,7 @@ public:
 
 protected:
 	float                       mTimePerFrame, //thoi gian luan chuyen 1 frame
-		mCurrentTotalTime; //tong thoi gian hien tai de thuc hien timeperframe
+		mCurrentTotalTime,
+		mTimeHit;
 };
 

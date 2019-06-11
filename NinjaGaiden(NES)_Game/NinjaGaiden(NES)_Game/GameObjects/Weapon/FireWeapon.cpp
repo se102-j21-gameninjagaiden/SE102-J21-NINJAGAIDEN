@@ -76,35 +76,7 @@ void FireWeapon::Update(float dt)
 		}
 
 	}
-	//this->SetPosition(_Weapon[0]->GetPosition());
 
-
-/*if (posX >= _boundLimit.right || posX <= _boundLimit.left || posY >= _boundLimit.bottom || posY <= _boundLimit.top)
-{
-	this->SetPosition(GetPosWeaponAtPlayer());
-	vx = 0;
-	vy = 0;
-	_Active = false;
-}*/
-//if (_Active)
-//{
-//	if (!_direction)
-//	{
-//		this->vx += 10;
-//		this->vy -= 6;
-//	}
-//	else
-//	{
-//		this->vx -= 10;
-//		this->vy -= 6;
-//	}
-//	Entity::Update(dt);
-//	_Weapon->SetPosition(this->GetPosition());
-//}
-//else
-//{
-//	this->SetPosition(GetPosWeaponAtPlayer());
-//}
 
 
 

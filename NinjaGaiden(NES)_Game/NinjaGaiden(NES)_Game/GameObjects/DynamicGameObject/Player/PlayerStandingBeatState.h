@@ -18,7 +18,9 @@ public:
 
 protected:
 	float                       mTimePerFrame, //thoi gian luan chuyen 1 frame
-		mCurrentTotalTime; //tong thoi gian hien tai de thuc hien timeperframe
+		mCurrentTotalTime,//tong thoi gian hien tai de thuc hien timeperframe
+	mTimeChangeState;
+	int mTimeHit;
 
 	//bool isLeftOrRightKeyPressed;
 	//float acceleratorY,

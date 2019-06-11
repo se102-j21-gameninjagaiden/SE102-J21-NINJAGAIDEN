@@ -288,5 +288,7 @@ void Sound::LoadAllSound()
 	loadSound("Resources/Sound/Level3.wav", "Level3");
 	loadSound("Resources/Sound/CannonShooter.wav", "CannonShooter");
 	loadSound("Resources/Sound/MachineGunner.wav", "MachineGunner");
+	loadSound("Resources/Sound/BonusScoreBoss.wav", "BonusScoreBoss");
+	loadSound("Resources/Sound/BossDie.wav", "BossDie");
 
 }

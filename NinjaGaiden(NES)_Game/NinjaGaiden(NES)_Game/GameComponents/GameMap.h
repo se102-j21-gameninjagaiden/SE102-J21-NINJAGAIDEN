@@ -8,12 +8,12 @@
 #include "..//GameComponents/QuadTree.h"
 #include "../GameObjects/Entity.h"
 #include "../GameObjects/StaticGameObject/Butterfly.h"
+#include "../GameObjects/StaticGameObject/BirdBrown.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Swordman.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Panther.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Eagle.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Goblin.h"
 #include "../GameObjects/DynamicGameObject/Enemy/Brute.h"
-#include "../GameObjects/StaticGameObject/Stair.h"
 #include "../GameObjects/Item/BlueMana.h"
 #include  "../GameObjects/Item/BlueBonus.h"
 #include  "../GameObjects/Item/Fire.h"
@@ -23,6 +23,10 @@
 #include  "../GameObjects/Item/ThrowingStar.h"
 #include  "../GameObjects/Item/TimeFreeze.h"
 #include  "../GameObjects/Item/WindmillStar.h"
+#include "../GameObjects/DynamicGameObject/Boss/Boss.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Canoneer.h"
+#include "../GameObjects/DynamicGameObject/Enemy/Runner.h"
+
 using namespace std;
 class GameMap
 {

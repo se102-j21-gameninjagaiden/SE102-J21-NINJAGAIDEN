@@ -43,7 +43,12 @@ void PlayerStandingState::HandleKeyboard()
 		return;
 	}
 	*/
-	
+	//if (IsKeyDown(DIK_Z))
+	//{
+	//	this->mPlayerData->player->SetState(new PlayerStandingBeatState(this->mPlayerData));
+	//	return;
+	//}
+	//
 	
 }
 
@@ -94,7 +99,7 @@ void PlayerStandingState::OnCollision(Entity * impactor, Entity::SideCollisions 
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 			this->mPlayerData->player->invincible = true;
-			this->mPlayerData->player->AddPosition(-FrameWidth, data.RegionCollision.bottom - data.RegionCollision.top);
+			this->mPlayerData->player->AddPosition(-FrameWidth, - FrameHeight/2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
 		break;
@@ -114,7 +119,7 @@ void PlayerStandingState::OnCollision(Entity * impactor, Entity::SideCollisions 
 		{
 			//this->mPlayerData->player->OnNoCollisionWithBottom();
 			this->mPlayerData->player->invincible = true;
-			this->mPlayerData->player->AddPosition(data.RegionCollision.right-data.RegionCollision.left+FrameWidth/2, data.RegionCollision.bottom - data.RegionCollision.top);
+			this->mPlayerData->player->AddPosition(data.RegionCollision.right-data.RegionCollision.left+FrameWidth/2,-FrameHeight/2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 			return;
 		}

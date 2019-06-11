@@ -40,7 +40,7 @@ void PlayerRunningState::HandleKeyboard()
 				this->mPlayerData->player->SetVx(Define::PLAYER_MAX_RUNNING_SPEED);
 			}
 		}
-	}
+	}	
 	else if (IsKeyDown(DIK_LEFTARROW))
 	{
 		mPlayerData->player->SetReverse(true);
@@ -146,7 +146,7 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 	{	if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
 		this->mPlayerData->player->invincible = true;
-		this->mPlayerData->player->AddPosition(-FrameWidth, data.RegionCollision.bottom - data.RegionCollision.top);
+		this->mPlayerData->player->AddPosition( (data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 		this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
 	break;
