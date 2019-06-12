@@ -258,6 +258,9 @@
     <ClCompile Include="GameObjects\StaticGameObject\BirdBrown.cpp">
       <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\SceneHelpGame.cpp">
+      <Filter>FrameWork\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameComponents\Animation.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="GameObjects\StaticGameObject\BirdBrown.h">
       <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SceneHelpGame.h">
+      <Filter>FrameWork\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -73,7 +73,7 @@ float GameObject::SecondPerFrame()
 
 void GameObject::Update(float dt)
 {
-	
+	if (GameGlobal::Pause)
 	if (_Active)
 	{
 		mAnimation->Update(dt);

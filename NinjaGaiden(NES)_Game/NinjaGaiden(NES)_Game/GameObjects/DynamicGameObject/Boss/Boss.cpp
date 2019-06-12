@@ -59,91 +59,98 @@ void Boss::changeAnimation(boolean _state)
 }
 void Boss::Update(float dt)
 {
-	if (isUpdate)
+	if (GameGlobal::Pause)
 	{
-		if (_HP == 0)
+		if (isUpdate)
 		{
-			isUpdate = false;
-			return;
-		}
-		GameObject::Update(dt);
-		Entity::Update(dt);
-
-		DBOUT("PosY:" << posY);
-		if (_Active == true)
-			if (state == JUMPING_STATE)
+			if (_HP == 0)
 			{
-				changeAnimation(JUMPING_STATE);
-				setBullet();
-				if (turnLeft == -1)
+				isUpdate = false;
+				return;
+			}
+			GameObject::Update(dt);
+			Entity::Update(dt);
+
+			DBOUT("PosY:" << posY);
+			if (_Active == true)
+				if (state == JUMPING_STATE)
 				{
-					mAnimation->FlipVertical(true);
+					changeAnimation(JUMPING_STATE);
+					setBullet();
+					if (turnLeft == -1)
+					{
+						mAnimation->FlipVertical(true);
+					}
+					else
+					{
+						mAnimation->FlipVertical(false);
+					}
+					vy = vy + 10;
+					vx = turnLeft * SPEED;
+					if (posY >= originalPos.y)
+					{
+						timeBullet++;
+						state = STANDING_STATE;
+
+					}
 				}
 				else
 				{
-					mAnimation->FlipVertical(false);
-				}
-				vy = vy + 10;
-				vx = turnLeft * SPEED;
-				if (posY >= originalPos.y)
-				{
-					timeBullet++;
-					state = STANDING_STATE;
-
-				}
-			}
-			else
-			{
-				time += dt;
-				changeAnimation(STANDING_STATE);
-				vx = 0;
-				vy = 0;
-				if (timeBullet >= 3)
-				{
-					for (int i = 0; i < 3; i++)
+					time += dt;
+					changeAnimation(STANDING_STATE);
+					vx = 0;
+					vy = 0;
+					if (timeBullet >= 3)
 					{
-						if (mPlayer->GetPosition().x > posX)
+						for (int i = 0; i < 3; i++)
 						{
-							bullet[i]->turn(1);
+							if (mPlayer->GetPosition().x > posX)
+							{
+								bullet[i]->turn(1);
+							}
+							else
+							{
+								bullet[i]->turn(-1);
+							}
+							bullet[i]->SetShot(true);
 						}
-						else
-						{
-							bullet[i]->turn(-1);
-						}
-						bullet[i]->SetShot(true);
+
+						timeBullet = 0;
 					}
 
-					timeBullet = 0;
+					if (time >= 1)
+					{
+						vy = -200;
+						time = 0;
+
+						turn();
+						posY = originalPos.y - 1;
+						state = JUMPING_STATE;
+
+					}
 				}
-
-				if (time >= 1)
-				{
-					vy = -200;
-					time = 0;
-
-					turn();
-					posY = originalPos.y - 1;
-					state = JUMPING_STATE;
-
-				}
-			}
-	}
-	else
-	{
-		//e_Boss->SetPosition(this->GetPosition());
-		if (timeDie<4)
-		{
-			timeDie += dt;
-			e_Boss->Update(dt);
-			Sound::getInstance()->play("BossDie", true, 0);
 		}
 		else
 		{
-			Sound::getInstance()->stop("BossDie");
-			e_Boss->SetPosition(-100, -100);
-			this->SetPosition(-100, -100);
+			//e_Boss->SetPosition(this->GetPosition());
+			if (timeDie < 4)
+			{
+				timeDie += dt;
+				e_Boss->Update(dt);
+				Sound::getInstance()->play("BossDie", true, 0);
+			}
+			else
+			{
+				Sound::getInstance()->stop("BossDie");
+				e_Boss->SetPosition(-100, -100);
+				this->SetPosition(-100, -100);
+			}
+
+
 		}
-	
+	}
+	else
+	{
 
 	}
 

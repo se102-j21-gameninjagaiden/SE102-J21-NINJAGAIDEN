@@ -290,5 +290,5 @@ void Sound::LoadAllSound()
 	loadSound("Resources/Sound/MachineGunner.wav", "MachineGunner");
 	loadSound("Resources/Sound/BonusScoreBoss.wav", "BonusScoreBoss");
 	loadSound("Resources/Sound/BossDie.wav", "BossDie");
-
+	loadSound("Resources/Sound/Pause.wav", "Pause");
 }

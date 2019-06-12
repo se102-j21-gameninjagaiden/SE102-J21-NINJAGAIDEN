@@ -29,82 +29,88 @@ Brute::Brute(D3DXVECTOR3 position)
 }
 void Brute::Update(float dt)
 {
-	
-	GameObject::Update(dt);
-	Entity::Update(dt);
-	if (_Active == true)
+	if (GameGlobal::Pause)
 	{
-		time += dt;
-		timeBullet += dt;
-		mAnimation->SetPosition(this->GetPosition());
-		if (bulletTurn == 0.8)
-			mAnimation->FlipVertical(true);
-		else
-			mAnimation->FlipVertical(false);
-		if (posX >= maxX)
+		GameObject::Update(dt);
+		Entity::Update(dt);
+		if (_Active == true)
 		{
-			turnLeft = -1;
-		}
-		if (posX <= minX)
-		{
-			turnLeft = 1;
-		}
-		if (time >= 1.6)
-		{
-			time = 0;
-			state = -state;
-			delete mAnimation;
-			mAnimation = new Animation(FileName(), TotalFrame(), Row(), Column(), SecondPerFrame());
-			for (int i = 0; i < 3; i++)
+			time += dt;
+			timeBullet += dt;
+			mAnimation->SetPosition(this->GetPosition());
+			if (bulletTurn == 1)
+				mAnimation->FlipVertical(true);
+			else
+				mAnimation->FlipVertical(false);
+			if (posX >= maxX)
 			{
-				bullet[i]->SetShot(-state);
+				turnLeft = -1;
 			}
-			Sound::getInstance()->play("MachineGunner", true, 0);
+			if (posX <= minX)
+			{
+				turnLeft = 1;
+			}
+			if (time >= 2)
+			{
+				time = 0;
+				state = -state;
+				delete mAnimation;
+				mAnimation = new Animation(FileName(), TotalFrame(), Row(), Column(), SecondPerFrame());
+				for (int i = 0; i < 3; i++)
+				{
+					bullet[i]->SetShot(-state);
+				}
+				Sound::getInstance()->play("MachineGunner", true, 0);
 
 
-		}
-		//Changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-		if (state == WALKING_STATE)
-		{
-			vx = turnLeft * SPEED;
-			setBullet();
-			for (int i = 0; i < 3; i++)
-			{
-				bullet[i]->Hidden();
 			}
-			if (mPlayer != NULL)
-				if (mPlayer->GetPosition().x > posX)
+			//Changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+			if (state == WALKING_STATE)
+			{
+				vx = turnLeft * SPEED;
+				setBullet();
+				for (int i = 0; i < 3; i++)
 				{
-					for (int i = 0; i < bullet.size(); i++)
+					bullet[i]->Hidden();
+				}
+				if (mPlayer != NULL)
+					if (mPlayer->GetPosition().x > posX)
 					{
-						bullet[i]->turn(1);
-						bulletTurn = -1;
+						for (int i = 0; i < bullet.size(); i++)
+						{
+							bullet[i]->turn(1);
+							bulletTurn = -1;
+						}
+					}
+					else
+					{
+						for (int i = 0; i < bullet.size(); i++)
+						{
+							bullet[i]->turn(-1);
+							bulletTurn = 1;
+						}
+					}
+			}
+			else
+			{
+				vx = 0;
+				if (mPlayer != NULL)
+				{
+					if (mPlayer->GetPosition().x > posX && turnLeft == -1)
+					{
+						turnLeft = 1;
+					}
+					if (mPlayer->GetPosition().x < posX && turnLeft == 1)
+					{
+						turnLeft = -1;
 					}
 				}
-				else
-				{
-					for (int i = 0; i < bullet.size(); i++)
-					{
-						bullet[i]->turn(-1);
-						bulletTurn = 1;
-					}
-				}
-		}
-		else
-		{
-			vx = 0;
-			if (mPlayer != NULL)
-			{
-				if (mPlayer->GetPosition().x > posX && turnLeft == -1)
-				{
-					turnLeft = 1;
-				}
-				if (mPlayer->GetPosition().x < posX && turnLeft == 1)
-				{
-					turnLeft = -1;
-				}
 			}
 		}
+	}
+	else
+	{
+
 	}
 
 }

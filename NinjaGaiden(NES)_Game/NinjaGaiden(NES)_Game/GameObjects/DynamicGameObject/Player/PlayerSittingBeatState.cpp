@@ -101,7 +101,7 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
 
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
@@ -127,7 +127,7 @@ void PlayerSittingBeatState::OnCollision(Entity * impactor, Entity::SideCollisio
 			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
 			{
-				this->mPlayerData->player->invincible = true;
+				//this->mPlayerData->player->invincible = true;
 				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
 
 				this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));

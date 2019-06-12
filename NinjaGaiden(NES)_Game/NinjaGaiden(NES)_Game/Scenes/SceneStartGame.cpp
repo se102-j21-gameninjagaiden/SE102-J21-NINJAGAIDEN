@@ -16,6 +16,11 @@ void SceneStartGame::Update(float dt)
 	{
 		GameGlobal::isGameRunning = false;
 	}
+	if (IsKeyDown(DIK_F1))
+	{
+		SceneManager::GetInstance()->ReplaceScene(new SceneHelpGame());
+		return;
+	}
 }
 
 void SceneStartGame::LoadContent()

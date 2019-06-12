@@ -30,25 +30,7 @@ PlayerFallingState::~PlayerFallingState()
 void PlayerFallingState::Update(float dt)
 {
 	
- //    if (mPlayerData->player->GetVy() >= Define::PLAYER_MAX_JUMP_VELOCITY)
- //   {
-	//	
-	//	 mPlayerData->player->SetVy(Define::PLAYER_MAX_JUMP_VELOCITY);
-	//	 if (mPlayerData->player->GetPosition().y>=GameGlobal::GetHeight()-FrameHeight) // xét vị trí tạm
-	//	 {
-
-	//		
-	//	
-
-	//	 
-	//		 mPlayerData->player->SetState(new PlayerStandingState(this->mPlayerData));
-	//		// mPlayerData->player->Set_allowJump();
-	//		 
-	//		 return;
-	//	 }
-	//	
- //   }
-	//else this->mPlayerData->player->AddVy(acceleratorY);
+ 
 	this->mPlayerData->player->AddVy(acceleratorY);
 
 	if (mPlayerData->player->GetVy() > Define::PLAYER_MAX_JUMP_VELOCITY)
@@ -141,7 +123,7 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		//{
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active==true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition((data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
@@ -165,7 +147,7 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		//{
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
@@ -186,7 +168,7 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 	case Entity::Top:
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
@@ -202,7 +184,7 @@ void PlayerFallingState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		{
 			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 			{
-				this->mPlayerData->player->invincible = true;
+				//this->mPlayerData->player->invincible = true;
 
 				this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 

@@ -19,35 +19,42 @@ Swordman::Swordman(D3DXVECTOR3 position)
 }
 void Swordman::Update(float dt)
 {
-	GameObject::Update(dt);
-	mAnimation->SetPosition(this->GetPosition());
-	if (_Active == true)
+	if (GameGlobal::Pause)
 	{
-		if (turnLeft == -1)
-			mAnimation->FlipVertical(true);
+		GameObject::Update(dt);
+		mAnimation->SetPosition(this->GetPosition());
+		if (_Active == true)
+		{
+			if (turnLeft == -1)
+				mAnimation->FlipVertical(true);
+			else
+				mAnimation->FlipVertical(false);
+			vx = turnLeft * SPEED;
+			//vy = 10;
+			if (posX >= maxX)
+				turnLeft = -1;
+			if (posX <= minX)
+				turnLeft = 1;
+		}
 		else
-			mAnimation->FlipVertical(false);
-		vx = turnLeft * SPEED;
-		//vy = 10;
-		if (posX >= maxX)
-			turnLeft = -1;
-		if (posX <= minX)
-			turnLeft = 1;
+		{
+			vx = 0;
+			vy = 0;
+			if (mPlayer != NULL)
+			{
+				if (mPlayer->GetPosition().x >= originalPos.x)
+				{
+					turnLeft = 1;
+				}
+				else
+					turnLeft = -1;
+			}
+
+		}
 	}
 	else
 	{
-		vx = 0;
-		vy = 0;
-		if (mPlayer != NULL)
-		{
-			if (mPlayer->GetPosition().x >= originalPos.x)
-			{
-				turnLeft = 1;
-			}
-			else
-				turnLeft = -1;
-		}
-		
+
 	}
 	
 }

@@ -1,17 +1,15 @@
 ﻿#include "SceneGame.h"
 #include "../GameControllers/SceneManager.h"
 #include "SceneEndGame.h"
+
 SceneGame::SceneGame(int _level)
 {
 	level = _level;
-
 	LoadContent();
 }
 
 void SceneGame::LoadContent()
 {
-	//level = 1;
-	level = 1;
 	Sound::getInstance()->LoadAllSound();
 	
 	Sound::getInstance()->play("Level" + to_string(level), true,0,1);
@@ -23,10 +21,7 @@ void SceneGame::LoadContent()
 
 	mMap->SetCamera(mCamera);
 	mPlayer = new Player();
-	//
-	//mPlayer->SetPosition(InitPosPlayer());
-	//
-	mPlayer->SetPosition(D3DXVECTOR3(1300, 30, 0));
+	mPlayer->SetPosition(InitPosPlayer());
 	mPlayer->SetCamera(mCamera);
 	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
 	gameUI->initTimer(150);
@@ -59,6 +54,23 @@ void SceneGame::Update(float dt)
 	{
 		SceneManager::GetInstance()->ReplaceScene(new SceneGameOver(level));
 		return;
+	}
+	if (IsKeyDown(DIK_P))
+	{
+		GameGlobal::Pause = !GameGlobal::Pause;
+		if (GameGlobal::Pause)
+		{
+			Sound::getInstance()->setVolume(100, "Level" + to_string(level));
+
+
+		}
+		else
+		{
+			Sound::getInstance()->setVolume(0, "Level" + to_string(level));
+			Sound::getInstance()->play("Pause", true, 0);
+
+		}
+	
 	}
 	if (IsKeyDown(DIK_Z))
 	{
@@ -94,8 +106,8 @@ void SceneGame::Update(float dt)
 	mPlayer->Update(dt);
 
 	CheckCameraAndWorldMap();
-
 	
+
 }
 
 void SceneGame::Draw()
@@ -126,6 +138,12 @@ int SceneGame::IsKeyDown(int KeyCode)
 	
 	
 }
+
+
+
+
+
+
 
 void SceneGame::CheckCameraAndWorldMap()
 {
@@ -158,6 +176,8 @@ void SceneGame::CheckCameraAndWorldMap()
 			mMap->GetHeight() - mCamera->GetHeight() / 2);
 	}
 }
+
+
 
 D3DXVECTOR2 SceneGame::InitPosPlayer()
 {
@@ -235,15 +255,7 @@ void SceneGame::checkRuleGame()
 			Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollisionWithPlayer.at(i), r);
 
 #pragma region	-Update GUI theo luật game -
-			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat
-				|| listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState()==PlayerState::StandingBeat && sidePlayer!=Entity::Right&& sidePlayer!= Entity::Left
-				|| listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState()==PlayerState::SittingBeat && sidePlayer!= Entity::Right && sidePlayer!=Entity::Left)
-			{
-				gameUI->SetplayerHP(gameUI->GetplayerHP() - 1);
-				
-				Sound::getInstance()->play("Injured", true, 0);
-				
-			}
+		
 			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Item && listCollisionWithPlayer.at(i)->_allowPlayerpick == true)			
 			{	
 				if( (mPlayer->getState() == PlayerState::StandingBeat && sidePlayer == Entity::Right &&  mPlayer->GetBound().right - listCollisionWithPlayer[i]->GetBound().left > 5 )
@@ -365,10 +377,23 @@ void SceneGame::checkRuleGame()
 			{
 				goto ExitPlayerOnCollision;
 			}
-			
-
+			if (listCollisionWithPlayer[i]->TagEnemy == Entity::Boss && !listCollisionWithPlayer[i]->isUpdate)
+			{
+				goto ExitPlayerOnCollision;
+			}
 
 			mPlayer->OnCollision(listCollisionWithPlayer.at(i), r, sidePlayer);
+
+			if (listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState() != PlayerState::StandingBeat &&  mPlayer->getState() != PlayerState::SittingBeat
+				|| listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false && mPlayer->getState() == PlayerState::StandingBeat && sidePlayer != Entity::Right&& sidePlayer != Entity::Left
+				|| listCollisionWithPlayer.at(i)->Tag == Entity::EntityTypes::Enemy&&listCollisionWithPlayer.at(i)->_Active == true && mPlayer->invincible == false  && mPlayer->getState() == PlayerState::SittingBeat && sidePlayer != Entity::Right && sidePlayer != Entity::Left)
+			{
+				gameUI->SetplayerHP(gameUI->GetplayerHP() - 1);
+
+				Sound::getInstance()->play("Injured", true, 0);
+				mPlayer->invincible = true;
+
+			}
 
 		ExitPlayerOnCollision:
 #pragma endregion
@@ -439,15 +464,6 @@ void SceneGame::checkRuleGame()
 		}
 		else
 		{
-
-				/*gameUI->SetLiveCount(2);
-				gameUI->SetplayerHP(MAX_HP);
-				gameUI->SetplayerMana(0);
-
-				gameUI->SetplayerScore(0);
-				gameUI->initTimer(150);
-				gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/BoxWeapon.png");
-				mPlayer->mWeapon = nullptr;*/
 			gameUI->SetLiveCount(gameUI->GetLiveCount() - 1);
 			Sound::getInstance()->stop("Level" + to_string(level));
 		}
@@ -461,7 +477,11 @@ void SceneGame::checkRuleGame()
 			level++;
 			Sound::getInstance()->play("Level" + to_string(level),true,0,1);
 			mMap = new GameMap(level);
-			gameUI->SetplayerHP(MAX_HP);
+			if (level < 3)
+			{
+				gameUI->SetplayerHP(MAX_HP);
+
+			}
 
 			gameUI->initTimer(150);
 			mPlayer->SetPosition(InitPosPlayer());

@@ -30,92 +30,99 @@ Goblin::Goblin(D3DXVECTOR3 position)
 }
 void Goblin::Update(float dt)
 {
-	if (isUpdate)
+	if (GameGlobal::Pause)
 	{
-		if (_Active == true)
+		if (isUpdate)
 		{
-			if (mPlayer != NULL)
-				if (mPlayer->GetPosition().x > posX)
-				{
-					mAnimation->FlipVertical(false);
-					mPlayer->GetPosition().x;
-					//turnLeft = 1;
-					for (int i = 0; i < bullet.size(); i++)
+			if (_Active == true)
+			{
+				if (mPlayer != NULL)
+					if (mPlayer->GetPosition().x > posX)
 					{
-						bullet[i]->SetVx(50);
-						if (abs(mPlayer->GetPosition().x - posX) < 50)
+						mAnimation->FlipVertical(false);
+						mPlayer->GetPosition().x;
+						//turnLeft = 1;
+						for (int i = 0; i < bullet.size(); i++)
 						{
-							bullet[i]->SetVx(30);
+							bullet[i]->SetVx(50);
+							if (abs(mPlayer->GetPosition().x - posX) < 50)
+							{
+								bullet[i]->SetVx(30);
+							}
 						}
 					}
-				}
-				else
-				{
-					//turnLeft = -1;
-					mAnimation->FlipVertical(true);
-					for (int i = 0; i < bullet.size(); i++)
+					else
 					{
-						bullet[i]->SetVx(-50);
-						if (abs(posX - mPlayer->GetPosition().x) < 50)
-							bullet[i]->SetVx(-30);
+						//turnLeft = -1;
+						mAnimation->FlipVertical(true);
+						for (int i = 0; i < bullet.size(); i++)
+						{
+							bullet[i]->SetVx(-50);
+							if (abs(posX - mPlayer->GetPosition().x) < 50)
+								bullet[i]->SetVx(-30);
+						}
 					}
-				}
-			if (posX >= maxX)
-				turnLeft = -1;
-			if (posX <= minX)
-				turnLeft = 1;
-			mAnimation->SetPosition(this->GetPosition());
-		}
+				if (posX >= maxX)
+					turnLeft = -1;
+				if (posX <= minX)
+					turnLeft = 1;
+				mAnimation->SetPosition(this->GetPosition());
+			}
 
-		GameObject::Update(dt);
-		//vx -= 5 * dt;
-		Entity::Update(dt);
-		if (_Active == true)
-		{
-			time += dt;
-			timeBullet += dt;
-			if (time >= 1)
+			GameObject::Update(dt);
+			//vx -= 5 * dt;
+			Entity::Update(dt);
+			if (_Active == true)
 			{
-				time = 0;
-				state = -state;
-				delete mAnimation;
-				mAnimation = new Animation(FileName(), TotalFrame(), Row(), Column(), SecondPerFrame());
-				if (bulletTracking < 1)
+				time += dt;
+				timeBullet += dt;
+				if (time >= 1)
 				{
-					bullet[bulletTracking]->SetShot(true);
-					bulletTracking++;
+					time = 0;
+					state = -state;
+					delete mAnimation;
+					mAnimation = new Animation(FileName(), TotalFrame(), Row(), Column(), SecondPerFrame());
+					if (bulletTracking < 1)
+					{
+						bullet[bulletTracking]->SetShot(true);
+						bulletTracking++;
+					}
+					else
+						bulletTracking = 0;
 				}
-				else
-					bulletTracking = 0;
 			}
-		}
-		else
-		{
-			for (int i = 0; i < bullet.size(); i++)
+			else
 			{
-				bullet[i]->Hidden();
+				for (int i = 0; i < bullet.size(); i++)
+				{
+					bullet[i]->Hidden();
+				}
 			}
-		}
 
-		if (state == WALKING_STATE)
-		{
-			setBullet();
-			vx = turnLeft * SPEED;
+			if (state == WALKING_STATE)
+			{
+				setBullet();
+				vx = turnLeft * SPEED;
+			}
+			else
+			{
+				vx = 0;
+			}
+
 		}
 		else
 		{
-			vx = 0;
+			timePauseUpdate--;
+			if (timePauseUpdate <= 0)
+			{
+				timePauseUpdate = 200;
+				isUpdate = true;
+			}
 		}
-
 	}
 	else
 	{
-		timePauseUpdate--;
-		if (timePauseUpdate <= 0)
-		{
-			timePauseUpdate = 200;
-			isUpdate = true;
-		}
+
 	}
 }
 

@@ -19,19 +19,21 @@ Runner::~Runner()
 
 void Runner::Update(float dt)
 {
-	GameObject::Update(dt);
-	Entity::Update(dt);
-	if (_Active == true)
+	if (GameGlobal::Pause)
 	{
-		mAnimation->SetPosition(this->GetPosition());
-		if (turnLeft == -1)
-			mAnimation->FlipVertical(true);
-		else
-			mAnimation->FlipVertical(false);
-		vx = turnLeft * SPEED;
-		if (state)
+		GameObject::Update(dt);
+		Entity::Update(dt);
+		if (_Active == true)
 		{
-			vy = 0;
+			mAnimation->SetPosition(this->GetPosition());
+			if (turnLeft == -1)
+				mAnimation->FlipVertical(true);
+			else
+				mAnimation->FlipVertical(false);
+			vx = turnLeft * SPEED;
+			if (state)
+			{
+				vy = 0;
 				if (posX >= maxX)
 				{
 					vy = -170;
@@ -42,23 +44,28 @@ void Runner::Update(float dt)
 					vy = -170;
 					state = false;
 				}
+			}
+			else
+			{
+				vy = vy + 10;
+			}
 		}
 		else
 		{
-			vy = vy + 10;
+			if (mPlayer != NULL)
+				if (mPlayer->GetPosition().x >= originalPos.x)
+				{
+					turnLeft = 1;
+				}
+				else
+					turnLeft = -1;
+			vx = 0;
+			vy = 0;
 		}
 	}
 	else
 	{
-		if (mPlayer != NULL)
-			if (mPlayer->GetPosition().x >= originalPos.x)
-			{
-				turnLeft = 1;
-			}
-			else
-				turnLeft = -1;
-		vx = 0;
-		vy = 0;
+
 	}
 }
 

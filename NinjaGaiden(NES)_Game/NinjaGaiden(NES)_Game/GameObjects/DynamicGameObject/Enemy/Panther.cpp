@@ -19,46 +19,53 @@ Panther::Panther(D3DXVECTOR3 position)
 
 void Panther::Update(float dt)
 {
-	if (isUpdate)
+	if (GameGlobal::Pause)
 	{
-		GameObject::Update(dt);
-		mAnimation->SetPosition(this->GetPosition());
-		if (_Active == true)
+		if (isUpdate)
 		{
-			if (turnLeft == -1)
-				mAnimation->FlipVertical(true);
+			GameObject::Update(dt);
+			mAnimation->SetPosition(this->GetPosition());
+			if (_Active == true)
+			{
+				if (turnLeft == -1)
+					mAnimation->FlipVertical(true);
+				else
+					mAnimation->FlipVertical(false);
+				vx = turnLeft * SPEED;
+				vy = vy + 10;
+				if (posX >= maxX)
+					turnLeft = -1;
+				if (posX <= minX)
+					turnLeft = 1;
+				DBOUT("PosY: " << posY << "OriginalY: " << originalPos.y);
+			}
 			else
-				mAnimation->FlipVertical(false);
-			vx = turnLeft * SPEED;
-			vy = vy + 10;
-			if (posX >= maxX)
-				turnLeft = -1;
-			if (posX <= minX)
-				turnLeft = 1;
-			DBOUT("PosY: " << posY << "OriginalY: " << originalPos.y);
+			{
+				vx = 0;
+				vy = 0;
+				if (mPlayer != NULL)
+					if (mPlayer->GetPosition().x >= originalPos.x)
+					{
+						turnLeft = 1;
+					}
+					else
+						turnLeft = -1;
+
+			}
 		}
 		else
 		{
-			vx = 0;
-			vy = 0;
-			if (mPlayer != NULL)
-				if (mPlayer->GetPosition().x >= originalPos.x)
-				{
-					turnLeft = 1;
-				}
-				else
-					turnLeft = -1;
-
+			timePauseUpdate--;
+			if (timePauseUpdate <= 0)
+			{
+				timePauseUpdate = 200;
+				isUpdate = true;
+			}
 		}
 	}
 	else
 	{
-		timePauseUpdate--;
-		if (timePauseUpdate <= 0)
-		{
-			timePauseUpdate = 200;
-			isUpdate = true;
-		}
+
 	}
 }
 

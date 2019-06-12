@@ -93,13 +93,7 @@ void PlayerClimbingState::OnCollision(Entity * impactor, Entity::SideCollisions 
 	if (side== Entity::SideCollisions::Right && impactor->Tag == Entity::EntityTypes::Stair)
 	
 	{
-		/*this->mPlayerData->player->isOnStair == true;
-		if (this->mPlayerData->player->GetPosition().y <= impactor->GetBound().top)
-		{
-			this->mPlayerData->player->AddVy(acceleratorY);
-			this->mPlayerData->player->isOnStair = true;
-
-		}*/
+		
 		
 	}
 	else
@@ -114,7 +108,7 @@ void PlayerClimbingState::OnCollision(Entity * impactor, Entity::SideCollisions 
 	}
 	if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 	{
-		this->mPlayerData->player->invincible = true;
+		//this->mPlayerData->player->invincible = true;
 
 	}
 	

@@ -53,59 +53,68 @@ Player::~Player()
 void Player::Update(float dt)
 {
 	// Effect Hit
-	if (e_Hit->_Active)
-	{ 
-		e_Hit->Update(dt);
-		if (e_Hit->_timeSpawn >= e_Hit->Column()* e_Hit->SecondPerFrame())
-		{
-			e_Hit->_Active = false;
-			e_Hit->_timeSpawn = 0;
-		}
-		else
-		{
-			e_Hit->_timeSpawn += dt;
-		}
-	}
-	//Weapon
-	if (mWeapon)
+	if (GameGlobal::Pause)
 	{
-		 
+		if (e_Hit->_Active)
+		{
+			e_Hit->Update(dt);
+			if (e_Hit->_timeSpawn >= e_Hit->Column()* e_Hit->SecondPerFrame())
+			{
+				e_Hit->_Active = false;
+				e_Hit->_timeSpawn = 0;
+			}
+			else
+			{
+				e_Hit->_timeSpawn += dt;
+			}
+		}
+		//Weapon
+		if (mWeapon)
+		{
+
 			mWeapon->Update(dt);
 			mWeapon->GetPositionPlayer(mPlayerData->player->GetPosition());
 			//mWeapon->SetPosLimitAtMap(mCamera->GetPosition() + D3DXVECTOR3(mCamera->GetWidth() / 2, 0, 0));
 			mWeapon->setBoundLimit(mCamera->GetBound());
 			//mWeapon->SetDirection(mCurrentReverse);
 			mWeapon->setBoundplayer(this->mPlayerData->player->GetBound());
-		
-	}
-	
-	if (timeStopUpdateAni < (mCurrentAnimation->getColums())*0.25 && this->isUpdate==true||this->mCurrentState!=PlayerState::Climbing)
-	{
-		mCurrentAnimation->Update(dt);
-		timeStopUpdateAni += dt;
+
+		}
+
+		if (timeStopUpdateAni < (mCurrentAnimation->getColums())*0.25 && this->isUpdate == true || this->mCurrentState != PlayerState::Climbing)
+		{
+			mCurrentAnimation->Update(dt);
+			timeStopUpdateAni += dt;
+		}
+		else
+		{
+			mCurrentAnimation->ResetAnimation();
+			timeStopUpdateAni = 0;
+			isUpdate = false;
+		}
+		if (this->mPlayerData->state)
+		{
+			this->mPlayerData->state->Update(dt);
+		}
+
+		Entity::Update(dt);
+
 	}
 	else
 	{
-		mCurrentAnimation->ResetAnimation();
-		timeStopUpdateAni = 0;
-		isUpdate = false;
-	}
-    if (this->mPlayerData->state)
-    {
-        this->mPlayerData->state->Update(dt);
-    }
 
-    Entity::Update(dt);
-	
-	
+	}
 }
 
 void Player::HandleKeyboard()
 {
-    if (this->mPlayerData->state)
-    {
-        this->mPlayerData->state->HandleKeyboard();
-    }
+	if (GameGlobal::Pause)
+	{
+		if (this->mPlayerData->state)
+		{
+			this->mPlayerData->state->HandleKeyboard();
+		}
+	}
 }
 
 void Player::OnKeyPressed(int key)

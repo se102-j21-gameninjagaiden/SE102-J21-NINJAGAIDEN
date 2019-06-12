@@ -35,7 +35,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
 
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
@@ -54,7 +54,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
@@ -68,7 +68,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 	case Entity::Top: case Entity::TopLeft: case Entity::TopRight:
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-FrameWidth/2, -FrameHeight/2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
@@ -88,7 +88,7 @@ void PlayerSittingState::OnCollision(Entity * impactor, Entity::SideCollisions s
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible==false)
 		{
 			//this->mPlayerData->player->OnNoCollisionWithBottom();
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight/2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 			return;

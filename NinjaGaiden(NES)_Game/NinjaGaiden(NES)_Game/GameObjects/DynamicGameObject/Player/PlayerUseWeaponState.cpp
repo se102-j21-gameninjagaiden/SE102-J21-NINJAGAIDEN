@@ -33,7 +33,7 @@ void PlayerUseWeaponState::OnCollision(Entity * impactor, Entity::SideCollisions
 	{
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
 
@@ -56,7 +56,7 @@ void PlayerUseWeaponState::OnCollision(Entity * impactor, Entity::SideCollisions
 	{
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
@@ -80,7 +80,7 @@ void PlayerUseWeaponState::OnCollision(Entity * impactor, Entity::SideCollisions
 	{
 		if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-FrameWidth, -FrameHeight/2);
 			this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
@@ -92,7 +92,7 @@ void PlayerUseWeaponState::OnCollision(Entity * impactor, Entity::SideCollisions
 
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
 

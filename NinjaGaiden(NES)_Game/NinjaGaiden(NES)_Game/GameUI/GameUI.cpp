@@ -143,14 +143,17 @@ GameUI::GameUI(void)
 
 void GameUI::Update(float dt)
 {
-	if (_gameTimer <= 0)
+	if (GameGlobal::Pause)
 	{
-		_playerHP = 0;
-		
-	}
-	else
-	{
-		_gameTimer = _gameTimer - dt * 1000;
+		if (_gameTimer <= 0)
+		{
+			_playerHP = 0;
+
+		}
+		else
+		{
+			_gameTimer = _gameTimer - dt * 1000;
+		}
 	}
 	
 }

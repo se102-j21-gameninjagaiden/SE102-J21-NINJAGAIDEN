@@ -91,7 +91,7 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 			//day Player ra phia ben phai de cho player khong bi xuyen qua object
 			if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 			{
-				this->mPlayerData->player->invincible = true;
+				//this->mPlayerData->player->invincible = true;
 
 				this->mPlayerData->player->AddPosition(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2, -FrameHeight / 2);
 
@@ -120,7 +120,7 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 
 			if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 			{
-				this->mPlayerData->player->invincible = true;
+				//this->mPlayerData->player->invincible = true;
 
 				this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
@@ -145,7 +145,7 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 	case Entity::Top: case Entity::TopLeft: case Entity::TopRight:
 	{	if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-		this->mPlayerData->player->invincible = true;
+		//this->mPlayerData->player->invincible = true;
 		this->mPlayerData->player->AddPosition( (data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 		this->mPlayerData->player->SetState(new PlayerDyingState(this->mPlayerData));
 		}
@@ -159,7 +159,7 @@ void PlayerRunningState::OnCollision(Entity *impactor, Entity::SideCollisions si
 		////this->mPlayerData->player->AddPosition(0, -(data.RegionCollision.bottom - data.RegionCollision.top));
 		if (impactor->Tag == Entity::EntityTypes::Enemy&& impactor->_Active == true && this->mPlayerData->player->invincible == false)
 		{
-			this->mPlayerData->player->invincible = true;
+			//this->mPlayerData->player->invincible = true;
 			this->mPlayerData->player->AddPosition(-(data.RegionCollision.right - data.RegionCollision.left + FrameWidth / 2), -FrameHeight / 2);
 
 

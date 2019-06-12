@@ -30,79 +30,86 @@ Eagle::Eagle(D3DXVECTOR3 position)
 
 void Eagle::Update(float dt)
 {
-	if (isUpdate)
+	if (GameGlobal::Pause)
 	{
-		GameObject::Update(dt);
-		//mAnimation->SetPosition(this->GetPosition());
-		if (_Active == true)
+		if (isUpdate)
 		{
-			if (oT >= 150 && oT < 250)
+			GameObject::Update(dt);
+			//mAnimation->SetPosition(this->GetPosition());
+			if (_Active == true)
 			{
-				mAnimation->FlipVertical(true);
-			}
-			else
-			{
-				mAnimation->FlipVertical(false);
-			}
-			if (oT >= 250)
-			{
-				mAnimation->FlipVertical(false);
-			}
-			if (oT >= 350)
-			{
-				oT = 150;
-			}
-
-
-			//
-			//if (oT >= 250)
-			//{
-			////	mAnimation->FlipVertical(false);
-			//}
-			//if (oT = 300)
-			//{
-			//	//oT = 0;
-			//}
-			if (mPlayer != NULL)
-				playerPos = mPlayer->GetPosition();
-			oT++;
-			if (mPlayer != NULL)
-				if (!direction)
+				if (oT >= 150 && oT < 250)
 				{
-					this->vx = ((100 * cos(2 * 3.14*0.005*oT + 3.14 / 2)) + mPlayer->GetPosition().x) / dt;
-					this->vy = (mPlayer->GetPosition().y - 10 - this->posY);
-
-
-
+					mAnimation->FlipVertical(true);
 				}
 				else
 				{
-
-					this->vx = ((100 * cos(2 * 3.14*0.005*oT + -3.14 / 2)) + mPlayer->GetPosition().x) / dt;
-					this->vy = (mPlayer->GetPosition().y - 10 - this->posY);
-
+					mAnimation->FlipVertical(false);
+				}
+				if (oT >= 250)
+				{
+					mAnimation->FlipVertical(false);
+				}
+				if (oT >= 350)
+				{
+					oT = 150;
 				}
 
-			posX = vx * dt;
 
-			posY += vy * dt;
-			mAnimation->SetPosition(D3DXVECTOR2(posX, posY));
+				//
+				//if (oT >= 250)
+				//{
+				////	mAnimation->FlipVertical(false);
+				//}
+				//if (oT = 300)
+				//{
+				//	//oT = 0;
+				//}
+				if (mPlayer != NULL)
+					playerPos = mPlayer->GetPosition();
+				oT++;
+				if (mPlayer != NULL)
+					if (!direction)
+					{
+						this->vx = ((100 * cos(2 * 3.14*0.005*oT + 3.14 / 2)) + mPlayer->GetPosition().x) / dt;
+						this->vy = (mPlayer->GetPosition().y - 10 - this->posY);
+
+
+
+					}
+					else
+					{
+
+						this->vx = ((100 * cos(2 * 3.14*0.005*oT + -3.14 / 2)) + mPlayer->GetPosition().x) / dt;
+						this->vy = (mPlayer->GetPosition().y - 10 - this->posY);
+
+					}
+
+				posX = vx * dt;
+
+				posY += vy * dt;
+				mAnimation->SetPosition(D3DXVECTOR2(posX, posY));
+			}
+			else
+			{
+				vx = 0;
+				vy = 0;
+				SetPosition(originalPos);
+			}
 		}
 		else
 		{
-			vx = 0;
-			vy = 0;
-			SetPosition(originalPos);
+			timePauseUpdate--;
+			if (timePauseUpdate <= 0)
+			{
+				timePauseUpdate = 200;
+				isUpdate = true;
+			}
 		}
 	}
 	else
 	{
-		timePauseUpdate--;
-		if (timePauseUpdate <= 0)
-		{
-			timePauseUpdate = 200;
-			isUpdate = true;
-		}
+
 	}
 }
 

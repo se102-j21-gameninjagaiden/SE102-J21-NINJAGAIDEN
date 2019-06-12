@@ -56,7 +56,7 @@ void FireWeapon::Update(float dt)
 			{
 				_Weapon[i]->SetVx(vx);
 				_Weapon[i]->SetVy((vy));
-				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+5)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(120)*(i+1)*dt));
+				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+6)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(120)*(4)*dt));
 
 			}
 			else
@@ -64,7 +64,7 @@ void FireWeapon::Update(float dt)
 				_Weapon[i]->SetVx(-(vx));
 				_Weapon[i]->SetVy((vy));
 				//_Weapon[i]->Update(dt);
-				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+5)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(120)*(i+1)*dt));
+				_Weapon[i]->SetPosition(_Weapon[i]->GetPosition().x + _Weapon[i]->GetVx()*(i+6)*dt, _Weapon[i]->GetPosition().y + _Weapon[i]->GetVy()*(sin(120)*(4)*dt));
 
 			}
 			//Entity::Update(dt);

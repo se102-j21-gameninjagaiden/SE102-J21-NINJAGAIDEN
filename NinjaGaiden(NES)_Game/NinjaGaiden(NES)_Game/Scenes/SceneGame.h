@@ -4,7 +4,6 @@
 #include <vector>
 #include <d3dx9.h>
 #include <d3d9.h>
-
 #include "../GameComponents/Scene.h"
 #include "../GameComponents/Sprite.h"
 #include "../GameComponents/GameMap.h"
@@ -13,6 +12,7 @@
 #include "../GameUI/GameUI.h"
 #include  "../GameComponents/Sound.h"
 #include "SceneGameOver.h"
+
 class SceneGame : public Scene
 {
 public:
@@ -26,7 +26,6 @@ public:
     void OnKeyUp(int keyCode);
    
 	int IsKeyDown(int KeyCode);
-
 protected:
 	D3DXVECTOR2 InitPosPlayer();
 	void checkRuleGame();

@@ -10,11 +10,10 @@
 #include  "../GameComponents/Sound.h"
 #include "../GameControllers/SceneManager.h"
 #include "SceneGame.h"
-#include "SceneHelpGame.h"
-class SceneStartGame : public Scene
+class SceneHelpGame : public Scene
 {
 public:
-	SceneStartGame();
+	SceneHelpGame();
 
 	void Update(float dt);
 	void LoadContent();
@@ -26,7 +25,7 @@ public:
 	int IsKeyDown(int KeyCode);
 
 protected:
-	Sprite *SpriteStartGame;
+	Sprite *SpriteHelpGame;
 
 
 };

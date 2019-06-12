@@ -59,7 +59,7 @@ public:
 	static LPDIRECTINPUTDEVICE8  GetCurrentKeyBoard();
 	
 	static LPDIRECTINPUT8  GetCurrentDirectInput();
-	
+	static bool Pause;
 
 	static void SetCurrentKeyState(BYTE keyStates[256]);
 	static void SetCurrentKeyPress(bool Keyspress[256]);

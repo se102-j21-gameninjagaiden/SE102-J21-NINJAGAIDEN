@@ -37,7 +37,7 @@ void PlayerClingingState::OnCollision(Entity * impactor, Entity::SideCollisions 
 {
 	if (impactor->Tag == Entity::EntityTypes::Enemy && impactor->_Active == true && this->mPlayerData->player->invincible == false)
 	{
-		this->mPlayerData->player->invincible = true;
+		//this->mPlayerData->player->invincible = true;
 		
 	}
 }

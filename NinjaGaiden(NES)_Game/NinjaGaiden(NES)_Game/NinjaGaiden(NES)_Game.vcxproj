@@ -186,6 +186,7 @@
     <ClCompile Include="Scenes\SceneEndGame.cpp" />
     <ClCompile Include="Scenes\SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneGameOver.cpp" />
+    <ClCompile Include="Scenes\SceneHelpGame.cpp" />
     <ClCompile Include="Scenes\SceneStartGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +254,7 @@
     <ClInclude Include="Scenes\SceneEndGame.h" />
     <ClInclude Include="Scenes\SceneGame.h" />
     <ClInclude Include="Scenes\SceneGameOver.h" />
+    <ClInclude Include="Scenes\SceneHelpGame.h" />
     <ClInclude Include="Scenes\SceneStartGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
