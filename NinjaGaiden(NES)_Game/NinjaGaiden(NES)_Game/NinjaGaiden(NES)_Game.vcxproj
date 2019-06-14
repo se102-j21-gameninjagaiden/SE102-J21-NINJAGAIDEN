@@ -187,6 +187,7 @@
     <ClCompile Include="Scenes\SceneGame.cpp" />
     <ClCompile Include="Scenes\SceneGameOver.cpp" />
     <ClCompile Include="Scenes\SceneHelpGame.cpp" />
+    <ClCompile Include="Scenes\SceneScoreGame.cpp" />
     <ClCompile Include="Scenes\SceneStartGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,7 @@
     <ClInclude Include="GameComponents\GameCollision.h" />
     <ClInclude Include="GameComponents\GameGlobal.h" />
     <ClInclude Include="GameComponents\GameLog.h" />
+    <ClInclude Include="GameComponents\GameMap.h" />
     <ClInclude Include="GameComponents\GameTime.h" />
     <ClInclude Include="GameComponents\QuadTree.h" />
     <ClInclude Include="GameComponents\Scene.h" />
@@ -255,6 +257,7 @@
     <ClInclude Include="Scenes\SceneGame.h" />
     <ClInclude Include="Scenes\SceneGameOver.h" />
     <ClInclude Include="Scenes\SceneHelpGame.h" />
+    <ClInclude Include="Scenes\SceneScoreGame.h" />
     <ClInclude Include="Scenes\SceneStartGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

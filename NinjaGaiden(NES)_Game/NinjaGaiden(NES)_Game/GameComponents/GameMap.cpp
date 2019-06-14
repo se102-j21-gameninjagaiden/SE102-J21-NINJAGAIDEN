@@ -6,8 +6,6 @@ GameMap::GameMap(int level)
 }
 void GameMap::LoadMap( int level)
 {
-	/*drawEffect = false;
-	TimeDrawEffect = 6000;*/
 	
 
 	fstream fs("Resources/Map/Map" + to_string(level) + "/map.txt");
@@ -33,8 +31,6 @@ void GameMap::LoadMap( int level)
 	r.bottom = this->GetHeight();
 
 	mQuadTree = new QuadTree(1, r);
-	// Khởi tạo các viên gạch
-	//khoi tao cac khoi Brick (vien gach)
 #pragma region -ENEMY-
 	fstream f_ei("Resources/Map/Map" + to_string(level) + "/Enemy.txt");
 	float idType, posX, posY, minX, maxX, originalTurn;
@@ -263,7 +259,6 @@ void GameMap::Update(float dt)
 
 	for (size_t i = 0; i < mListObjects.size(); i++)
 	{
-		//int k= mQuadTree->getTotalEntities();
 	
 			if (!isContain(mListObjects[i]->GetBound(), mCamera->GetBound()) && mListObjects[i]->Tag == Entity::EntityTypes::Enemy)
 			{
@@ -271,6 +266,7 @@ void GameMap::Update(float dt)
 				mListObjects[i]->SetActive(false);
 			}
 			mListObjects[i]->Update(dt);
+		
 
 			
 		
@@ -310,22 +306,8 @@ void GameMap::Draw()
 			}
 			mTileMap->SetHeight(FrameHeight);
 			mTileMap->SetWidth(FrameWidth);
-			//position			
-			//if (!drawEffect)
+
 			mTileMap->Draw(position,rect,D3DXVECTOR2(),trans);
-			/*else
-			{
-				mTileMap->Draw(position, rect, D3DXVECTOR2(), trans, 0, D3DXVECTOR2(), D3DCOLOR_ARGB(rand() % 255, 255, 255, 255));
-				TimeDrawEffect--;
-				if (TimeDrawEffect <= 0)
-				{
-					TimeDrawEffect = 6000;
-					Sleep(2000);
-					drawEffect = false;
-
-				}
-
-			}*/
 
 		}
 	}
@@ -414,10 +396,6 @@ int GameMap::GetWidth()
 {
 	return mcolumnCount * FrameWidth;
 }
-//std::vector<Entity*> GameMap::GetListObject()
-//{
-//	return mListObjects;
-//}
 
 std::vector<GameObject*> GameMap::GetListObject()
 {

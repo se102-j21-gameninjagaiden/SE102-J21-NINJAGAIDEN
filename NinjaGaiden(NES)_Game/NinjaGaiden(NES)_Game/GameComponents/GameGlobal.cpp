@@ -15,6 +15,7 @@ LPDIRECTINPUTDEVICE8 GameGlobal::mKeyBoard = NULL;
 BYTE GameGlobal::mKeyStates[256];
 bool GameGlobal::mKeyPress[256];
 bool GameGlobal::Pause = true;
+bool GameGlobal::ContinueGame = false;
 GameGlobal::GameGlobal()
 {
 

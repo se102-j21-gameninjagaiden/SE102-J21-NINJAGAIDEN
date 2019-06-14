@@ -17,7 +17,7 @@ class SceneGame : public Scene
 {
 public:
     SceneGame(int _level=1);
-
+	~SceneGame();
     void Update(float dt);
     void LoadContent();
     void Draw();
@@ -26,6 +26,8 @@ public:
     void OnKeyUp(int keyCode);
    
 	int IsKeyDown(int KeyCode);
+	void SaveGame();
+	void LoadSaveGame();
 protected:
 	D3DXVECTOR2 InitPosPlayer();
 	void checkRuleGame();
@@ -41,5 +43,6 @@ protected:
 	vector<Entity*> listObject;
     float mTimeCounter;
 	int score;
+	fstream f_score;
 };
 

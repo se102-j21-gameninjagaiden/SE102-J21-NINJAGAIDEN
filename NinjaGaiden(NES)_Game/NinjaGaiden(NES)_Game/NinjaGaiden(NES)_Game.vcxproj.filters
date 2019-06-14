@@ -261,6 +261,9 @@
     <ClCompile Include="Scenes\SceneHelpGame.cpp">
       <Filter>FrameWork\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\SceneScoreGame.cpp">
+      <Filter>FrameWork\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameComponents\Animation.h">
@@ -459,6 +462,12 @@
       <Filter>FrameWork\GameObjects\StaticGameObject</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\SceneHelpGame.h">
+      <Filter>FrameWork\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\GameMap.h">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SceneScoreGame.h">
       <Filter>FrameWork\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿#include "SceneGame.h"
 #include "../GameControllers/SceneManager.h"
 #include "SceneEndGame.h"
+#include "SceneScoreGame.h"
 
 SceneGame::SceneGame(int _level)
 {
@@ -8,23 +9,50 @@ SceneGame::SceneGame(int _level)
 	LoadContent();
 }
 
+SceneGame::~SceneGame()
+{
+	delete mMap;
+	delete mCamera;
+	delete mPlayer;
+	delete gameUI;
+	for (size_t i = 0; i < listObject.size(); i++)
+	{
+		if (listObject[i])
+			delete listObject[i];
+	}
+	listObject.clear();
+
+}
+
 void SceneGame::LoadContent()
 {
+	mPlayer = new Player();
 	Sound::getInstance()->LoadAllSound();
-	
-	Sound::getInstance()->play("Level" + to_string(level), true,0,1);
-	mMap = new GameMap(level);
+	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
 	mCamera = new Camera(GameGlobal::GetWidth(), GameGlobal::GetHeight());
-	mCamera->SetPosition(GameGlobal::GetWidth() / 2,
-		GameGlobal::GetHeight() / 2);
 
+	if (GameGlobal::ContinueGame)
+	{
+		LoadSaveGame();
+	}
+	else
+	{
+		mPlayer->SetPosition(InitPosPlayer());
+
+		mCamera->SetPosition(GameGlobal::GetWidth() / 2,
+			GameGlobal::GetHeight() / 2);
+
+		gameUI->initTimer(150);
+	}
+	Sound::getInstance()->play("Level" + to_string(level), true,0,1);
+
+	mMap = new GameMap(level);
+	
 
 	mMap->SetCamera(mCamera);
-	mPlayer = new Player();
-	mPlayer->SetPosition(InitPosPlayer());
+	
 	mPlayer->SetCamera(mCamera);
-	gameUI = new GameUI(GameGlobal::GetCurrentDevice(), 16, GameGlobal::GetWidth(), GameGlobal::GetHeight());
-	gameUI->initTimer(150);
+	
 	// Load player vào Object
 	for (int i = 0; i < mMap->GetListObject().size(); i++)
 	{
@@ -32,6 +60,10 @@ void SceneGame::LoadContent()
 		{
 			mMap->GetListObject()[i]->GetPLayer(mPlayer);
 			listObject.push_back(mMap->GetListObject().at(i));
+		}
+		if (mMap->GetListObject()[i]->TagEnemy == Entity::Boss)
+		{
+			mMap->GetListObject()[i]->_HP = gameUI->GetenemyHP();
 		}
 	}
 }
@@ -44,8 +76,10 @@ void SceneGame::Update(float dt)
 		if (gameUI->getTimer() == 0)
 		{
 			Sound::getInstance()->stop("BonusScoreBoss");
-
-			SceneManager::GetInstance()->ReplaceScene(new SceneEndGame());
+			f_score.open("Resources/Score.txt", ios::out | ios::app);
+			f_score << gameUI->GetplayerScore() << endl;
+			f_score.close();
+			SceneManager::GetInstance()->ReplaceScene(new SceneScoreGame(gameUI->GetplayerScore()));
 		return;
 		}
 		
@@ -71,6 +105,10 @@ void SceneGame::Update(float dt)
 
 		}
 	
+	}
+	if (IsKeyDown(DIK_F4))
+	{
+		SaveGame();
 	}
 	if (IsKeyDown(DIK_Z))
 	{
@@ -137,6 +175,119 @@ int SceneGame::IsKeyDown(int KeyCode)
 
 	
 	
+}
+
+void SceneGame::SaveGame()
+{
+	fstream f_Save;
+	f_Save.open("Resources/SaveGame.txt", ios::out);
+	for (int i = 0; i < 12; i++)
+	{
+		switch (i)
+		{
+		case 0:
+			f_Save << mPlayer->GetPosition().x << endl;
+			break;
+		case 1:
+			f_Save << mPlayer->GetPosition().y << endl;
+			break;
+		case 2:
+			f_Save << gameUI->GetplayerScore() << endl;
+
+			break;
+		case 3:
+			f_Save << gameUI->getTimer() << endl;
+			break;
+		case 4:
+			f_Save << gameUI->GetplayerMana() << endl;
+			break;
+		case 5:
+			if (mPlayer->mWeapon)
+			{
+				if (mPlayer->mWeapon->TagWeapon == Entity::ThrowingStarWeapon)
+				{
+					f_Save << 1 << endl;
+				}
+				if (mPlayer->mWeapon->TagWeapon == Entity::FireWeapon)
+				{
+					f_Save << 2 << endl;
+				}
+				if (mPlayer->mWeapon->TagWeapon == Entity::WindmillStarWeapon)
+				{
+					f_Save << 3 << endl;
+				}
+			}
+			else
+			{
+				f_Save << 0 << endl;
+			}
+			break;
+		case 6:
+			f_Save << gameUI->GetplayerHP() << endl;
+
+			break;
+		case 7:
+			f_Save << gameUI->GetenemyHP() << endl;
+			break;
+		case 8:
+			f_Save << level << endl;
+				break;
+		case 9:
+			f_Save << gameUI->GetLiveCount() << endl;
+			break;
+		case 10:
+			f_Save << mCamera->GetPosition().x << endl;
+			break;
+		case 11:
+			f_Save << mCamera->GetPosition().y << endl;
+			break;
+		default:
+			break;
+		}
+
+	}
+	f_Save.close();
+}
+
+void SceneGame::LoadSaveGame()
+{
+	fstream f_Save;
+	f_Save.open("Resources/SaveGame.txt");
+	float posX, posY, score, time, mana, idWeapon, playerHP, enemyHP, liveCount, posXcamera, posYcamera;
+	while (!f_Save.fail())
+	{
+		f_Save >> posX >> posY >> score >> time >> mana >> idWeapon >> playerHP >> enemyHP >> level >> liveCount >> posXcamera >> posYcamera;
+	}
+	f_Save.close();
+
+	mPlayer->SetPosition(posX, posY);
+	gameUI->SetplayerScore(score);
+	gameUI->initTimer(time);
+	gameUI->SetplayerMana(mana);
+	mPlayer->setPlayerMana(mana);
+	if (idWeapon == 1)
+	{
+		mPlayer->mWeapon = new ThrowingStarWeapon(mPlayer->GetPosition());
+		gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/ThrowingStarBox.png");
+	}
+	if (idWeapon == 2)
+	{
+		mPlayer->mWeapon = new FireWeapon(mPlayer->GetPosition());
+		gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/FireBox.png");
+	}
+	if (idWeapon == 3)
+	{
+		mPlayer->mWeapon = new WindmillStarWeapon(mPlayer->GetPosition());
+		gameUI->_boxWeapon = new Sprite("Resources/Item_Effect/WindmillStarBox.png");
+	}
+	gameUI->SetplayerHP(playerHP);
+	if (level == 3)
+	{
+		gameUI->SetenemyHP(enemyHP);
+	}
+	gameUI->SetLiveCount(liveCount);
+	mCamera->SetPosition(posXcamera, posYcamera);
+
 }
 
 

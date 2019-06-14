@@ -65,6 +65,7 @@ public:
 	static void SetCurrentKeyPress(bool Keyspress[256]);
 	static bool* getCurrentKeypress();
 	static BYTE* GetCurrentKeyState();
+	static bool ContinueGame;
 
 private:
 	static HINSTANCE mHInstance; //hInstance của windows hiện tại

@@ -8,13 +8,15 @@
 #include "../GameComponents/Scene.h"
 #include "../GameComponents/Sprite.h"
 #include  "../GameComponents/Sound.h"
+#include "../GameComponents/GameGlobal.h"
 #include "../GameControllers/SceneManager.h"
 #include "SceneGame.h"
-#include "SceneHelpGame.h"
-class SceneStartGame : public Scene
+#include "../GameUI/Font.h"
+#include "SceneEndGame.h"
+class SceneScoreGame : public Scene
 {
 public:
-	SceneStartGame();
+	SceneScoreGame(int Score);
 
 	void Update(float dt);
 	void LoadContent();
@@ -24,12 +26,15 @@ public:
 	void OnKeyUp(int keyCode);
 
 	int IsKeyDown(int KeyCode);
-
+	int FindHighScore();
+	
 protected:
-	Sprite *SpriteStartGame;
-	Sprite *Start;
-	Sprite *Continue;
-	bool Option;
+	Sprite *SpriteNinja;
+	Sprite *SpriteHighScore;
+	Font *arial;
+	int HighScore;
+	int CurrentSocre;
+	float timeChangeScene;
 
 
 };

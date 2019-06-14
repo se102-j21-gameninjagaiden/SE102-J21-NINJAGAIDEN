@@ -4,6 +4,7 @@ SceneGameOver::SceneGameOver(int _level)
 {
 	level = _level;
 	LoadContent();
+	GameGlobal::ContinueGame = false;
 }
 
 void SceneGameOver::Update(float dt)

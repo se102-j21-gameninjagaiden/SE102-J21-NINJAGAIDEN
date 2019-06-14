@@ -1,5 +1,5 @@
 #include "SceneHelpGame.h"
-
+#include "SceneStartGame.h"
 SceneHelpGame::SceneHelpGame()
 {
 	LoadContent();
@@ -15,6 +15,11 @@ void SceneHelpGame::Update(float dt)
 	if (IsKeyDown(DIK_ESCAPE))
 	{
 		GameGlobal::isGameRunning = false;
+	}
+	if (IsKeyDown(DIK_BACKSPACE))
+	{
+		SceneManager::GetInstance()->ReplaceScene(new SceneStartGame());
+		return;
 	}
 }
 

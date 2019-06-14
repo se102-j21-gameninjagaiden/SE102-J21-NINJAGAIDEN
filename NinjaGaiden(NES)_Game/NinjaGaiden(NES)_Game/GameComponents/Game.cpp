@@ -4,7 +4,6 @@
 #include "../Scenes/SceneGame.h"
 #include"../Scenes/SceneStartGame.h"
 
-
 Game::Game(int fps)
 {
 	mFPS = fps;
